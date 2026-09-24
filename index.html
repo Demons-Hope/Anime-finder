@@ -954,8 +954,9 @@
       /*
        * Amazon / Prime Video
        *
-       * Keep using the Prime Video icon here
-       * because that is the working logo.
+       * Use the jsDelivr-hosted Prime Video
+       * icon because the previous Simple Icons
+       * CDN URL returned 404.
        */
 
       if (
@@ -964,7 +965,7 @@
       ) {
 
         return (
-          "https://cdn.simpleicons.org/primevideo/FFFFFF"
+          "https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/primevideo.svg"
         );
 
       }
