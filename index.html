@@ -285,24 +285,6 @@
     }
 
 
-    .popcorn {
-
-      font-size:
-        26px;
-
-      filter:
-        drop-shadow(
-          0 0 8px
-          rgba(
-            138,
-            7,
-            7,
-            0.34
-          )
-        );
-    }
-
-
     h1 {
 
       margin:
@@ -1421,13 +1403,6 @@
 
       <div class="brand-row">
 
-        <span
-          class="popcorn"
-          aria-hidden="true"
-        >
-          🍿
-        </span>
-
         <h1>
 
           <span class="anime">
@@ -1568,14 +1543,6 @@
       ==================================================
       STREAMING PROVIDER CONFIGURATION
       ==================================================
-
-      This is the only place you need to edit when
-      adding another provider logo later.
-
-      "matches" = names returned by Watchmode
-      "displayName" = what Anime Finder shows
-      "logo" = primary logo
-      "fallbackLogo" = backup if primary fails
     */
 
 
@@ -1606,7 +1573,7 @@
           "HIDIVE",
 
         logo:
-          "https://cdn.simpleicons.org/hidive/FFFFFF",
+          "https://commons.wikimedia.org/wiki/Special:Redirect/file/Hidive_text_logo.svg",
 
         fallbackLogo:
           "https://www.hidive.com/favicon.ico"
@@ -1638,7 +1605,10 @@
           "Hulu",
 
         logo:
-          "https://cdn.simpleicons.org/hulu/1CE783"
+          "https://commons.wikimedia.org/wiki/Special:Redirect/file/Hulu_logo_(2018).svg",
+
+        fallbackLogo:
+          "https://www.hulu.com/favicon.ico"
       },
 
 
@@ -1713,7 +1683,10 @@
           "Pluto TV",
 
         logo:
-          "https://cdn.simpleicons.org/plutotv/FFFFFF"
+          "https://www.paramountpressexpress.com/pluto-tv/photos/PlutoTV_Logo_1080x1080_Pluto_White1.png",
+
+        fallbackLogo:
+          "https://pluto.tv/favicon.ico"
       },
 
 
@@ -1842,6 +1815,41 @@
 
         logo:
           "https://cdn.simpleicons.org/fandango/FF7300"
+      },
+
+
+      {
+        matches: [
+          "hoopla",
+          "hoopla digital"
+        ],
+
+        displayName:
+          "Hoopla",
+
+        logo:
+          "https://library.hoopladigital.com/wp-content/uploads/2024/08/Hoopla_logo_colorgrad_shadow.png",
+
+        fallbackLogo:
+          "https://www.hoopladigital.com/favicon.ico"
+      },
+
+
+      {
+        matches: [
+          "directv",
+          "directv on demand",
+          "directv on-demand"
+        ],
+
+        displayName:
+          "DIRECTV On Demand",
+
+        logo:
+          "https://www.directv.com/insider/wp-content/uploads/2024/05/directv_advertising_rgb_1cp_Midnight.png",
+
+        fallbackLogo:
+          "https://www.directv.com/favicon.ico"
       }
 
     ];
@@ -2606,14 +2614,6 @@
             : [];
 
 
-        /*
-          --------------------------------------------
-          U.S. SOURCES ONLY
-          + RETIRED PROVIDERS REMOVED
-          --------------------------------------------
-        */
-
-
         const usSources =
           sources.filter(
 
@@ -2632,13 +2632,6 @@
               )
 
           );
-
-
-        /*
-          --------------------------------------------
-          DEDUPLICATE PROVIDERS
-          --------------------------------------------
-        */
 
 
         const uniqueSources =
@@ -2682,20 +2675,6 @@
           );
 
         }
-
-
-        /*
-          --------------------------------------------
-          SORTING
-
-          1. Subscription
-          2. Free
-          3. Rent
-          4. Buy
-
-          Then provider name A-Z.
-          --------------------------------------------
-        */
 
 
         uniqueSources.sort(
@@ -2742,13 +2721,6 @@
 
           }
         );
-
-
-        /*
-          --------------------------------------------
-          NO RESULTS
-          --------------------------------------------
-        */
 
 
         if (
@@ -2800,13 +2772,6 @@
         }
 
 
-        /*
-          --------------------------------------------
-          RESULT HEADER
-          --------------------------------------------
-        */
-
-
         resultTitle.textContent =
           title.name ||
           query;
@@ -2824,13 +2789,6 @@
 
         resultsHeader.style.display =
           "block";
-
-
-        /*
-          --------------------------------------------
-          BUILD RESULT CARDS
-          --------------------------------------------
-        */
 
 
         let html =
@@ -2978,17 +2936,6 @@
           }
 
 
-          /*
-            Logo with graceful fallback.
-
-            Primary logo fails:
-            -> fallback logo
-
-            Fallback also fails:
-            -> TV emoji
-          */
-
-
           let logoHtml =
             "📺";
 
@@ -3039,15 +2986,6 @@
             `;
 
           }
-
-
-          /*
-            Watch button.
-
-            Invalid/missing links are shown as a
-            disabled button instead of sending the
-            user somewhere unsafe.
-          */
 
 
           let watchButtonHtml =
