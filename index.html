@@ -16,104 +16,90 @@
         body {
             margin: 0;
             padding: 0;
-
             width: 100%;
             min-height: 100%;
-
             background: #000000;
         }
 
         body {
             min-height: 100vh;
-
             font-family: Arial, sans-serif;
-
             color: white;
-
             overflow-x: hidden;
         }
 
 
         /* =========================================
-           BACKGROUND
+           HOODED SKULL BACKGROUND
         ========================================= */
 
         .background {
             position: fixed;
-
             inset: 0;
-
             overflow: hidden;
-
             background: #000000;
-
             z-index: 0;
         }
 
 
-        /* Red atmospheric glow */
+        /* Deep blood-red atmosphere */
 
         .red-glow {
             position: absolute;
 
-            width: 90vw;
-            height: 90vw;
-
-            max-width: 800px;
-            max-height: 800px;
+            width: 100vw;
+            height: 100vw;
 
             left: 50%;
-            top: 38%;
+            top: 42%;
 
             transform: translate(-50%, -50%);
 
             background:
                 radial-gradient(
                     circle,
-                    rgba(110, 0, 20, 0.55) 0%,
-                    rgba(70, 0, 12, 0.30) 35%,
-                    rgba(20, 0, 4, 0.10) 55%,
-                    transparent 72%
+                    rgba(110, 0, 20, 0.45) 0%,
+                    rgba(65, 0, 12, 0.25) 35%,
+                    transparent 70%
                 );
 
             filter: blur(25px);
         }
 
 
-        /* =========================================
-           SKULL
-        ========================================= */
+        /* Hooded figure */
 
-        .skull {
+        .hooded-skull {
             position: absolute;
 
-            width: min(95vw, 620px);
-
+            width: min(100vw, 650px);
             height: auto;
 
             left: 50%;
-            top: 45%;
+            top: 48%;
 
-            transform:
-                translate(-50%, -50%);
+            transform: translate(-50%, -50%);
 
             opacity: 0.78;
 
             filter:
-                drop-shadow(0 0 10px rgba(130, 0, 25, 0.8))
-                drop-shadow(0 0 35px rgba(100, 0, 20, 0.5));
+                drop-shadow(0 0 12px rgba(120, 0, 25, 0.8))
+                drop-shadow(0 0 45px rgba(80, 0, 15, 0.45));
 
             z-index: 1;
         }
 
 
-        /* Skull glow */
+        /* Red light behind the hood */
 
-        .skull-glow {
+        .hood-light {
             position: absolute;
 
-            width: min(80vw, 500px);
-            height: min(80vw, 500px);
+            width: 80vw;
+            height: 80vw;
+
+            max-width: 550px;
+            max-height: 550px;
 
             left: 50%;
             top: 43%;
@@ -142,11 +128,9 @@
         .container {
 
             position: relative;
-
             z-index: 10;
 
             width: calc(100% - 30px);
-
             max-width: 650px;
 
             margin: 55px auto 0;
@@ -155,26 +139,18 @@
 
             text-align: center;
 
-            background:
-                rgba(0, 0, 0, 0.90);
+            background: rgba(0, 0, 0, 0.90);
 
-            border:
-
-                1px solid rgba(130, 10, 30, 0.75);
+            border: 1px solid rgba(130, 10, 30, 0.75);
 
             border-radius: 14px;
 
             box-shadow:
-
                 0 0 18px rgba(120, 0, 25, 0.35),
-
                 0 0 45px rgba(80, 0, 15, 0.20),
-
                 0 25px 70px rgba(0, 0, 0, 0.95);
         }
 
-
-        /* Red line across top */
 
         .container::before {
 
@@ -189,7 +165,6 @@
             height: 1px;
 
             background:
-
                 linear-gradient(
                     90deg,
                     transparent,
@@ -198,7 +173,6 @@
                 );
 
             box-shadow:
-
                 0 0 10px rgba(170, 0, 35, 0.8);
         }
 
@@ -217,10 +191,6 @@
             line-height: 1.2;
 
             letter-spacing: 1px;
-
-            text-shadow:
-
-                0 0 15px rgba(255, 255, 255, 0.08);
         }
 
 
@@ -229,18 +199,14 @@
             color: #a50f2b;
 
             text-shadow:
-
                 0 0 8px rgba(170, 0, 35, 0.8),
-
                 0 0 22px rgba(120, 0, 25, 0.5);
         }
 
 
         p {
 
-            margin:
-
-                0 0 27px;
+            margin: 0 0 27px;
 
             color: #a8a8a8;
 
@@ -251,7 +217,7 @@
 
 
         /* =========================================
-           SEARCH
+           SEARCH — LEFT EXACTLY AS BEFORE
         ========================================= */
 
         .search-box {
@@ -276,9 +242,7 @@
 
             border-radius: 8px;
 
-            border:
-
-                1px solid #4e0c1b;
+            border: 1px solid #4e0c1b;
 
             background: #000000;
 
@@ -291,7 +255,6 @@
 
 
         input::placeholder {
-
             color: #666666;
         }
 
@@ -301,7 +264,6 @@
             border-color: #a20f2b;
 
             box-shadow:
-
                 0 0 12px rgba(150, 0, 30, 0.35);
         }
 
@@ -314,14 +276,11 @@
 
             padding: 14px;
 
-            border:
-
-                1px solid #8e1029;
+            border: 1px solid #8e1029;
 
             border-radius: 8px;
 
             background:
-
                 linear-gradient(
                     135deg,
                     #65091d,
@@ -337,7 +296,6 @@
             cursor: pointer;
 
             box-shadow:
-
                 0 0 12px rgba(130, 0, 25, 0.25);
         }
 
@@ -361,7 +319,6 @@
                 margin-top: 80px;
 
                 padding:
-
                     40px 30px 45px;
             }
 
@@ -380,9 +337,9 @@
             }
 
 
-            .skull {
+            .hooded-skull {
 
-                top: 48%;
+                top: 50%;
 
                 opacity: 0.70;
             }
@@ -402,19 +359,16 @@
                 margin-top: 35px;
 
                 padding:
-
                     27px 16px 30px;
             }
 
 
             h1 {
-
                 font-size: 27px;
             }
 
 
             p {
-
                 font-size: 14px;
             }
         }
@@ -435,21 +389,21 @@
 
         <div class="red-glow"></div>
 
-        <div class="skull-glow"></div>
+        <div class="hood-light"></div>
 
 
-        <!-- SVG SKULL -->
+        <!-- HOODED SKULL -->
 
         <svg
-            class="skull"
-            viewBox="0 0 500 600"
+            class="hooded-skull"
+            viewBox="0 0 600 700"
             xmlns="http://www.w3.org/2000/svg"
         >
 
             <defs>
 
                 <linearGradient
-                    id="skullGradient"
+                    id="hood"
                     x1="0"
                     y1="0"
                     x2="1"
@@ -458,17 +412,17 @@
 
                     <stop
                         offset="0%"
-                        stop-color="#090909"
+                        stop-color="#250006"
                     />
 
                     <stop
-                        offset="45%"
-                        stop-color="#1a080b"
+                        offset="35%"
+                        stop-color="#090000"
                     />
 
                     <stop
-                        offset="70%"
-                        stop-color="#070707"
+                        offset="65%"
+                        stop-color="#180005"
                     />
 
                     <stop
@@ -480,7 +434,7 @@
 
 
                 <linearGradient
-                    id="redEdge"
+                    id="skull"
                     x1="0"
                     y1="0"
                     x2="1"
@@ -489,17 +443,17 @@
 
                     <stop
                         offset="0%"
-                        stop-color="#8e0c29"
+                        stop-color="#161616"
                     />
 
                     <stop
                         offset="50%"
-                        stop-color="#35000d"
+                        stop-color="#050505"
                     />
 
                     <stop
                         offset="100%"
-                        stop-color="#080000"
+                        stop-color="#000000"
                     />
 
                 </linearGradient>
@@ -507,186 +461,361 @@
             </defs>
 
 
-            <!-- Skull head -->
+            <!-- =================================
+                 HOOD
+            ================================== -->
 
             <path
+
                 d="
-                M250 35
+                M300 25
 
-                C145 35
-                75 115
-                80 225
+                C145 30
+                55 155
+                75 320
 
-                C82 310
-                120 365
-                155 405
+                C85 430
+                130 530
+                175 625
 
-                L165 500
+                L300 570
 
-                L210 540
+                L425 625
 
-                L290 540
+                C470 530
+                515 430
+                525 320
 
-                L335 500
-
-                L345 405
-
-                C380 365
-                418 310
-                420 225
-
-                C425 115
-                355 35
-                250 35
+                C545 155
+                455 30
+                300 25
 
                 Z
                 "
 
-                fill="url(#skullGradient)"
+                fill="url(#hood)"
 
-                stroke="url(#redEdge)"
+                stroke="#62091d"
 
-                stroke-width="8"
+                stroke-width="7"
             />
 
 
-            <!-- Left eye -->
+            <!-- Hood inner shadow -->
 
             <path
+
                 d="
-                M115 205
-                C145 165
-                195 165
-                215 205
-                C195 250
-                145 255
-                115 205
+                M300 75
+
+                C200 75
+                135 160
+                145 285
+
+                C155 365
+                190 430
+                220 475
+
+                L300 520
+
+                L380 475
+
+                C410 430
+                445 365
+                455 285
+
+                C465 160
+                400 75
+                300 75
+
                 Z
                 "
 
                 fill="#000000"
 
-                stroke="#5c0719"
+                stroke="#35000c"
 
                 stroke-width="5"
             />
 
 
-            <!-- Right eye -->
+            <!-- =================================
+                 SKULL
+            ================================== -->
 
             <path
+
                 d="
-                M285 205
-                C305 165
-                355 165
-                385 205
-                C355 255
-                305 250
-                285 205
-                Z
-                "
+                M300 105
 
-                fill="#000000"
+                C220 105
+                165 165
+                170 260
 
-                stroke="#5c0719"
+                C172 335
+                205 380
+                230 415
 
-                stroke-width="5"
-            />
+                L235 505
 
+                L270 545
 
-            <!-- Nose -->
+                L330 545
 
-            <path
-                d="
-                M250 225
-                L215 315
-                L250 335
-                L285 315
-                Z
-                "
+                L365 505
 
-                fill="#000000"
+                L370 415
 
-                stroke="#4c0716"
+                C395 380
+                428 335
+                430 260
 
-                stroke-width="5"
-            />
-
-
-            <!-- Jaw -->
-
-            <path
-                d="
-                M165 350
-
-                C175 410
-                195 445
-                250 450
-
-                C305 445
-                325 410
-                335 350
-
-                C300 375
-                200 375
-                165 350
+                C435 165
+                380 105
+                300 105
 
                 Z
                 "
 
-                fill="#050505"
+                fill="url(#skull)"
 
-                stroke="#5c0719"
+                stroke="#7d0b25"
 
                 stroke-width="6"
             />
 
 
-            <!-- Teeth -->
+            <!-- =================================
+                 EYES
+            ================================== -->
+
+            <path
+
+                d="
+                M195 245
+
+                C215 205
+                265 200
+                285 240
+
+                C270 285
+                215 290
+                195 245
+
+                Z
+                "
+
+                fill="#000000"
+
+                stroke="#68091f"
+
+                stroke-width="6"
+            />
+
+
+            <path
+
+                d="
+                M315 240
+
+                C335 200
+                385 205
+                405 245
+
+                C385 290
+                330 285
+                315 240
+
+                Z
+                "
+
+                fill="#000000"
+
+                stroke="#68091f"
+
+                stroke-width="6"
+            />
+
+
+            <!-- Red eye glow -->
+
+            <path
+
+                d="
+                M215 247
+                L275 238
+                L215 265
+                Z
+                "
+
+                fill="#8f0b28"
+
+                opacity="0.75"
+            />
+
+
+            <path
+
+                d="
+                M385 247
+                L325 238
+                L385 265
+                Z
+                "
+
+                fill="#8f0b28"
+
+                opacity="0.75"
+            />
+
+
+            <!-- =================================
+                 NOSE
+            ================================== -->
+
+            <path
+
+                d="
+                M300 265
+
+                L265 350
+
+                L300 375
+
+                L335 350
+
+                Z
+                "
+
+                fill="#000000"
+
+                stroke="#5c071a"
+
+                stroke-width="5"
+            />
+
+
+            <!-- =================================
+                 JAW
+            ================================== -->
+
+            <path
+
+                d="
+                M225 390
+
+                C230 455
+                255 490
+                300 495
+
+                C345 490
+                370 455
+                375 390
+
+                C340 420
+                260 420
+                225 390
+
+                Z
+                "
+
+                fill="#030303"
+
+                stroke="#65091f"
+
+                stroke-width="6"
+            />
+
+
+            <!-- =================================
+                 TEETH
+            ================================== -->
 
             <g
-                fill="#090909"
-                stroke="#641022"
+                fill="#080808"
+                stroke="#711027"
                 stroke-width="3"
             >
 
-                <path d="M185 365 L185 410 L205 410 L205 370 Z"/>
+                <path d="M240 405 L240 455 L258 455 L258 410 Z"/>
 
-                <path d="M210 370 L210 420 L230 420 L230 372 Z"/>
+                <path d="M263 410 L263 465 L281 465 L281 412 Z"/>
 
-                <path d="M235 372 L235 425 L255 425 L255 372 Z"/>
+                <path d="M286 412 L286 470 L304 470 L304 412 Z"/>
 
-                <path d="M260 372 L260 425 L280 425 L280 372 Z"/>
+                <path d="M309 412 L309 470 L327 470 L327 412 Z"/>
 
-                <path d="M285 370 L285 420 L305 420 L305 370 Z"/>
+                <path d="M332 410 L332 465 L350 465 L350 410 Z"/>
 
-                <path d="M310 365 L310 410 L330 410 L330 365 Z"/>
+                <path d="M355 405 L355 455 L373 455 L373 405 Z"/>
 
             </g>
 
 
-            <!-- Red cracks -->
+            <!-- =================================
+                 HOOD CRACKS / RED LIGHT
+            ================================== -->
 
             <g
-                stroke="#8d0c29"
-                stroke-width="5"
                 fill="none"
-                opacity="0.8"
+                stroke="#9a0d2b"
+                stroke-width="5"
+                opacity="0.75"
             >
 
-                <path d="M130 115 L170 155 L150 190"/>
+                <path d="M115 180 L175 225"/>
 
-                <path d="M370 115 L330 155 L350 190"/>
+                <path d="M485 180 L425 225"/>
 
-                <path d="M150 300 L180 325"/>
+                <path d="M125 390 L180 350"/>
 
-                <path d="M350 300 L320 325"/>
+                <path d="M475 390 L420 350"/>
 
-                <path d="M205 90 L225 130"/>
+                <path d="M170 110 L215 155"/>
 
-                <path d="M295 90 L275 130"/>
+                <path d="M430 110 L385 155"/>
 
             </g>
+
+
+            <!-- Fine red rim -->
+
+            <path
+
+                d="
+                M300 25
+                C145 30
+                55 155
+                75 320
+                "
+
+                fill="none"
+
+                stroke="#9d0d2c"
+
+                stroke-width="3"
+
+                opacity="0.8"
+            />
+
+
+            <path
+
+                d="
+                M300 25
+                C455 30
+                545 155
+                525 320
+                "
+
+                fill="none"
+
+                stroke="#9d0d2c"
+
+                stroke-width="3"
+
+                opacity="0.8"
+            />
 
         </svg>
 
