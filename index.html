@@ -1,860 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Anime Finder</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #000;
+      color: white;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        linear-gradient(
+          rgba(0, 0, 0, 0.28),
+          rgba(0, 0, 0, 0.55)
+        ),
+        url("hooded-skull.png") center center / cover fixed no-repeat;
+
+      overflow-x: hidden;
+    }
+
+    /* Dark cinematic overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle at center,
+          transparent 15%,
+          rgba(0, 0, 0, 0.18) 45%,
+          rgba(0, 0, 0, 0.72) 100%
+        );
+
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      width: calc(100% - 30px);
+      max-width: 650px;
 
-    <title>Anime Finder</title>
+      margin: 55px auto 0;
+      padding: 32px 20px 35px;
 
-    <style>
+      background: rgba(0, 0, 0, 0.72);
 
-        * {
-            box-sizing: border-box;
-        }
+      border: 1px solid rgba(150, 0, 0, 0.8);
+      border-radius: 18px;
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100%;
-            background: #000000;
-        }
+      box-shadow:
+        0 0 25px rgba(120, 0, 0, 0.35),
+        inset 0 0 30px rgba(80, 0, 0, 0.15);
 
-        body {
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            color: white;
-            overflow-x: hidden;
-        }
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 10px;
 
+      font-size: clamp(30px, 8vw, 48px);
+      letter-spacing: 1px;
+
+      text-shadow:
+        0 0 10px rgba(150, 0, 0, 0.8),
+        0 0 25px rgba(100, 0, 0, 0.5);
+    }
+
+    h1 span {
+      color: #8b0000;
+    }
+
+    .subtitle {
+      margin: 0 0 25px;
+
+      color: #cfcfcf;
+      font-size: 15px;
+    }
+
+    .search-area {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        /* =========================================
-           HOODED SKULL BACKGROUND
-        ========================================= */
+    input {
+      width: 100%;
+      padding: 16px 18px;
 
-        .background {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            background: #000000;
-            z-index: 0;
-        }
+      border: 1px solid #600000;
+      border-radius: 12px;
 
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
 
-        /* Deep blood-red atmosphere */
+      font-size: 16px;
+      outline: none;
 
-        .red-glow {
-            position: absolute;
+      box-shadow:
+        inset 0 0 12px rgba(100, 0, 0, 0.2);
+    }
 
-            width: 100vw;
-            height: 100vw;
+    input::placeholder {
+      color: #888;
+    }
 
-            left: 50%;
-            top: 42%;
+    input:focus {
+      border-color: #a00000;
 
-            transform: translate(-50%, -50%);
+      box-shadow:
+        0 0 12px rgba(140, 0, 0, 0.45),
+        inset 0 0 12px rgba(100, 0, 0, 0.2);
+    }
 
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(110, 0, 20, 0.45) 0%,
-                    rgba(65, 0, 12, 0.25) 35%,
-                    transparent 70%
-                );
+    button {
+      width: 100%;
+      padding: 16px;
 
-            filter: blur(25px);
-        }
+      border: none;
+      border-radius: 12px;
 
+      background: linear-gradient(
+        135deg,
+        #7a0000,
+        #b00000
+      );
 
-        /* Hooded figure */
+      color: white;
 
-        .hooded-skull {
-            position: absolute;
+      font-size: 16px;
+      font-weight: bold;
 
-            width: min(100vw, 650px);
-            height: auto;
+      cursor: pointer;
 
-            left: 50%;
-            top: 48%;
+      box-shadow:
+        0 0 15px rgba(140, 0, 0, 0.45);
 
-            transform: translate(-50%, -50%);
+      transition: 0.2s ease;
+    }
 
-            opacity: 0.78;
+    button:active {
+      transform: scale(0.98);
+    }
 
-            filter:
-                drop-shadow(0 0 12px rgba(120, 0, 25, 0.8))
-                drop-shadow(0 0 45px rgba(80, 0, 15, 0.45));
+    button:hover {
+      box-shadow:
+        0 0 25px rgba(180, 0, 0, 0.65);
+    }
 
-            z-index: 1;
-        }
+    @media (min-width: 600px) {
+      .container {
+        margin-top: 80px;
+        padding: 35px 30px 40px;
+      }
 
+      .search-area {
+        flex-direction: row;
+      }
 
-        /* Red light behind the hood */
+      input {
+        flex: 1;
+      }
 
-        .hood-light {
-            position: absolute;
-
-            width: 80vw;
-            height: 80vw;
-
-            max-width: 550px;
-            max-height: 550px;
-
-            left: 50%;
-            top: 43%;
-
-            transform: translate(-50%, -50%);
-
-            border-radius: 50%;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(150, 0, 30, 0.18),
-                    transparent 68%
-                );
-
-            filter: blur(30px);
-
-            z-index: 0;
-        }
-
-
-        /* =========================================
-           MAIN PANEL
-        ========================================= */
-
-        .container {
-
-            position: relative;
-            z-index: 10;
-
-            width: calc(100% - 30px);
-            max-width: 650px;
-
-            margin: 55px auto 0;
-
-            padding: 32px 20px 35px;
-
-            text-align: center;
-
-            background: rgba(0, 0, 0, 0.90);
-
-            border: 1px solid rgba(130, 10, 30, 0.75);
-
-            border-radius: 14px;
-
-            box-shadow:
-                0 0 18px rgba(120, 0, 25, 0.35),
-                0 0 45px rgba(80, 0, 15, 0.20),
-                0 25px 70px rgba(0, 0, 0, 0.95);
-        }
-
-
-        .container::before {
-
-            content: "";
-
-            position: absolute;
-
-            top: 0;
-            left: 12%;
-
-            width: 76%;
-            height: 1px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    #a30d2c,
-                    transparent
-                );
-
-            box-shadow:
-                0 0 10px rgba(170, 0, 35, 0.8);
-        }
-
-
-        /* =========================================
-           TITLE
-        ========================================= */
-
-        h1 {
-
-            margin: 0 0 10px;
-
-            font-size:
-                clamp(28px, 8vw, 42px);
-
-            line-height: 1.2;
-
-            letter-spacing: 1px;
-        }
-
-
-        h1 span {
-
-            color: #a50f2b;
-
-            text-shadow:
-                0 0 8px rgba(170, 0, 35, 0.8),
-                0 0 22px rgba(120, 0, 25, 0.5);
-        }
-
-
-        p {
-
-            margin: 0 0 27px;
-
-            color: #a8a8a8;
-
-            font-size: 15px;
-
-            line-height: 1.5;
-        }
-
-
-        /* =========================================
-           SEARCH — LEFT EXACTLY AS BEFORE
-        ========================================= */
-
-        .search-box {
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 10px;
-
-            width: 100%;
-        }
-
-
-        input {
-
-            width: 100%;
-
-            min-height: 53px;
-
-            padding: 15px;
-
-            border-radius: 8px;
-
-            border: 1px solid #4e0c1b;
-
-            background: #000000;
-
-            color: white;
-
-            font-size: 16px;
-
-            outline: none;
-        }
-
-
-        input::placeholder {
-            color: #666666;
-        }
-
-
-        input:focus {
-
-            border-color: #a20f2b;
-
-            box-shadow:
-                0 0 12px rgba(150, 0, 30, 0.35);
-        }
-
-
-        button {
-
-            width: 100%;
-
-            min-height: 53px;
-
-            padding: 14px;
-
-            border: 1px solid #8e1029;
-
-            border-radius: 8px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #65091d,
-                    #8e0d27
-                );
-
-            color: white;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 0 12px rgba(130, 0, 25, 0.25);
-        }
-
-
-        button:active {
-
-            transform: scale(0.98);
-
-            background: #a20f2b;
-        }
-
-
-        /* =========================================
-           DESKTOP
-        ========================================= */
-
-        @media (min-width: 600px) {
-
-            .container {
-
-                margin-top: 80px;
-
-                padding:
-                    40px 30px 45px;
-            }
-
-
-            .search-box {
-
-                flex-direction: row;
-            }
-
-
-            button {
-
-                width: auto;
-
-                min-width: 125px;
-            }
-
-
-            .hooded-skull {
-
-                top: 50%;
-
-                opacity: 0.70;
-            }
-        }
-
-
-        /* =========================================
-           SMALL PHONES
-        ========================================= */
-
-        @media (max-width: 380px) {
-
-            .container {
-
-                width: calc(100% - 22px);
-
-                margin-top: 35px;
-
-                padding:
-                    27px 16px 30px;
-            }
-
-
-            h1 {
-                font-size: 27px;
-            }
-
-
-            p {
-                font-size: 14px;
-            }
-        }
-
-    </style>
-
+      button {
+        width: 130px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
+  <main class="container">
 
-    <!-- =====================================
-         BACKGROUND
-    ====================================== -->
+    <h1>🍿 Anime <span>Finder</span></h1>
 
-    <div class="background">
+    <p class="subtitle">
+      Find where to watch your favorite anime.
+    </p>
 
-        <div class="red-glow"></div>
+    <div class="search-area">
 
-        <div class="hood-light"></div>
+      <input
+        type="text"
+        id="animeSearch"
+        placeholder="Search for an anime..."
+      >
 
-
-        <!-- HOODED SKULL -->
-
-        <svg
-            class="hooded-skull"
-            viewBox="0 0 600 700"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-
-            <defs>
-
-                <linearGradient
-                    id="hood"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                >
-
-                    <stop
-                        offset="0%"
-                        stop-color="#250006"
-                    />
-
-                    <stop
-                        offset="35%"
-                        stop-color="#090000"
-                    />
-
-                    <stop
-                        offset="65%"
-                        stop-color="#180005"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#000000"
-                    />
-
-                </linearGradient>
-
-
-                <linearGradient
-                    id="skull"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                >
-
-                    <stop
-                        offset="0%"
-                        stop-color="#161616"
-                    />
-
-                    <stop
-                        offset="50%"
-                        stop-color="#050505"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#000000"
-                    />
-
-                </linearGradient>
-
-            </defs>
-
-
-            <!-- =================================
-                 HOOD
-            ================================== -->
-
-            <path
-
-                d="
-                M300 25
-
-                C145 30
-                55 155
-                75 320
-
-                C85 430
-                130 530
-                175 625
-
-                L300 570
-
-                L425 625
-
-                C470 530
-                515 430
-                525 320
-
-                C545 155
-                455 30
-                300 25
-
-                Z
-                "
-
-                fill="url(#hood)"
-
-                stroke="#62091d"
-
-                stroke-width="7"
-            />
-
-
-            <!-- Hood inner shadow -->
-
-            <path
-
-                d="
-                M300 75
-
-                C200 75
-                135 160
-                145 285
-
-                C155 365
-                190 430
-                220 475
-
-                L300 520
-
-                L380 475
-
-                C410 430
-                445 365
-                455 285
-
-                C465 160
-                400 75
-                300 75
-
-                Z
-                "
-
-                fill="#000000"
-
-                stroke="#35000c"
-
-                stroke-width="5"
-            />
-
-
-            <!-- =================================
-                 SKULL
-            ================================== -->
-
-            <path
-
-                d="
-                M300 105
-
-                C220 105
-                165 165
-                170 260
-
-                C172 335
-                205 380
-                230 415
-
-                L235 505
-
-                L270 545
-
-                L330 545
-
-                L365 505
-
-                L370 415
-
-                C395 380
-                428 335
-                430 260
-
-                C435 165
-                380 105
-                300 105
-
-                Z
-                "
-
-                fill="url(#skull)"
-
-                stroke="#7d0b25"
-
-                stroke-width="6"
-            />
-
-
-            <!-- =================================
-                 EYES
-            ================================== -->
-
-            <path
-
-                d="
-                M195 245
-
-                C215 205
-                265 200
-                285 240
-
-                C270 285
-                215 290
-                195 245
-
-                Z
-                "
-
-                fill="#000000"
-
-                stroke="#68091f"
-
-                stroke-width="6"
-            />
-
-
-            <path
-
-                d="
-                M315 240
-
-                C335 200
-                385 205
-                405 245
-
-                C385 290
-                330 285
-                315 240
-
-                Z
-                "
-
-                fill="#000000"
-
-                stroke="#68091f"
-
-                stroke-width="6"
-            />
-
-
-            <!-- Red eye glow -->
-
-            <path
-
-                d="
-                M215 247
-                L275 238
-                L215 265
-                Z
-                "
-
-                fill="#8f0b28"
-
-                opacity="0.75"
-            />
-
-
-            <path
-
-                d="
-                M385 247
-                L325 238
-                L385 265
-                Z
-                "
-
-                fill="#8f0b28"
-
-                opacity="0.75"
-            />
-
-
-            <!-- =================================
-                 NOSE
-            ================================== -->
-
-            <path
-
-                d="
-                M300 265
-
-                L265 350
-
-                L300 375
-
-                L335 350
-
-                Z
-                "
-
-                fill="#000000"
-
-                stroke="#5c071a"
-
-                stroke-width="5"
-            />
-
-
-            <!-- =================================
-                 JAW
-            ================================== -->
-
-            <path
-
-                d="
-                M225 390
-
-                C230 455
-                255 490
-                300 495
-
-                C345 490
-                370 455
-                375 390
-
-                C340 420
-                260 420
-                225 390
-
-                Z
-                "
-
-                fill="#030303"
-
-                stroke="#65091f"
-
-                stroke-width="6"
-            />
-
-
-            <!-- =================================
-                 TEETH
-            ================================== -->
-
-            <g
-                fill="#080808"
-                stroke="#711027"
-                stroke-width="3"
-            >
-
-                <path d="M240 405 L240 455 L258 455 L258 410 Z"/>
-
-                <path d="M263 410 L263 465 L281 465 L281 412 Z"/>
-
-                <path d="M286 412 L286 470 L304 470 L304 412 Z"/>
-
-                <path d="M309 412 L309 470 L327 470 L327 412 Z"/>
-
-                <path d="M332 410 L332 465 L350 465 L350 410 Z"/>
-
-                <path d="M355 405 L355 455 L373 455 L373 405 Z"/>
-
-            </g>
-
-
-            <!-- =================================
-                 HOOD CRACKS / RED LIGHT
-            ================================== -->
-
-            <g
-                fill="none"
-                stroke="#9a0d2b"
-                stroke-width="5"
-                opacity="0.75"
-            >
-
-                <path d="M115 180 L175 225"/>
-
-                <path d="M485 180 L425 225"/>
-
-                <path d="M125 390 L180 350"/>
-
-                <path d="M475 390 L420 350"/>
-
-                <path d="M170 110 L215 155"/>
-
-                <path d="M430 110 L385 155"/>
-
-            </g>
-
-
-            <!-- Fine red rim -->
-
-            <path
-
-                d="
-                M300 25
-                C145 30
-                55 155
-                75 320
-                "
-
-                fill="none"
-
-                stroke="#9d0d2c"
-
-                stroke-width="3"
-
-                opacity="0.8"
-            />
-
-
-            <path
-
-                d="
-                M300 25
-                C455 30
-                545 155
-                525 320
-                "
-
-                fill="none"
-
-                stroke="#9d0d2c"
-
-                stroke-width="3"
-
-                opacity="0.8"
-            />
-
-        </svg>
+      <button onclick="searchAnime()">
+        Search
+      </button>
 
     </div>
 
+  </main>
 
-    <!-- =====================================
-         MAIN PANEL
-    ====================================== -->
+  <script>
+    function searchAnime() {
+      const anime = document.getElementById("animeSearch").value.trim();
 
-    <main class="container">
+      if (anime === "") {
+        alert("Enter an anime first! 🍿");
+        return;
+      }
 
-        <h1>
-            🍿 <span>Anime</span> Finder
-        </h1>
-
-
-        <p>
-            Find where to watch your favorite anime.
-        </p>
-
-
-        <div class="search-box">
-
-            <input
-                type="text"
-                placeholder="Search for an anime..."
-                aria-label="Search for an anime"
-            >
-
-
-            <button>
-                Search
-            </button>
-
-        </div>
-
-    </main>
-
+      alert("Searching for: " + anime);
+    }
+  </script>
 
 </body>
 </html>
