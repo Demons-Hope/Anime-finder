@@ -12,9 +12,14 @@
       min-height: 100vh;
       font-family: Arial, sans-serif;
       color: white;
+
       background:
-        linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)),
+        linear-gradient(
+          rgba(0, 0, 0, 0.65),
+          rgba(0, 0, 0, 0.82)
+        ),
         url("./hooded-skull.png");
+
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -24,121 +29,294 @@
       max-width: 900px;
       margin: auto;
       padding: 40px 20px;
-      text-align: center;
     }
 
     h1 {
+      text-align: center;
       font-size: 48px;
       margin-bottom: 10px;
       text-shadow: 0 0 15px black;
     }
 
     .subtitle {
+      text-align: center;
       font-size: 18px;
       margin-bottom: 30px;
-      color: #ddd;
+      color: #ccc;
     }
 
     .search-box {
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 30px;
+      margin-bottom: 35px;
     }
 
     input {
       width: 60%;
-      padding: 14px;
-      border-radius: 8px;
-      border: none;
+      padding: 15px 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+      background: rgba(10, 10, 10, 0.85);
+      color: white;
+
       font-size: 16px;
       outline: none;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      border-color: #6c5ce7;
+
+      box-shadow:
+        0 0 12px rgba(108, 92, 231, 0.5);
+    }
+
+    input::placeholder {
+      color: #999;
     }
 
     button {
-      padding: 14px 22px;
+      padding: 15px 24px;
+
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
+
       background: #6c5ce7;
       color: white;
+
       font-size: 16px;
       font-weight: bold;
+
       cursor: pointer;
+
+      transition: 0.2s;
     }
 
     button:hover {
-      background: #5747d1;
+      background: #7d6df0;
+      transform: translateY(-2px);
     }
 
     #results {
-      text-align: left;
+      width: 100%;
     }
 
     .anime-title {
       text-align: center;
-      font-size: 32px;
+
+      font-size: 34px;
+      font-weight: bold;
+
       margin-bottom: 25px;
+
+      text-shadow: 0 0 12px black;
     }
+
+    /*
+      STREAMING CARDS
+    */
 
     .service-card {
-      background: rgba(20, 20, 20, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
+      position: relative;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(30, 30, 30, 0.95),
+          rgba(12, 12, 12, 0.95)
+        );
+
+      border: 1px solid rgba(255, 255, 255, 0.12);
+
+      border-radius: 16px;
+
       padding: 20px;
+
       margin-bottom: 15px;
+
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+
       gap: 20px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+
+      box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.45);
+
+      transition:
+        transform 0.2s,
+        border-color 0.2s,
+        box-shadow 0.2s;
     }
 
+    .service-card:hover {
+      transform: translateY(-3px);
+
+      border-color:
+        rgba(108, 92, 231, 0.65);
+
+      box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.6),
+        0 0 15px rgba(108, 92, 231, 0.15);
+    }
+
+    /*
+      LEFT SIDE
+    */
+
     .service-info {
+      display: flex;
+      align-items: center;
+
+      gap: 16px;
+
       flex: 1;
     }
 
-    .service-name {
-      font-size: 21px;
-      font-weight: bold;
-      margin-bottom: 8px;
+    /*
+      SERVICE ICON
+    */
+
+    .service-icon {
+      width: 58px;
+      height: 58px;
+
+      border-radius: 12px;
+
+      background:
+        rgba(255, 255, 255, 0.08);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 25px;
+
+      flex-shrink: 0;
+
+      border:
+        1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .service-details {
-      color: #ccc;
-      font-size: 14px;
-      line-height: 1.6;
+    /*
+      SERVICE NAME
+    */
+
+    .service-name {
+      font-size: 20px;
+      font-weight: bold;
+
+      margin-bottom: 7px;
     }
+
+    /*
+      SERVICE DETAILS
+    */
+
+    .service-details {
+      color: #aaa;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+    }
+
+    /*
+      BADGE
+    */
+
+    .badge {
+      display: inline-block;
+
+      padding: 4px 9px;
+
+      margin-right: 5px;
+
+      border-radius: 6px;
+
+      font-size: 12px;
+      font-weight: bold;
+
+      background:
+        rgba(108, 92, 231, 0.18);
+
+      color: #bdb4ff;
+    }
+
+    /*
+      WATCH BUTTON
+    */
 
     .watch-button {
       text-decoration: none;
+
       white-space: nowrap;
+
       background: #00b894;
+
       color: white;
-      padding: 12px 18px;
-      border-radius: 8px;
+
+      padding: 12px 20px;
+
+      border-radius: 9px;
+
       font-weight: bold;
-      display: inline-block;
+
+      transition:
+        background 0.2s,
+        transform 0.2s;
+
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .watch-button:hover {
-      background: #009f80;
+      background: #00d2a8;
+
+      transform:
+        translateY(-2px);
     }
+
+    /*
+      MESSAGES
+    */
 
     .message {
       text-align: center;
-      background: rgba(0, 0, 0, 0.65);
-      padding: 20px;
-      border-radius: 10px;
+
+      background:
+        rgba(0, 0, 0, 0.7);
+
+      padding: 22px;
+
+      border-radius: 12px;
+
       font-size: 18px;
+
+      border:
+        1px solid rgba(255, 255, 255, 0.1);
     }
 
     .loading {
       text-align: center;
+
       font-size: 18px;
-      padding: 20px;
+
+      padding: 25px;
     }
 
+    /*
+      MOBILE
+    */
+
     @media (max-width: 600px) {
+
+      .container {
+        padding: 30px 15px;
+      }
+
       h1 {
         font-size: 36px;
       }
@@ -148,17 +326,23 @@
       }
 
       input {
-        width: auto;
+        width: 100%;
       }
 
       .service-card {
-        flex-direction: column;
         align-items: stretch;
+
+        flex-direction: column;
+      }
+
+      .service-info {
+        width: 100%;
       }
 
       .watch-button {
         text-align: center;
       }
+
     }
   </style>
 </head>
@@ -174,6 +358,7 @@
     </div>
 
     <div class="search-box">
+
       <input
         type="text"
         id="animeSearch"
@@ -184,37 +369,58 @@
       <button onclick="searchAnime()">
         Search
       </button>
+
     </div>
 
     <div id="results"></div>
 
   </div>
 
+
   <script>
 
-    // Our Cloudflare Worker
+    /*
+      CLOUDFLARE WORKER
+    */
+
     const WORKER_URL =
       "https://holy-lake-cba9.daviswillis232.workers.dev/";
 
 
-    // Prevent HTML from being injected into the page
+    /*
+      PROTECT TEXT FROM HTML INJECTION
+    */
+
     function escapeHtml(text) {
+
       return String(text ?? "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
     }
 
 
-    // Allow pressing Enter to search
+    /*
+      PRESS ENTER TO SEARCH
+    */
+
     function handleEnter(event) {
+
       if (event.key === "Enter") {
+
         searchAnime();
+
       }
+
     }
 
+
+    /*
+      SEARCH FOR ANIME
+    */
 
     async function searchAnime() {
 
@@ -228,67 +434,109 @@
         input.value.trim();
 
 
-      // Make sure something was entered
+      /*
+        NOTHING ENTERED
+      */
+
       if (!anime) {
 
         results.innerHTML = `
+
           <div class="message">
+
             Please enter an anime name.
+
           </div>
+
         `;
 
         return;
+
       }
 
 
-      // Show loading message
+      /*
+        LOADING
+      */
+
       results.innerHTML = `
+
         <div class="loading">
-          🔎 Searching for ${escapeHtml(anime)}...
+
+          🔎 Searching for
+          ${escapeHtml(anime)}...
+
         </div>
+
       `;
 
 
       try {
 
-        // Ask our Cloudflare Worker
+        /*
+          ASK CLOUDFLARE WORKER
+        */
+
         const response = await fetch(
+
           WORKER_URL +
           "?q=" +
           encodeURIComponent(anime)
+
         );
 
 
-        // Convert response to JSON
+        /*
+          CONVERT RESPONSE TO JSON
+        */
+
         const data =
           await response.json();
 
 
-        // Worker returned an error
+        /*
+          WORKER ERROR
+        */
+
         if (!response.ok) {
 
           results.innerHTML = `
+
             <div class="message">
-              ❌ ${escapeHtml(
-                data.error || "Something went wrong."
+
+              ❌
+              ${escapeHtml(
+                data.error ||
+                "Something went wrong."
               )}
+
             </div>
+
           `;
 
           return;
+
         }
 
 
-        // Make sure the Worker returned a title
+        /*
+          MAKE SURE A TITLE WAS FOUND
+        */
+
         if (!data.title) {
 
           results.innerHTML = `
+
             <div class="message">
+
               ❌ No anime was found.
+
             </div>
+
           `;
 
           return;
+
         }
 
 
@@ -296,21 +544,30 @@
           data.title;
 
 
-        // Get streaming sources
+        /*
+          GET STREAMING SOURCES
+        */
+
         const sources =
           Array.isArray(data.sources)
             ? data.sources
             : [];
 
 
-        // Only show US availability
+        /*
+          ONLY SHOW US SOURCES
+        */
+
         const usSources =
           sources.filter(source =>
             source.region === "US"
           );
 
 
-        // Remove duplicate services
+        /*
+          REMOVE DUPLICATES
+        */
+
         const uniqueSources = [];
 
         const seen = new Set();
@@ -323,104 +580,182 @@
             "-" +
             source.type;
 
+
           if (!seen.has(key)) {
 
             seen.add(key);
 
             uniqueSources.push(source);
+
           }
+
         }
 
 
-        // No US sources
+        /*
+          NO STREAMING OPTIONS
+        */
+
         if (uniqueSources.length === 0) {
 
           results.innerHTML = `
+
             <div class="anime-title">
+
               ${escapeHtml(title.name)}
+
             </div>
 
             <div class="message">
-              😕 No US streaming options were found.
+
+              😕 No US streaming options
+              were found.
+
             </div>
+
           `;
 
           return;
+
         }
 
 
-        // Put subscription services first
-        // and purchases afterward.
+        /*
+          SUBSCRIPTIONS FIRST
+        */
+
         uniqueSources.sort((a, b) => {
 
-          if (a.type === "sub" && b.type !== "sub") {
+          if (
+            a.type === "sub" &&
+            b.type !== "sub"
+          ) {
+
             return -1;
+
           }
 
-          if (a.type !== "sub" && b.type === "sub") {
+          if (
+            a.type !== "sub" &&
+            b.type === "sub"
+          ) {
+
             return 1;
+
           }
 
           return 0;
+
         });
 
 
-        // Start the results HTML
+        /*
+          START RESULTS
+        */
+
         let html = `
 
           <div class="anime-title">
+
             ${escapeHtml(title.name)}
+
           </div>
 
         `;
 
 
-        // Create a card for every service
+        /*
+          CREATE STREAMING CARDS
+        */
+
         for (const source of uniqueSources) {
 
-          let typeText = "Available";
+
+          /*
+            DETERMINE TYPE
+          */
+
+          let typeText =
+            "Available";
+
 
           if (source.type === "sub") {
-            typeText = "Subscription";
+
+            typeText =
+              "Subscription";
+
           }
 
           else if (source.type === "buy") {
-            typeText = "Buy";
+
+            typeText =
+              "Buy";
+
           }
 
           else if (source.type === "rent") {
-            typeText = "Rent";
+
+            typeText =
+              "Rent";
+
           }
 
+
+          /*
+            PRICE
+          */
 
           let priceText = "";
 
 
-          if (source.price !== null &&
-              source.price !== undefined) {
+          if (
+            source.price !== null &&
+            source.price !== undefined
+          ) {
 
             priceText =
-              ` • $${Number(source.price).toFixed(2)}`;
+              ` • $${Number(
+                source.price
+              ).toFixed(2)}`;
+
           }
 
 
+          /*
+            FORMAT
+          */
+
           let formatText = "";
+
 
           if (source.format) {
 
             formatText =
-              ` • ${escapeHtml(source.format)}`;
+              ` • ${escapeHtml(
+                source.format
+              )}`;
+
           }
 
 
+          /*
+            EPISODES
+          */
+
           let episodeText = "";
+
 
           if (source.episodes) {
 
             episodeText =
               ` • ${source.episodes} episodes`;
+
           }
 
+
+          /*
+            BUILD CARD
+          */
 
           html += `
 
@@ -428,32 +763,64 @@
 
               <div class="service-info">
 
-                <div class="service-name">
-                  ${escapeHtml(source.name)}
+                <div class="service-icon">
+
+                  📺
+
                 </div>
 
-                <div class="service-details">
 
-                  ${escapeHtml(typeText)}
-                  ${priceText}
-                  ${formatText}
-                  ${episodeText}
+                <div>
+
+                  <div class="service-name">
+
+                    ${escapeHtml(
+                      source.name
+                    )}
+
+                  </div>
+
+
+                  <div class="service-details">
+
+                    <span class="badge">
+
+                      ${escapeHtml(
+                        typeText
+                      )}
+
+                    </span>
+
+                    ${priceText}
+
+                    ${formatText}
+
+                    ${episodeText}
+
+                  </div>
 
                 </div>
 
               </div>
 
+
               ${
                 source.web_url
                   ? `
+
                     <a
                       class="watch-button"
-                      href="${escapeHtml(source.web_url)}"
+                      href="${escapeHtml(
+                        source.web_url
+                      )}"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
+
                       Watch Now
+
                     </a>
+
                   `
                   : ""
               }
@@ -461,16 +828,29 @@
             </div>
 
           `;
+
         }
 
 
-        // Put everything onto the page
-        results.innerHTML = html;
+        /*
+          DISPLAY RESULTS
+        */
+
+        results.innerHTML =
+          html;
 
 
-      } catch (error) {
+      }
+
+
+      /*
+        ERROR HANDLING
+      */
+
+      catch (error) {
 
         console.error(error);
+
 
         results.innerHTML = `
 
@@ -482,7 +862,9 @@
           </div>
 
         `;
+
       }
+
     }
 
   </script>
