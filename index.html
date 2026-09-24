@@ -161,6 +161,151 @@
     }
 
 
+    /* =========================================
+       MAIN TABS
+    ========================================= */
+
+
+    .main-tabs {
+
+      width:
+        100%;
+
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      gap:
+        10px;
+
+      margin:
+        0 auto 18px;
+
+      flex-wrap:
+        wrap;
+    }
+
+
+    .main-tab {
+
+      border:
+        1px solid
+        rgba(
+          138,
+          7,
+          7,
+          0.45
+        );
+
+      background:
+        rgba(
+          0,
+          0,
+          0,
+          0.42
+        );
+
+      color:
+        #ffffff;
+
+      padding:
+        12px 22px;
+
+      border-radius:
+        10px;
+
+      font-size:
+        15px;
+
+      font-weight:
+        800;
+
+      cursor:
+        pointer;
+
+      transition:
+
+        background
+        0.2s,
+
+        border-color
+        0.2s,
+
+        box-shadow
+        0.2s,
+
+        transform
+        0.2s;
+    }
+
+
+    .main-tab:hover {
+
+      transform:
+        translateY(
+          -2px
+        );
+
+      border-color:
+        rgba(
+          138,
+          7,
+          7,
+          0.8
+        );
+
+      background:
+        rgba(
+          70,
+          0,
+          0,
+          0.45
+        );
+
+      box-shadow:
+        0 0 16px
+        rgba(
+          138,
+          7,
+          7,
+          0.25
+        );
+    }
+
+
+    .main-tab.active {
+
+      background:
+        linear-gradient(
+          180deg,
+          #8a0707 0%,
+          #5a1919 100%
+        );
+
+      color:
+        #000000;
+
+      border-color:
+        #8a0707;
+
+      box-shadow:
+        0 5px 18px
+        rgba(
+          138,
+          7,
+          7,
+          0.3
+        );
+    }
+
+
+    /* =========================================
+       SEARCH PANEL
+    ========================================= */
+
+
     .search-panel {
 
       position:
@@ -1247,6 +1392,293 @@
     }
 
 
+    /* =========================================
+       ALL SERVICES DIRECTORY
+    ========================================= */
+
+
+    .services-directory {
+
+      display:
+        none;
+
+      width:
+        100%;
+    }
+
+
+    .directory-header {
+
+      text-align:
+        center;
+
+      margin:
+        0 0 28px;
+    }
+
+
+    .directory-header h2 {
+
+      margin:
+        0 0 8px;
+
+      color:
+        #f2f2f2;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size:
+        clamp(
+          1.8rem,
+          5vw,
+          2.35rem
+        );
+    }
+
+
+    .directory-header p {
+
+      margin:
+        0 auto;
+
+      max-width:
+        650px;
+
+      color:
+        #a9a9a9;
+
+      font-size:
+        0.95rem;
+
+      line-height:
+        1.5;
+    }
+
+
+    .services-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(
+            220px,
+            1fr
+          )
+        );
+
+      gap:
+        14px;
+    }
+
+
+    .directory-service-card {
+
+      min-height:
+        120px;
+
+      padding:
+        20px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.08
+        );
+
+      border-radius:
+        14px;
+
+      background:
+        rgba(
+          0,
+          0,
+          0,
+          0.42
+        );
+
+      backdrop-filter:
+        blur(
+          7px
+        );
+
+      -webkit-backdrop-filter:
+        blur(
+          7px
+        );
+
+      box-shadow:
+        0 8px 25px
+        rgba(
+          0,
+          0,
+          0,
+          0.35
+        );
+
+      transition:
+
+        transform
+        0.2s,
+
+        background
+        0.2s,
+
+        border-color
+        0.2s,
+
+        box-shadow
+        0.2s;
+    }
+
+
+    .directory-service-card:hover {
+
+      transform:
+        translateY(
+          -4px
+        );
+
+      background:
+        rgba(
+          0,
+          0,
+          0,
+          0.58
+        );
+
+      border-color:
+        rgba(
+          138,
+          7,
+          7,
+          0.7
+        );
+
+      box-shadow:
+
+        0 12px 30px
+        rgba(
+          0,
+          0,
+          0,
+          0.5
+        ),
+
+        0 0 20px
+        rgba(
+          138,
+          7,
+          7,
+          0.25
+        );
+    }
+
+
+    .directory-service-icon {
+
+      width:
+        68px;
+
+      height:
+        68px;
+
+      flex:
+        0 0 68px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      margin-right:
+        16px;
+
+      border-radius:
+        12px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.055
+        );
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.07
+        );
+
+      overflow:
+        hidden;
+    }
+
+
+    .directory-service-logo {
+
+      display:
+        block;
+
+      width:
+        54px;
+
+      height:
+        54px;
+
+      object-fit:
+        contain;
+    }
+
+
+    .directory-service-fallback {
+
+      color:
+        #d8d8d8;
+
+      font-size:
+        2rem;
+    }
+
+
+    .directory-service-name {
+
+      color:
+        #f3f3f3;
+
+      font-size:
+        1rem;
+
+      font-weight:
+        800;
+
+      line-height:
+        1.35;
+
+      word-break:
+        break-word;
+    }
+
+
     footer {
 
       padding:
@@ -1266,6 +1698,11 @@
     }
 
 
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+
     @media (
       max-width: 720px
     ) {
@@ -1282,6 +1719,26 @@
 
         padding-top:
           24px;
+      }
+
+
+      .main-tabs {
+
+        gap:
+          8px;
+      }
+
+
+      .main-tab {
+
+        flex:
+          1;
+
+        padding:
+          11px 12px;
+
+        font-size:
+          14px;
       }
 
 
@@ -1345,6 +1802,20 @@
           column;
       }
 
+
+      .services-grid {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .directory-service-card {
+
+        min-height:
+          105px;
+      }
+
     }
 
 
@@ -1381,6 +1852,32 @@
           29px;
       }
 
+
+      .directory-service-icon {
+
+        width:
+          58px;
+
+        height:
+          58px;
+
+        flex-basis:
+          58px;
+
+        margin-right:
+          13px;
+      }
+
+
+      .directory-service-logo {
+
+        width:
+          45px;
+
+        height:
+          45px;
+      }
+
     }
 
 
@@ -1395,7 +1892,45 @@
   <main class="page-shell">
 
 
+    <!-- =========================================
+         MAIN NAVIGATION TABS
+    ========================================== -->
+
+
+    <nav
+      class="main-tabs"
+      aria-label="Main navigation"
+    >
+
+      <button
+        class="main-tab active"
+        id="searchTab"
+        type="button"
+        onclick="showTab('search')"
+      >
+        🔎 Search Anime
+      </button>
+
+
+      <button
+        class="main-tab"
+        id="servicesTab"
+        type="button"
+        onclick="showTab('services')"
+      >
+        📺 All Services
+      </button>
+
+    </nav>
+
+
+    <!-- =========================================
+         SEARCH SECTION
+    ========================================== -->
+
+
     <section
+      id="searchSection"
       class="search-panel"
       aria-label="Anime Finder"
     >
@@ -1516,6 +2051,40 @@
       <div
         id="results"
         aria-live="polite"
+      ></div>
+
+
+    </section>
+
+
+    <!-- =========================================
+         ALL SERVICES SECTION
+    ========================================== -->
+
+
+    <section
+      id="servicesSection"
+      class="services-directory"
+      aria-label="All streaming services"
+    >
+
+
+      <div class="directory-header">
+
+        <h2>
+          All Streaming Services
+        </h2>
+
+        <p>
+          Streaming services currently supported by Anime Finder.
+        </p>
+
+      </div>
+
+
+      <div
+        id="servicesGrid"
+        class="services-grid"
       ></div>
 
 
@@ -1819,17 +2388,17 @@
 
 
       {
-  matches: [
-    "hoopla",
-    "hoopla digital"
-  ],
+        matches: [
+          "hoopla",
+          "hoopla digital"
+        ],
 
-  displayName:
-    "Hoopla",
+        displayName:
+          "Hoopla",
 
-  logo:
-    "https://commons.wikimedia.org/wiki/Special:Redirect/file/Hoopla_logo.svg"
-},
+        logo:
+          "https://commons.wikimedia.org/wiki/Special:Redirect/file/Hoopla_logo.svg"
+      },
 
 
       {
@@ -2377,6 +2946,339 @@
 
       ].join(
         "|"
+      );
+
+    }
+
+
+    /*
+      ==================================================
+      MAIN TAB SWITCHING
+      ==================================================
+    */
+
+
+    function showTab(
+      tab
+    ) {
+
+      const searchSection =
+        document.getElementById(
+          "searchSection"
+        );
+
+
+      const servicesSection =
+        document.getElementById(
+          "servicesSection"
+        );
+
+
+      const searchTab =
+        document.getElementById(
+          "searchTab"
+        );
+
+
+      const servicesTab =
+        document.getElementById(
+          "servicesTab"
+        );
+
+
+      if (
+
+        !searchSection ||
+        !servicesSection ||
+        !searchTab ||
+        !servicesTab
+
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        tab ===
+        "services"
+      ) {
+
+        searchSection.style.display =
+          "none";
+
+
+        servicesSection.style.display =
+          "block";
+
+
+        searchTab.classList.remove(
+          "active"
+        );
+
+
+        servicesTab.classList.add(
+          "active"
+        );
+
+
+        renderServicesDirectory();
+
+
+        return;
+
+      }
+
+
+      searchSection.style.display =
+        "block";
+
+
+      servicesSection.style.display =
+        "none";
+
+
+      servicesTab.classList.remove(
+        "active"
+      );
+
+
+      searchTab.classList.add(
+        "active"
+      );
+
+    }
+
+
+    /*
+      ==================================================
+      ALL SERVICES DIRECTORY
+      ==================================================
+    */
+
+
+    function renderServicesDirectory() {
+
+      const grid =
+        document.getElementById(
+          "servicesGrid"
+        );
+
+
+      if (
+        !grid
+      ) {
+
+        return;
+
+      }
+
+
+      grid.innerHTML =
+        "";
+
+
+      const uniqueServices =
+        [];
+
+
+      const seenNames =
+        new Set();
+
+
+      SERVICE_CONFIG.forEach(
+        service => {
+
+
+          if (
+            !service ||
+            !service.displayName
+          ) {
+
+            return;
+
+          }
+
+
+          if (
+            isRetiredProvider(
+              service.displayName
+            )
+          ) {
+
+            return;
+
+          }
+
+
+          const cleanName =
+            String(
+              service.displayName
+            )
+              .trim();
+
+
+          const key =
+            cleanName.toLowerCase();
+
+
+          if (
+            seenNames.has(
+              key
+            )
+          ) {
+
+            return;
+
+          }
+
+
+          seenNames.add(
+            key
+          );
+
+
+          uniqueServices.push(
+            service
+          );
+
+        }
+      );
+
+
+      uniqueServices.sort(
+        (
+          a,
+          b
+        ) =>
+
+          a.displayName.localeCompare(
+            b.displayName
+          )
+
+      );
+
+
+      uniqueServices.forEach(
+        service => {
+
+
+          const card =
+            document.createElement(
+              "article"
+            );
+
+
+          card.className =
+            "directory-service-card";
+
+
+          const icon =
+            document.createElement(
+              "div"
+            );
+
+
+          icon.className =
+            "directory-service-icon";
+
+
+          const logo =
+            document.createElement(
+              "img"
+            );
+
+
+          logo.className =
+            "directory-service-logo";
+
+
+          logo.alt =
+            service.displayName +
+            " logo";
+
+
+          logo.loading =
+            "lazy";
+
+
+          logo.src =
+            service.logo || "";
+
+
+          logo.addEventListener(
+            "error",
+            () => {
+
+
+              if (
+
+                service.fallbackLogo &&
+
+                logo.src !==
+                service.fallbackLogo
+
+              ) {
+
+                logo.src =
+                  service.fallbackLogo;
+
+                return;
+
+              }
+
+
+              logo.style.display =
+                "none";
+
+
+              icon.classList.add(
+                "directory-service-fallback"
+              );
+
+
+              icon.textContent =
+                "📺";
+
+            }
+          );
+
+
+          icon.appendChild(
+            logo
+          );
+
+
+          const name =
+            document.createElement(
+              "div"
+            );
+
+
+          name.className =
+            "directory-service-name";
+
+
+          name.textContent =
+            service.displayName;
+
+
+          card.appendChild(
+            icon
+          );
+
+
+          card.appendChild(
+            name
+          );
+
+
+          grid.appendChild(
+            card
+          );
+
+        }
       );
 
     }
