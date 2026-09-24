@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
@@ -15,80 +16,202 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Arial, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color: white;
 
       background:
         linear-gradient(
-          rgba(0, 0, 0, 0.55),
-          rgba(0, 0, 0, 0.65)
+          rgba(0, 0, 0, 0.58),
+          rgba(0, 0, 0, 0.72)
         ),
         url("./hooded-skull.png");
 
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-
-      color: white;
     }
 
+
+    /* =========================
+       MAIN CONTAINER
+    ========================= */
+
     .container {
-      width: 90%;
+      width: 92%;
       max-width: 900px;
-      margin: auto;
-      padding: 50px 0;
+
+      margin: 0 auto;
+
+      padding:
+        55px 0 70px;
+    }
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header {
+      text-align: center;
+
+      margin-bottom: 35px;
+    }
+
+    .logo-mark {
+      font-size: 42px;
+
+      margin-bottom: 5px;
+
+      filter:
+        drop-shadow(
+          0 0 15px
+          rgba(255, 255, 255, 0.12)
+        );
     }
 
     h1 {
-      text-align: center;
-      font-size: 42px;
-      margin-bottom: 10px;
+      margin: 0;
+
+      font-size: clamp(38px, 7vw, 58px);
+
+      letter-spacing: 2px;
+
       text-shadow:
-        0 3px 15px rgba(0, 0, 0, 0.8);
+        0 4px 20px rgba(0, 0, 0, 0.9),
+        0 0 25px rgba(138, 7, 7, 0.25);
+
+      animation:
+        titlePulse 4s ease-in-out infinite;
+    }
+
+    @keyframes titlePulse {
+
+      0%,
+      100% {
+        text-shadow:
+          0 4px 20px rgba(0, 0, 0, 0.9),
+          0 0 25px rgba(138, 7, 7, 0.20);
+      }
+
+      50% {
+        text-shadow:
+          0 4px 20px rgba(0, 0, 0, 0.9),
+          0 0 32px rgba(138, 7, 7, 0.42);
+      }
+
     }
 
     .subtitle {
-      text-align: center;
-      color: #cccccc;
+      margin-top: 10px;
+
+      color: #c7c7c7;
+
+      font-size: 16px;
+
+      letter-spacing: 0.4px;
+    }
+
+
+    /* =========================
+       SEARCH AREA
+    ========================= */
+
+    .search-panel {
+      padding: 18px;
+
       margin-bottom: 35px;
+
+      background:
+        rgba(0, 0, 0, 0.42);
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+      border-radius: 18px;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow:
+        0 12px 35px
+        rgba(0, 0, 0, 0.42);
     }
 
     .search-box {
       display: flex;
+
       gap: 10px;
-      margin-bottom: 35px;
     }
 
     #animeSearch {
       flex: 1;
-      padding: 15px 18px;
+
+      min-width: 0;
+
+      padding:
+        15px 18px;
+
       font-size: 17px;
 
-      background: rgba(0, 0, 0, 0.55);
+      background:
+        rgba(0, 0, 0, 0.58);
+
       color: white;
 
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.16);
+
       border-radius: 10px;
 
       outline: none;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+
+      transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
     }
 
     #animeSearch::placeholder {
-      color: #aaaaaa;
+      color: #999;
     }
 
     #animeSearch:focus {
-      border-color: rgba(138, 7, 7, 0.8);
+      background:
+        rgba(0, 0, 0, 0.72);
+
+      border-color:
+        rgba(138, 7, 7, 0.85);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(138, 7, 7, 0.12);
     }
 
-    .search-button {
-      padding: 15px 25px;
 
+    /* =========================
+       SEARCH BUTTON
+    ========================= */
+
+    .search-button {
       border: none;
+
+      padding:
+        15px 26px;
+
       border-radius: 10px;
 
       background:
@@ -101,16 +224,19 @@
       color: #000000;
 
       font-size: 16px;
+
       font-weight: bold;
 
       cursor: pointer;
 
-      transition:
-        background 0.2s,
-        transform 0.2s;
-
       box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.3);
+        0 5px 15px
+        rgba(0, 0, 0, 0.35);
+
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
     }
 
     .search-button:hover {
@@ -121,44 +247,138 @@
           #6A1D1D 100%
         );
 
-      transform: translateY(-2px);
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 7px 18px
+        rgba(0, 0, 0, 0.45);
     }
 
-    #results {
-      margin-top: 20px;
+    .search-button:active {
+      transform:
+        translateY(0);
+    }
+
+    .search-button.loading {
+      cursor: wait;
+
+      opacity: 0.75;
+    }
+
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    .loading-container {
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: 12px;
+
+      padding: 30px;
+
+      color: #ccc;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+
+      border:
+        3px solid
+        rgba(255, 255, 255, 0.18);
+
+      border-top-color:
+        #8A0707;
+
+      border-radius: 50%;
+
+      animation:
+        spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+
+      to {
+        transform:
+          rotate(360deg);
+      }
+
+    }
+
+
+    /* =========================
+       RESULTS HEADER
+    ========================= */
+
+    .results-header {
+      display: flex;
+
+      align-items: flex-end;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      margin-bottom: 18px;
     }
 
     .anime-title {
-      font-size: 28px;
-      margin-bottom: 20px;
+      margin: 0;
+
+      font-size:
+        clamp(24px, 5vw, 31px);
 
       text-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.8);
+        0 4px 15px
+        rgba(0, 0, 0, 0.85);
     }
+
+    .result-count {
+      color: #aaa;
+
+      font-size: 13px;
+
+      white-space: nowrap;
+    }
+
+
+    /* =========================
+       SERVICE CARDS
+    ========================= */
 
     .service-card {
       position: relative;
 
-      background: rgba(0, 0, 0, 0.38);
-
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-
-      border: 1px solid rgba(255, 255, 255, 0.12);
-
-      border-radius: 16px;
-
-      padding: 20px;
-      margin-bottom: 15px;
-
       display: flex;
+
       align-items: center;
       justify-content: space-between;
 
       gap: 20px;
 
+      padding: 20px;
+
+      margin-bottom: 15px;
+
+      background:
+        rgba(0, 0, 0, 0.38);
+
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+      border-radius: 16px;
+
       box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.35);
+        0 8px 25px
+        rgba(0, 0, 0, 0.35);
 
       transition:
         transform 0.2s,
@@ -168,21 +388,33 @@
     }
 
     .service-card:hover {
-      transform: translateY(-3px);
+      transform:
+        translateY(-3px);
 
-      background: rgba(0, 0, 0, 0.48);
+      background:
+        rgba(0, 0, 0, 0.48);
 
       border-color:
         rgba(108, 92, 231, 0.55);
 
       box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.5),
-        0 0 18px rgba(108, 92, 231, 0.15);
+        0 10px 30px
+        rgba(0, 0, 0, 0.5),
+
+        0 0 18px
+        rgba(108, 92, 231, 0.15);
     }
+
+
+    /* =========================
+       SERVICE INFO
+    ========================= */
 
     .service-info {
       display: flex;
+
       align-items: center;
+
       gap: 15px;
 
       min-width: 0;
@@ -193,16 +425,20 @@
       height: 55px;
 
       display: flex;
+
       align-items: center;
       justify-content: center;
 
       flex-shrink: 0;
 
-      background: rgba(0, 0, 0, 0.35);
+      background:
+        rgba(0, 0, 0, 0.38);
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.1);
 
       border-radius: 12px;
-
-      border: 1px solid rgba(255, 255, 255, 0.1);
 
       overflow: hidden;
     }
@@ -215,39 +451,64 @@
     }
 
     .service-name {
+      margin-bottom: 7px;
+
       font-size: 19px;
+
       font-weight: bold;
 
-      margin-bottom: 7px;
+      word-break: break-word;
     }
 
     .service-details {
       display: flex;
-      flex-wrap: wrap;
+
       align-items: center;
+
+      flex-wrap: wrap;
 
       gap: 8px;
 
-      color: #bbbbbb;
+      color: #bbb;
+
       font-size: 14px;
     }
 
+
+    /* =========================
+       BADGE
+    ========================= */
+
     .badge {
-      padding: 4px 8px;
+      padding:
+        4px 8px;
 
       border-radius: 6px;
 
-      background: rgba(255, 255, 255, 0.12);
+      background:
+        rgba(255, 255, 255, 0.12);
 
-      color: #eeeeee;
+      color: #eee;
 
       font-size: 12px;
+
       font-weight: bold;
     }
 
+
+    /* =========================
+       WATCH BUTTON
+    ========================= */
+
     .watch-button {
       text-decoration: none;
+
       white-space: nowrap;
+
+      padding:
+        12px 20px;
+
+      border-radius: 9px;
 
       background:
         linear-gradient(
@@ -258,18 +519,16 @@
 
       color: #000000;
 
-      padding: 12px 20px;
-
-      border-radius: 9px;
-
       font-weight: bold;
+
+      box-shadow:
+        0 4px 12px
+        rgba(0, 0, 0, 0.3);
 
       transition:
         background 0.2s,
-        transform 0.2s;
-
-      box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.3);
+        transform 0.2s,
+        box-shadow 0.2s;
     }
 
     .watch-button:hover {
@@ -282,55 +541,214 @@
 
       color: #000000;
 
-      transform: translateY(-2px);
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 6px 15px
+        rgba(0, 0, 0, 0.4);
     }
 
+
+    /* =========================
+       MESSAGES
+    ========================= */
+
     .message {
+      padding: 30px 20px;
+
       text-align: center;
 
-      padding: 25px;
+      color: #ccc;
 
-      color: #cccccc;
+      background:
+        rgba(0, 0, 0, 0.38);
 
-      background: rgba(0, 0, 0, 0.35);
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.1);
 
-      border-radius: 12px;
+      border-radius: 16px;
 
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+
+      box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.3);
+    }
+
+    .message-icon {
+      display: block;
+
+      margin-bottom: 10px;
+
+      font-size: 30px;
     }
 
     .error {
       color: #ff7777;
     }
 
+
+    /* =========================
+       SEARCH AGAIN
+    ========================= */
+
+    .search-again {
+      display: block;
+
+      width: fit-content;
+
+      margin:
+        25px auto 0;
+
+      padding:
+        11px 18px;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.14);
+
+      border-radius: 9px;
+
+      background:
+        rgba(0, 0, 0, 0.42);
+
+      color: #ccc;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition:
+        background 0.2s,
+        color 0.2s,
+        transform 0.2s;
+    }
+
+    .search-again:hover {
+      background:
+        rgba(0, 0, 0, 0.65);
+
+      color: white;
+
+      transform:
+        translateY(-2px);
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+      margin-top: 45px;
+
+      text-align: center;
+
+      color: #777;
+
+      font-size: 12px;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
     @media (max-width: 650px) {
 
       .container {
         width: 94%;
-        padding: 30px 0;
+
+        padding:
+          35px 0 50px;
       }
 
-      h1 {
+      .header {
+        margin-bottom: 25px;
+      }
+
+      .logo-mark {
         font-size: 34px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+
+      .search-panel {
+        padding: 13px;
+
+        border-radius: 15px;
       }
 
       .search-box {
         flex-direction: column;
       }
 
+      #animeSearch {
+        width: 100%;
+      }
+
       .search-button {
         width: 100%;
       }
 
-      .service-card {
+      .results-header {
+        align-items: flex-start;
+
         flex-direction: column;
+
+        gap: 5px;
+      }
+
+      .service-card {
         align-items: stretch;
+
+        flex-direction: column;
+
+        padding: 17px;
+      }
+
+      .service-info {
+        width: 100%;
       }
 
       .watch-button {
-        text-align: center;
+        display: block;
+
         width: 100%;
+
+        text-align: center;
+      }
+
+    }
+
+
+    /* =========================
+       VERY SMALL PHONES
+    ========================= */
+
+    @media (max-width: 400px) {
+
+      .service-info {
+        gap: 11px;
+      }
+
+      .service-icon {
+        width: 48px;
+        height: 48px;
+      }
+
+      .service-logo {
+        width: 36px;
+        height: 36px;
+      }
+
+      .service-name {
+        font-size: 17px;
       }
 
     }
@@ -338,56 +756,135 @@
   </style>
 </head>
 
+
 <body>
 
   <div class="container">
 
-    <h1>Anime Finder</h1>
 
-    <div class="subtitle">
-      Find where your anime is streaming
+    <!-- HEADER -->
+
+    <header class="header">
+
+      <div class="logo-mark">
+        💀
+      </div>
+
+      <h1>
+        Anime Finder
+      </h1>
+
+      <div class="subtitle">
+        Find where your anime is streaming
+      </div>
+
+    </header>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-panel">
+
+      <div class="search-box">
+
+        <input
+          type="text"
+          id="animeSearch"
+          placeholder="Search for an anime..."
+          autocomplete="off"
+        >
+
+        <button
+          class="search-button"
+          id="searchButton"
+          onclick="searchAnime()"
+        >
+          Search
+        </button>
+
+      </div>
+
     </div>
 
-    <div class="search-box">
 
-      <input
-        type="text"
-        id="animeSearch"
-        placeholder="Search for an anime..."
-        autocomplete="off"
-      >
+    <!-- RESULTS -->
 
-      <button
-        class="search-button"
-        onclick="searchAnime()"
-      >
-        Search
-      </button>
+    <div id="results">
+
+      <div class="message">
+
+        <span class="message-icon">
+          🔎
+        </span>
+
+        Search for an anime to find
+        where you can watch it.
+
+      </div>
 
     </div>
 
-    <div id="results"></div>
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+      Anime Finder
+    </div>
+
 
   </div>
 
 
   <script>
 
+
+    /* =========================
+       WORKER
+    ========================= */
+
     const WORKER_URL =
       "https://holy-lake-cba9.daviswillis232.workers.dev/";
 
 
+    /* =========================
+       HTML ESCAPING
+    ========================= */
+
     function escapeHtml(value) {
 
       return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
     }
 
+
+    /* =========================
+       SERVICE LOGOS
+    ========================= */
 
     function getServiceLogo(serviceName) {
 
@@ -395,7 +892,6 @@
         serviceName.toLowerCase();
 
 
-      // Crunchyroll
       if (
         name.includes("crunchyroll")
       ) {
@@ -407,7 +903,6 @@
       }
 
 
-      // Prime Video / Amazon
       if (
         name.includes("prime video") ||
         name.includes("amazon")
@@ -420,7 +915,6 @@
       }
 
 
-      // Apple TV
       if (
         name.includes("appletv") ||
         name.includes("apple tv")
@@ -433,7 +927,6 @@
       }
 
 
-      // Fandango
       if (
         name.includes("fandango")
       ) {
@@ -445,15 +938,20 @@
       }
 
 
-      // Unknown service
       return null;
 
     }
 
 
+    /* =========================
+       ENTER KEY
+    ========================= */
+
     function handleEnter(event) {
 
-      if (event.key === "Enter") {
+      if (
+        event.key === "Enter"
+      ) {
 
         searchAnime();
 
@@ -470,6 +968,10 @@
       );
 
 
+    /* =========================
+       SEARCH
+    ========================= */
+
     async function searchAnime() {
 
       const searchInput =
@@ -482,6 +984,11 @@
           "results"
         );
 
+      const searchButton =
+        document.getElementById(
+          "searchButton"
+        );
+
 
       const query =
         searchInput.value.trim();
@@ -490,23 +997,58 @@
       if (!query) {
 
         results.innerHTML = `
+
           <div class="message">
+
+            <span class="message-icon">
+              🔎
+            </span>
+
             Please enter an anime name.
+
           </div>
+
         `;
+
+        searchInput.focus();
 
         return;
 
       }
 
 
+      /* =========================
+         LOADING STATE
+      ========================= */
+
+      searchButton.classList.add(
+        "loading"
+      );
+
+      searchButton.textContent =
+        "Searching...";
+
+
       results.innerHTML = `
+
         <div class="message">
-          Searching for
-          <strong>
-            ${escapeHtml(query)}
-          </strong>...
+
+          <div class="loading-container">
+
+            <div class="spinner"></div>
+
+            <span>
+              Searching for
+              <strong>
+                ${escapeHtml(query)}
+              </strong>
+              ...
+            </span>
+
+          </div>
+
         </div>
+
       `;
 
 
@@ -539,12 +1081,17 @@
 
 
         const sources =
-          Array.isArray(data.sources)
+          Array.isArray(
+            data.sources
+          )
             ? data.sources
             : [];
 
 
-        // Only show US sources
+        /* =========================
+           US SOURCES ONLY
+        ========================= */
+
         const usSources =
           sources.filter(
             source =>
@@ -552,9 +1099,11 @@
           );
 
 
-        // Remove duplicate services/types
-        const uniqueSources = [];
+        /* =========================
+           REMOVE DUPLICATES
+        ========================= */
 
+        const uniqueSources = [];
 
         const seen =
           new Set();
@@ -589,13 +1138,17 @@
         }
 
 
-        // Subscriptions first
+        /* =========================
+           SUBSCRIPTIONS FIRST
+        ========================= */
+
         uniqueSources.sort(
           (a, b) => {
 
             const aSubscription =
               a.type === "sub" ||
               a.type === "subscription";
+
 
             const bSubscription =
               b.type === "sub" ||
@@ -628,18 +1181,40 @@
         );
 
 
+        /* =========================
+           NO RESULTS
+        ========================= */
+
         if (
           uniqueSources.length === 0
         ) {
 
           results.innerHTML = `
+
             <div class="message">
+
+              <span class="message-icon">
+                😔
+              </span>
+
               No US streaming options
               were found for
+
               <strong>
-                ${escapeHtml(title.name)}
+                ${escapeHtml(
+                  title.name
+                )}
               </strong>.
+
+              <button
+                class="search-again"
+                onclick="focusSearch()"
+              >
+                Search Another Anime
+              </button>
+
             </div>
+
           `;
 
           return;
@@ -647,17 +1222,43 @@
         }
 
 
+        /* =========================
+           RESULTS HEADER
+        ========================= */
+
         let html = `
 
-          <div class="anime-title">
-            ${escapeHtml(title.name)}
+          <div class="results-header">
+
+            <h2 class="anime-title">
+              ${escapeHtml(
+                title.name
+              )}
+            </h2>
+
+            <div class="result-count">
+
+              ${uniqueSources.length}
+              ${
+                uniqueSources.length === 1
+                  ? "option"
+                  : "options"
+              }
+
+            </div>
+
           </div>
 
         `;
 
 
+        /* =========================
+           SERVICE CARDS
+        ========================= */
+
         uniqueSources.forEach(
           source => {
+
 
             let typeText =
               "Other";
@@ -692,6 +1293,8 @@
             }
 
 
+            /* PRICE */
+
             let priceText = "";
 
 
@@ -701,11 +1304,20 @@
               source.price !== ""
             ) {
 
-              priceText =
-                `<span>$${escapeHtml(source.price)}</span>`;
+              priceText = `
+
+                <span>
+                  $${escapeHtml(
+                    source.price
+                  )}
+                </span>
+
+              `;
 
             }
 
+
+            /* FORMAT */
 
             let formatText = "";
 
@@ -714,11 +1326,20 @@
               source.format
             ) {
 
-              formatText =
-                `<span>${escapeHtml(source.format)}</span>`;
+              formatText = `
+
+                <span>
+                  ${escapeHtml(
+                    source.format
+                  )}
+                </span>
+
+              `;
 
             }
 
+
+            /* EPISODE */
 
             let episodeText = "";
 
@@ -727,11 +1348,21 @@
               source.episode_number
             ) {
 
-              episodeText =
-                `<span>Episode ${escapeHtml(source.episode_number)}</span>`;
+              episodeText = `
+
+                <span>
+                  Episode
+                  ${escapeHtml(
+                    source.episode_number
+                  )}
+                </span>
+
+              `;
 
             }
 
+
+            /* LOGO */
 
             const logo =
               getServiceLogo(
@@ -743,7 +1374,9 @@
 
               <div class="service-card">
 
+
                 <div class="service-info">
+
 
                   <div class="service-icon">
 
@@ -754,7 +1387,9 @@
 
                           <img
                             src="${logo}"
-                            alt="${escapeHtml(source.name)}"
+                            alt="${escapeHtml(
+                              source.name
+                            )}"
                             class="service-logo"
                           >
 
@@ -767,6 +1402,7 @@
 
 
                   <div>
+
 
                     <div class="service-name">
 
@@ -795,7 +1431,9 @@
 
                     </div>
 
+
                   </div>
+
 
                 </div>
 
@@ -807,7 +1445,9 @@
 
                       <a
                         class="watch-button"
-                        href="${escapeHtml(source.web_url)}"
+                        href="${escapeHtml(
+                          source.web_url
+                        )}"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -818,6 +1458,7 @@
 
                     : ""
                 }
+
 
               </div>
 
@@ -844,10 +1485,23 @@
 
           <div class="message error">
 
-            ${escapeHtml(
-              error.message ||
-              "Unable to find this anime."
-            )}
+            <span class="message-icon">
+              ⚠️
+            </span>
+
+            ${
+              escapeHtml(
+                error.message ||
+                "Unable to find this anime."
+              )
+            }
+
+            <button
+              class="search-again"
+              onclick="focusSearch()"
+            >
+              Try Again
+            </button>
 
           </div>
 
@@ -855,7 +1509,45 @@
 
       }
 
+
+      finally {
+
+        searchButton.classList.remove(
+          "loading"
+        );
+
+        searchButton.textContent =
+          "Search";
+
+      }
+
     }
+
+
+    /* =========================
+       FOCUS SEARCH
+    ========================= */
+
+    function focusSearch() {
+
+      const searchInput =
+        document.getElementById(
+          "animeSearch"
+        );
+
+
+      searchInput.value = "";
+
+      searchInput.focus();
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
 
   </script>
 
