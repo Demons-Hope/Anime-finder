@@ -2,123 +2,139 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Anime Finder</title>
 
   <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       font-family: Arial, sans-serif;
-      color: white;
 
       background:
         linear-gradient(
-          rgba(0, 0, 0, 0.65),
-          rgba(0, 0, 0, 0.82)
+          rgba(0, 0, 0, 0.55),
+          rgba(0, 0, 0, 0.65)
         ),
         url("./hooded-skull.png");
 
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
+
+      color: white;
     }
 
     .container {
+      width: 90%;
       max-width: 900px;
       margin: auto;
-      padding: 40px 20px;
+      padding: 50px 0;
     }
 
     h1 {
       text-align: center;
-      font-size: 48px;
+      font-size: 42px;
       margin-bottom: 10px;
-      text-shadow: 0 0 15px black;
+      text-shadow:
+        0 3px 15px rgba(0, 0, 0, 0.8);
     }
 
     .subtitle {
       text-align: center;
-      font-size: 18px;
-      margin-bottom: 30px;
-      color: #ccc;
+      color: #cccccc;
+      margin-bottom: 35px;
     }
 
     .search-box {
       display: flex;
-      justify-content: center;
       gap: 10px;
       margin-bottom: 35px;
     }
 
-    input {
-      width: 60%;
+    #animeSearch {
+      flex: 1;
       padding: 15px 18px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 17px;
 
-      background: rgba(10, 10, 10, 0.85);
+      background: rgba(0, 0, 0, 0.55);
       color: white;
 
-      font-size: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+
       outline: none;
-      box-sizing: border-box;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
-    input:focus {
-      border-color: #6c5ce7;
-
-      box-shadow:
-        0 0 12px rgba(108, 92, 231, 0.5);
+    #animeSearch::placeholder {
+      color: #aaaaaa;
     }
 
-    input::placeholder {
-      color: #999;
+    #animeSearch:focus {
+      border-color: rgba(138, 7, 7, 0.8);
     }
 
-    button {
-      padding: 15px 24px;
+    .search-button {
+      padding: 15px 25px;
 
       border: none;
       border-radius: 10px;
 
-      background: #6c5ce7;
-      color: white;
+      background:
+        linear-gradient(
+          180deg,
+          #8A0707 0%,
+          #5A1919 100%
+        );
+
+      color: #000000;
 
       font-size: 16px;
       font-weight: bold;
 
       cursor: pointer;
 
-      transition: 0.2s;
+      transition:
+        background 0.2s,
+        transform 0.2s;
+
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    button:hover {
-      background: #7d6df0;
+    .search-button:hover {
+      background:
+        linear-gradient(
+          180deg,
+          #A30A0A 0%,
+          #6A1D1D 100%
+        );
+
       transform: translateY(-2px);
     }
 
     #results {
-      width: 100%;
+      margin-top: 20px;
     }
 
     .anime-title {
-      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
 
-      font-size: 34px;
-      font-weight: bold;
-
-      margin-bottom: 25px;
-
-      text-shadow: 0 0 12px black;
+      text-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.8);
     }
-
-    /*
-      STREAMING CARDS
-      Transparent glass effect so
-      the background shows through.
-    */
 
     .service-card {
       position: relative;
@@ -133,7 +149,6 @@
       border-radius: 16px;
 
       padding: 20px;
-
       margin-bottom: 15px;
 
       display: flex;
@@ -165,97 +180,73 @@
         0 0 18px rgba(108, 92, 231, 0.15);
     }
 
-    /*
-      LEFT SIDE
-    */
-
     .service-info {
       display: flex;
       align-items: center;
+      gap: 15px;
 
-      gap: 16px;
-
-      flex: 1;
+      min-width: 0;
     }
 
-    /*
-      SERVICE ICON
-    */
-
     .service-icon {
-      width: 58px;
-      height: 58px;
-
-      border-radius: 12px;
-
-      background:
-        rgba(255, 255, 255, 0.08);
+      width: 55px;
+      height: 55px;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
-      font-size: 25px;
-
       flex-shrink: 0;
 
-      border:
-        1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.35);
+
+      border-radius: 12px;
+
+      border: 1px solid rgba(255, 255, 255, 0.1);
+
+      overflow: hidden;
     }
 
-    /*
-      SERVICE NAME
-    */
+    .service-logo {
+      width: 42px;
+      height: 42px;
+
+      object-fit: contain;
+    }
 
     .service-name {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: bold;
 
       margin-bottom: 7px;
     }
 
-    /*
-      SERVICE DETAILS
-    */
-
     .service-details {
-      color: #aaa;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
 
+      gap: 8px;
+
+      color: #bbbbbb;
       font-size: 14px;
-
-      line-height: 1.5;
     }
 
-    /*
-      BADGE
-    */
-
     .badge {
-      display: inline-block;
-
-      padding: 4px 9px;
-
-      margin-right: 5px;
+      padding: 4px 8px;
 
       border-radius: 6px;
 
+      background: rgba(255, 255, 255, 0.12);
+
+      color: #eeeeee;
+
       font-size: 12px;
       font-weight: bold;
-
-      background:
-        rgba(108, 92, 231, 0.18);
-
-      color: #bdb4ff;
     }
-
-    /*
-      WATCH BUTTON
-      Dark red gradient with black text
-    */
 
     .watch-button {
       text-decoration: none;
-
       white-space: nowrap;
 
       background:
@@ -291,75 +282,59 @@
 
       color: #000000;
 
-      transform:
-        translateY(-2px);
+      transform: translateY(-2px);
     }
-
-    /*
-      MESSAGES
-    */
 
     .message {
       text-align: center;
 
-      background:
-        rgba(0, 0, 0, 0.7);
+      padding: 25px;
 
-      padding: 22px;
+      color: #cccccc;
+
+      background: rgba(0, 0, 0, 0.35);
 
       border-radius: 12px;
 
-      font-size: 18px;
-
-      border:
-        1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
-    .loading {
-      text-align: center;
-
-      font-size: 18px;
-
-      padding: 25px;
+    .error {
+      color: #ff7777;
     }
 
-    /*
-      MOBILE
-    */
-
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
 
       .container {
-        padding: 30px 15px;
+        width: 94%;
+        padding: 30px 0;
       }
 
       h1 {
-        font-size: 36px;
+        font-size: 34px;
       }
 
       .search-box {
         flex-direction: column;
       }
 
-      input {
+      .search-button {
         width: 100%;
       }
 
       .service-card {
-        align-items: stretch;
-
         flex-direction: column;
-      }
-
-      .service-info {
-        width: 100%;
+        align-items: stretch;
       }
 
       .watch-button {
         text-align: center;
+        width: 100%;
       }
 
     }
+
   </style>
 </head>
 
@@ -370,7 +345,7 @@
     <h1>Anime Finder</h1>
 
     <div class="subtitle">
-      Find where you can legally watch your favorite anime.
+      Find where your anime is streaming
     </div>
 
     <div class="search-box">
@@ -378,11 +353,14 @@
       <input
         type="text"
         id="animeSearch"
-        placeholder="Enter anime name..."
-        onkeydown="handleEnter(event)"
+        placeholder="Search for an anime..."
+        autocomplete="off"
       >
 
-      <button onclick="searchAnime()">
+      <button
+        class="search-button"
+        onclick="searchAnime()"
+      >
         Search
       </button>
 
@@ -395,21 +373,13 @@
 
   <script>
 
-    /*
-      CLOUDFLARE WORKER
-    */
-
     const WORKER_URL =
       "https://holy-lake-cba9.daviswillis232.workers.dev/";
 
 
-    /*
-      PROTECT TEXT FROM HTML INJECTION
-    */
+    function escapeHtml(value) {
 
-    function escapeHtml(text) {
-
-      return String(text ?? "")
+      return String(value)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -419,9 +389,67 @@
     }
 
 
-    /*
-      PRESS ENTER TO SEARCH
-    */
+    function getServiceLogo(serviceName) {
+
+      const name =
+        serviceName.toLowerCase();
+
+
+      // Crunchyroll
+      if (
+        name.includes("crunchyroll")
+      ) {
+
+        return (
+          "https://cdn.simpleicons.org/crunchyroll/F47521"
+        );
+
+      }
+
+
+      // Prime Video / Amazon
+      if (
+        name.includes("prime video") ||
+        name.includes("amazon")
+      ) {
+
+        return (
+          "https://cdn.simpleicons.org/primevideo/FFFFFF"
+        );
+
+      }
+
+
+      // Apple TV
+      if (
+        name.includes("appletv") ||
+        name.includes("apple tv")
+      ) {
+
+        return (
+          "https://cdn.simpleicons.org/appletv/FFFFFF"
+        );
+
+      }
+
+
+      // Fandango
+      if (
+        name.includes("fandango")
+      ) {
+
+        return (
+          "https://cdn.simpleicons.org/fandango/FF7300"
+        );
+
+      }
+
+
+      // Unknown service
+      return null;
+
+    }
+
 
     function handleEnter(event) {
 
@@ -434,36 +462,37 @@
     }
 
 
-    /*
-      SEARCH FOR ANIME
-    */
+    document
+      .getElementById("animeSearch")
+      .addEventListener(
+        "keydown",
+        handleEnter
+      );
+
 
     async function searchAnime() {
 
-      const input =
-        document.getElementById("animeSearch");
+      const searchInput =
+        document.getElementById(
+          "animeSearch"
+        );
 
       const results =
-        document.getElementById("results");
+        document.getElementById(
+          "results"
+        );
 
-      const anime =
-        input.value.trim();
+
+      const query =
+        searchInput.value.trim();
 
 
-      /*
-        NOTHING ENTERED
-      */
-
-      if (!anime) {
+      if (!query) {
 
         results.innerHTML = `
-
           <div class="message">
-
             Please enter an anime name.
-
           </div>
-
         `;
 
         return;
@@ -471,87 +500,36 @@
       }
 
 
-      /*
-        LOADING
-      */
-
       results.innerHTML = `
-
-        <div class="loading">
-
-          🔎 Searching for
-          ${escapeHtml(anime)}...
-
+        <div class="message">
+          Searching for
+          <strong>
+            ${escapeHtml(query)}
+          </strong>...
         </div>
-
       `;
 
 
       try {
 
-        /*
-          ASK CLOUDFLARE WORKER
-        */
+        const response =
+          await fetch(
+            WORKER_URL +
+            "?q=" +
+            encodeURIComponent(query)
+          );
 
-        const response = await fetch(
-
-          WORKER_URL +
-          "?q=" +
-          encodeURIComponent(anime)
-
-        );
-
-
-        /*
-          CONVERT RESPONSE TO JSON
-        */
 
         const data =
           await response.json();
 
 
-        /*
-          WORKER ERROR
-        */
-
         if (!response.ok) {
 
-          results.innerHTML = `
-
-            <div class="message">
-
-              ❌
-              ${escapeHtml(
-                data.error ||
-                "Something went wrong."
-              )}
-
-            </div>
-
-          `;
-
-          return;
-
-        }
-
-
-        /*
-          MAKE SURE A TITLE WAS FOUND
-        */
-
-        if (!data.title) {
-
-          results.innerHTML = `
-
-            <div class="message">
-
-              ❌ No anime was found.
-
-            </div>
-
-          `;
-
-          return;
+          throw new Error(
+            data.error ||
+            "Something went wrong."
+          );
 
         }
 
@@ -560,36 +538,32 @@
           data.title;
 
 
-        /*
-          GET STREAMING SOURCES
-        */
-
         const sources =
           Array.isArray(data.sources)
             ? data.sources
             : [];
 
 
-        /*
-          ONLY SHOW US SOURCES
-        */
-
+        // Only show US sources
         const usSources =
-          sources.filter(source =>
-            source.region === "US"
+          sources.filter(
+            source =>
+              source.region === "US"
           );
 
 
-        /*
-          REMOVE DUPLICATES
-        */
-
+        // Remove duplicate services/types
         const uniqueSources = [];
 
-        const seen = new Set();
+
+        const seen =
+          new Set();
 
 
-        for (const source of usSources) {
+        for (
+          const source
+          of usSources
+        ) {
 
           const key =
             source.source_id +
@@ -597,38 +571,75 @@
             source.type;
 
 
-          if (!seen.has(key)) {
+          if (
+            seen.has(key)
+          ) {
 
-            seen.add(key);
-
-            uniqueSources.push(source);
+            continue;
 
           }
+
+
+          seen.add(key);
+
+          uniqueSources.push(
+            source
+          );
 
         }
 
 
-        /*
-          NO STREAMING OPTIONS
-        */
+        // Subscriptions first
+        uniqueSources.sort(
+          (a, b) => {
 
-        if (uniqueSources.length === 0) {
+            const aSubscription =
+              a.type === "sub" ||
+              a.type === "subscription";
+
+            const bSubscription =
+              b.type === "sub" ||
+              b.type === "subscription";
+
+
+            if (
+              aSubscription &&
+              !bSubscription
+            ) {
+
+              return -1;
+
+            }
+
+
+            if (
+              !aSubscription &&
+              bSubscription
+            ) {
+
+              return 1;
+
+            }
+
+
+            return 0;
+
+          }
+        );
+
+
+        if (
+          uniqueSources.length === 0
+        ) {
 
           results.innerHTML = `
-
-            <div class="anime-title">
-
-              ${escapeHtml(title.name)}
-
-            </div>
-
             <div class="message">
-
-              😕 No US streaming options
-              were found.
-
+              No US streaming options
+              were found for
+              <strong>
+                ${escapeHtml(title.name)}
+              </strong>.
             </div>
-
           `;
 
           return;
@@ -636,221 +647,185 @@
         }
 
 
-        /*
-          SUBSCRIPTIONS FIRST
-        */
-
-        uniqueSources.sort((a, b) => {
-
-          if (
-            a.type === "sub" &&
-            b.type !== "sub"
-          ) {
-
-            return -1;
-
-          }
-
-          if (
-            a.type !== "sub" &&
-            b.type === "sub"
-          ) {
-
-            return 1;
-
-          }
-
-          return 0;
-
-        });
-
-
-        /*
-          START RESULTS
-        */
-
         let html = `
 
           <div class="anime-title">
-
             ${escapeHtml(title.name)}
-
           </div>
 
         `;
 
 
-        /*
-          CREATE STREAMING CARDS
-        */
+        uniqueSources.forEach(
+          source => {
 
-        for (const source of uniqueSources) {
-
-
-          /*
-            DETERMINE TYPE
-          */
-
-          let typeText =
-            "Available";
+            let typeText =
+              "Other";
 
 
-          if (source.type === "sub") {
+            if (
+              source.type === "sub" ||
+              source.type === "subscription"
+            ) {
 
-            typeText =
-              "Subscription";
+              typeText =
+                "Subscription";
 
-          }
+            }
 
-          else if (source.type === "buy") {
+            else if (
+              source.type === "buy"
+            ) {
 
-            typeText =
-              "Buy";
+              typeText =
+                "Buy";
 
-          }
+            }
 
-          else if (source.type === "rent") {
+            else if (
+              source.type === "rent"
+            ) {
 
-            typeText =
-              "Rent";
+              typeText =
+                "Rent";
 
-          }
-
-
-          /*
-            PRICE
-          */
-
-          let priceText = "";
-
-
-          if (
-            source.price !== null &&
-            source.price !== undefined
-          ) {
-
-            priceText =
-              ` • $${Number(
-                source.price
-              ).toFixed(2)}`;
-
-          }
+            }
 
 
-          /*
-            FORMAT
-          */
-
-          let formatText = "";
+            let priceText = "";
 
 
-          if (source.format) {
+            if (
+              source.price !== undefined &&
+              source.price !== null &&
+              source.price !== ""
+            ) {
 
-            formatText =
-              ` • ${escapeHtml(
-                source.format
-              )}`;
+              priceText =
+                `<span>$${escapeHtml(source.price)}</span>`;
 
-          }
-
-
-          /*
-            EPISODES
-          */
-
-          let episodeText = "";
+            }
 
 
-          if (source.episodes) {
-
-            episodeText =
-              ` • ${source.episodes} episodes`;
-
-          }
+            let formatText = "";
 
 
-          /*
-            BUILD CARD
-          */
+            if (
+              source.format
+            ) {
 
-          html += `
+              formatText =
+                `<span>${escapeHtml(source.format)}</span>`;
 
-            <div class="service-card">
-
-              <div class="service-info">
-
-                <div class="service-icon">
-
-                  📺
-
-                </div>
+            }
 
 
-                <div>
+            let episodeText = "";
 
-                  <div class="service-name">
 
-                    ${escapeHtml(
-                      source.name
-                    )}
+            if (
+              source.episode_number
+            ) {
+
+              episodeText =
+                `<span>Episode ${escapeHtml(source.episode_number)}</span>`;
+
+            }
+
+
+            const logo =
+              getServiceLogo(
+                source.name
+              );
+
+
+            html += `
+
+              <div class="service-card">
+
+                <div class="service-info">
+
+                  <div class="service-icon">
+
+                    ${
+                      logo
+
+                        ? `
+
+                          <img
+                            src="${logo}"
+                            alt="${escapeHtml(source.name)}"
+                            class="service-logo"
+                          >
+
+                        `
+
+                        : "📺"
+                    }
 
                   </div>
 
 
-                  <div class="service-details">
+                  <div>
 
-                    <span class="badge">
+                    <div class="service-name">
 
                       ${escapeHtml(
-                        typeText
+                        source.name
                       )}
 
-                    </span>
+                    </div>
 
-                    ${priceText}
 
-                    ${formatText}
+                    <div class="service-details">
 
-                    ${episodeText}
+                      <span class="badge">
+
+                        ${escapeHtml(
+                          typeText
+                        )}
+
+                      </span>
+
+                      ${priceText}
+
+                      ${formatText}
+
+                      ${episodeText}
+
+                    </div>
 
                   </div>
 
                 </div>
+
+
+                ${
+                  source.web_url
+
+                    ? `
+
+                      <a
+                        class="watch-button"
+                        href="${escapeHtml(source.web_url)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Watch Now
+                      </a>
+
+                    `
+
+                    : ""
+                }
 
               </div>
 
+            `;
 
-              ${
-                source.web_url
-                  ? `
+          }
+        );
 
-                    <a
-                      class="watch-button"
-                      href="${escapeHtml(
-                        source.web_url
-                      )}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-
-                      Watch Now
-
-                    </a>
-
-                  `
-                  : ""
-              }
-
-            </div>
-
-          `;
-
-        }
-
-
-        /*
-          DISPLAY RESULTS
-        */
 
         results.innerHTML =
           html;
@@ -858,22 +833,21 @@
 
       }
 
-
-      /*
-        ERROR HANDLING
-      */
-
       catch (error) {
 
-        console.error(error);
+        console.error(
+          error
+        );
 
 
         results.innerHTML = `
 
-          <div class="message">
+          <div class="message error">
 
-            ❌ Something went wrong while
-            searching for the anime.
+            ${escapeHtml(
+              error.message ||
+              "Unable to find this anime."
+            )}
 
           </div>
 
