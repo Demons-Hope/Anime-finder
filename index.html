@@ -22,6 +22,7 @@
 
     body {
       min-height: 100vh;
+
       background:
         linear-gradient(
           rgba(0, 0, 0, 0.28),
@@ -32,7 +33,6 @@
       overflow-x: hidden;
     }
 
-    /* Dark cinematic overlay */
     body::before {
       content: "";
       position: fixed;
@@ -167,6 +167,59 @@
         0 0 25px rgba(180, 0, 0, 0.65);
     }
 
+    #results {
+      margin-top: 25px;
+      text-align: left;
+    }
+
+    .result-card {
+      padding: 20px;
+
+      background: rgba(10, 10, 10, 0.85);
+
+      border: 1px solid rgba(150, 0, 0, 0.7);
+      border-radius: 15px;
+
+      box-shadow:
+        0 0 20px rgba(120, 0, 0, 0.25);
+    }
+
+    .result-card h2 {
+      margin: 0 0 10px;
+
+      color: #ffffff;
+      font-size: 24px;
+    }
+
+    .result-card p {
+      margin: 8px 0;
+
+      color: #cfcfcf;
+      line-height: 1.5;
+    }
+
+    .watch-title {
+      margin-top: 18px !important;
+
+      color: #a00000 !important;
+      font-weight: bold;
+    }
+
+    .watch-option {
+      margin-top: 8px;
+      padding: 12px;
+
+      background: rgba(80, 0, 0, 0.25);
+
+      border-left: 3px solid #900000;
+      border-radius: 8px;
+    }
+
+    .error {
+      color: #ff7777;
+      text-align: center;
+    }
+
     @media (min-width: 600px) {
       .container {
         margin-top: 80px;
@@ -204,6 +257,7 @@
         type="text"
         id="animeSearch"
         placeholder="Search for an anime..."
+        onkeydown="handleEnter(event)"
       >
 
       <button onclick="searchAnime()">
@@ -212,19 +266,67 @@
 
     </div>
 
+    <div id="results"></div>
+
   </main>
 
   <script>
+
+    function handleEnter(event) {
+      if (event.key === "Enter") {
+        searchAnime();
+      }
+    }
+
     function searchAnime() {
-      const anime = document.getElementById("animeSearch").value.trim();
+
+      const anime =
+        document
+          .getElementById("animeSearch")
+          .value
+          .trim();
+
+      const results =
+        document.getElementById("results");
 
       if (anime === "") {
-        alert("Enter an anime first! 🍿");
+
+        results.innerHTML = `
+          <div class="result-card">
+            <p class="error">
+              Enter an anime first! 🍿
+            </p>
+          </div>
+        `;
+
         return;
       }
 
-      alert("Searching for: " + anime);
+      results.innerHTML = `
+
+        <div class="result-card">
+
+          <h2>${anime}</h2>
+
+          <p>
+            Anime found! We're checking
+            where you can legally watch it.
+          </p>
+
+          <p class="watch-title">
+            Where to watch
+          </p>
+
+          <div class="watch-option">
+            🔎 Availability search coming next...
+          </div>
+
+        </div>
+
+      `;
+
     }
+
   </script>
 
 </body>
