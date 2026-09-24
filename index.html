@@ -272,13 +272,21 @@
 
   <script>
 
+    /*
+      Cloudflare Worker
+      This keeps the Watchmode API key hidden.
+    */
+
+    const WORKER_URL =
+      "https://holy-lake-cba9.daviswillis232.workers.dev/";
+
     function handleEnter(event) {
       if (event.key === "Enter") {
         searchAnime();
       }
     }
 
-    function searchAnime() {
+    async function searchAnime() {
 
       const anime =
         document
@@ -303,7 +311,6 @@
       }
 
       results.innerHTML = `
-
         <div class="result-card">
 
           <h2>${anime}</h2>
@@ -318,12 +325,118 @@
           </p>
 
           <div class="watch-option">
-            🔎 Availability search coming next...
+            🔎 Checking availability...
           </div>
 
         </div>
-
       `;
+
+      try {
+
+        const response =
+          await fetch(
+            WORKER_URL +
+            "?q=" +
+            encodeURIComponent(anime)
+          );
+
+        if (!response.ok) {
+          throw new Error(
+            "Worker returned HTTP " +
+            response.status
+          );
+        }
+
+        const data =
+          await response.json();
+
+        console.log(
+          "Watchmode response:",
+          data
+        );
+
+        const titles =
+          (data.title_results || [])
+            .filter(title =>
+              title.type === "tv_series"
+            )
+            .slice(0, 5);
+
+        if (titles.length === 0) {
+
+          results.innerHTML = `
+            <div class="result-card">
+
+              <h2>${anime}</h2>
+
+              <p class="error">
+                No matching anime series were found.
+              </p>
+
+            </div>
+          `;
+
+          return;
+        }
+
+        results.innerHTML = `
+          <div class="result-card">
+
+            <h2>Results for "${anime}"</h2>
+
+            <p>
+              Watchmode found ${titles.length}
+              matching anime series.
+            </p>
+
+            <p class="watch-title">
+              Matches
+            </p>
+
+            ${titles.map(title => `
+
+              <div class="watch-option">
+
+                📺 <strong>${title.name}</strong>
+
+                ${
+                  title.year
+                    ? ` (${title.year})`
+                    : ""
+                }
+
+              </div>
+
+            `).join("")}
+
+          </div>
+        `;
+
+      } catch (error) {
+
+        console.error(
+          "Anime Finder error:",
+          error
+        );
+
+        results.innerHTML = `
+          <div class="result-card">
+
+            <h2>${anime}</h2>
+
+            <p class="error">
+              ⚠️ We couldn't connect to
+              the availability service.
+            </p>
+
+            <p>
+              ${error.message}
+            </p>
+
+          </div>
+        `;
+
+      }
 
     }
 
