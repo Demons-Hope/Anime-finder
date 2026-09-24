@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anime Finder</title>
 
     <style>
@@ -8,15 +9,14 @@
             box-sizing: border-box;
         }
 
-        html, body {
-            margin: 0;
-            width: 100%;
+        html {
             min-height: 100%;
+            background: #000000;
         }
 
         body {
+            margin: 0;
             min-height: 100vh;
-            overflow: hidden;
 
             font-family: Arial, sans-serif;
             color: white;
@@ -24,92 +24,311 @@
             background: #000000;
 
             position: relative;
+
+            overflow-x: hidden;
         }
 
-        /* =================================
-           CRYSTAL LIGHT BACKGROUND
-           ================================= */
+        /* =====================================
+           CRYSTAL BACKGROUND
+           ===================================== */
 
-        body::before {
-            content: "";
-            position: absolute;
+        .crystals {
+            position: fixed;
             inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            pointer-events: none;
+
+            overflow: hidden;
 
             background:
                 linear-gradient(
-                    125deg,
-                    transparent 0%,
-                    transparent 20%,
-                    rgba(90, 0, 15, 0.55) 20%,
-                    rgba(90, 0, 15, 0.55) 30%,
-                    transparent 30%
-                ),
-
-                linear-gradient(
-                    35deg,
-                    transparent 0%,
-                    transparent 35%,
-                    rgba(130, 0, 25, 0.30) 35%,
-                    rgba(130, 0, 25, 0.30) 48%,
-                    transparent 48%
-                ),
-
-                linear-gradient(
-                    155deg,
-                    transparent 0%,
-                    transparent 48%,
-                    rgba(70, 0, 12, 0.65) 48%,
-                    rgba(70, 0, 12, 0.65) 63%,
-                    transparent 63%
-                ),
-
-                linear-gradient(
-                    70deg,
-                    transparent 0%,
-                    transparent 62%,
-                    rgba(150, 5, 25, 0.25) 62%,
-                    rgba(150, 5, 25, 0.25) 70%,
-                    transparent 70%
+                    135deg,
+                    #000000 0%,
+                    #000000 28%,
+                    #28000b 28.5%,
+                    #000000 42%,
+                    #3a000f 42.5%,
+                    #000000 57%,
+                    #240008 57.5%,
+                    #000000 73%,
+                    #30000c 73.5%,
+                    #000000 100%
                 );
-
-            z-index: 0;
         }
 
-        /* Crystal facets */
+        /* Large crystal facet */
 
-        body::after {
+        .crystals::before {
             content: "";
+
             position: absolute;
-            inset: 0;
+
+            width: 130%;
+            height: 80%;
+
+            left: -15%;
+            top: 8%;
 
             background:
                 linear-gradient(
                     115deg,
                     transparent 0%,
-                    transparent 47%,
-                    rgba(255, 40, 55, 0.16) 47.3%,
-                    transparent 48%
+                    transparent 18%,
+                    rgba(100, 0, 20, 0.45) 18.5%,
+                    rgba(100, 0, 20, 0.45) 32%,
+                    transparent 32.5%
                 ),
 
                 linear-gradient(
                     65deg,
                     transparent 0%,
-                    transparent 53%,
-                    rgba(255, 30, 45, 0.12) 53.3%,
-                    transparent 54%
+                    transparent 42%,
+                    rgba(130, 0, 25, 0.35) 42.5%,
+                    rgba(130, 0, 25, 0.35) 56%,
+                    transparent 56.5%
                 ),
 
                 linear-gradient(
                     145deg,
                     transparent 0%,
-                    transparent 72%,
-                    rgba(190, 10, 30, 0.18) 72.3%,
-                    transparent 73%
+                    transparent 62%,
+                    rgba(80, 0, 15, 0.55) 62.5%,
+                    rgba(80, 0, 15, 0.55) 76%,
+                    transparent 76.5%
                 );
 
-            z-index: 1;
-            pointer-events: none;
+            transform: rotate(-5deg);
         }
 
-        /* =================================
-          
+        /* Crystal light rays */
+
+        .crystals::after {
+            content: "";
+
+            position: absolute;
+            inset: -30%;
+
+            background:
+                linear-gradient(
+                    112deg,
+                    transparent 47%,
+                    rgba(160, 10, 35, 0.45) 48%,
+                    rgba(160, 10, 35, 0.08) 49%,
+                    transparent 51%
+                ),
+
+                linear-gradient(
+                    72deg,
+                    transparent 51%,
+                    rgba(120, 0, 25, 0.40) 52%,
+                    rgba(120, 0, 25, 0.06) 53%,
+                    transparent 55%
+                ),
+
+                linear-gradient(
+                    145deg,
+                    transparent 58%,
+                    rgba(190, 15, 40, 0.25) 59%,
+                    rgba(190, 15, 40, 0.04) 60%,
+                    transparent 62%
+                );
+
+            transform: rotate(4deg);
+        }
+
+        /* =====================================
+           MAIN CONTENT
+           ===================================== */
+
+        .container {
+            position: relative;
+            z-index: 10;
+
+            width: calc(100% - 32px);
+            max-width: 620px;
+
+            margin: 55px auto 0;
+
+            padding: 30px 20px 35px;
+
+            text-align: center;
+
+            background: rgba(0, 0, 0, 0.94);
+
+            border: 1px solid #5b0b1c;
+
+            box-shadow:
+                0 0 25px rgba(120, 0, 25, 0.35),
+                0 20px 60px rgba(0, 0, 0, 0.9);
+
+            border-radius: 12px;
+        }
+
+        /* =====================================
+           TITLE
+           ===================================== */
+
+        h1 {
+            margin: 0 0 10px;
+
+            font-size: clamp(28px, 8vw, 40px);
+
+            line-height: 1.2;
+
+            letter-spacing: 1px;
+        }
+
+        h1 span {
+            color: #9b1028;
+
+            text-shadow:
+                0 0 12px rgba(155, 0, 30, 0.6);
+        }
+
+        p {
+            margin: 0 0 25px;
+
+            color: #aaa;
+
+            font-size: 15px;
+
+            line-height: 1.5;
+        }
+
+        /* =====================================
+           SEARCH
+           ===================================== */
+
+        .search-box {
+            width: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        input {
+            width: 100%;
+
+            min-height: 52px;
+
+            padding: 14px;
+
+            border-radius: 8px;
+
+            border: 1px solid #55101c;
+
+            background: #000000;
+
+            color: white;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #666;
+        }
+
+        input:focus {
+            border-color: #9b1028;
+
+            box-shadow:
+                0 0 15px rgba(155, 0, 30, 0.35);
+        }
+
+        button {
+            width: 100%;
+
+            min-height: 52px;
+
+            padding: 14px;
+
+            border-radius: 8px;
+
+            border: 1px solid #79132a;
+
+            background: #6d0b20;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:active {
+            background: #94132d;
+        }
+
+        /* =====================================
+           LARGER SCREENS
+           ===================================== */
+
+        @media (min-width: 600px) {
+
+            .container {
+                margin-top: 80px;
+
+                padding: 40px 30px 45px;
+            }
+
+            .search-box {
+                flex-direction: row;
+            }
+
+            input {
+                min-height: 52px;
+            }
+
+            button {
+                width: auto;
+
+                min-width: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Crystal background -->
+    <div class="crystals"></div>
+
+    <!-- Main content -->
+    <main class="container">
+
+        <h1>
+            🍿 <span>Anime</span> Finder
+        </h1>
+
+        <p>
+            Find where to watch your favorite anime.
+        </p>
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                placeholder="Search for an anime..."
+                aria-label="Search for an anime"
+            >
+
+            <button>
+                Search
+            </button>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
