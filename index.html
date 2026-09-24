@@ -116,17 +116,17 @@
 
     /*
       STREAMING CARDS
+      Transparent glass effect so
+      the background shows through.
     */
 
     .service-card {
       position: relative;
 
-      background:
-        linear-gradient(
-          135deg,
-          rgba(30, 30, 30, 0.95),
-          rgba(12, 12, 12, 0.95)
-        );
+      background: rgba(0, 0, 0, 0.38);
+
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
 
       border: 1px solid rgba(255, 255, 255, 0.12);
 
@@ -143,23 +143,26 @@
       gap: 20px;
 
       box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.45);
+        0 8px 25px rgba(0, 0, 0, 0.35);
 
       transition:
         transform 0.2s,
         border-color 0.2s,
+        background 0.2s,
         box-shadow 0.2s;
     }
 
     .service-card:hover {
       transform: translateY(-3px);
 
+      background: rgba(0, 0, 0, 0.48);
+
       border-color:
-        rgba(108, 92, 231, 0.65);
+        rgba(108, 92, 231, 0.55);
 
       box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.6),
-        0 0 15px rgba(108, 92, 231, 0.15);
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        0 0 18px rgba(108, 92, 231, 0.15);
     }
 
     /*
