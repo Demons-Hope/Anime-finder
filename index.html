@@ -1,227 +1,284 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Anime Finder</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
-        html {
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+
+            width: 100%;
             min-height: 100%;
+
             background: #000000;
         }
 
         body {
-            margin: 0;
             min-height: 100vh;
 
             font-family: Arial, sans-serif;
+
             color: white;
-
-            background: #000000;
-
-            position: relative;
 
             overflow-x: hidden;
         }
 
-        /* =====================================
-           CRYSTAL BACKGROUND
-           ===================================== */
 
-        .crystals {
+        /* =========================================
+           BACKGROUND
+        ========================================= */
+
+        .background {
             position: fixed;
+
             inset: 0;
-
-            width: 100%;
-            height: 100%;
-
-            pointer-events: none;
 
             overflow: hidden;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #000000 0%,
-                    #000000 28%,
-                    #28000b 28.5%,
-                    #000000 42%,
-                    #3a000f 42.5%,
-                    #000000 57%,
-                    #240008 57.5%,
-                    #000000 73%,
-                    #30000c 73.5%,
-                    #000000 100%
-                );
+            background: #000000;
+
+            z-index: 0;
         }
 
-        /* Large crystal facet */
 
-        .crystals::before {
-            content: "";
+        /* Red atmospheric glow */
 
+        .red-glow {
             position: absolute;
 
-            width: 130%;
-            height: 80%;
+            width: 90vw;
+            height: 90vw;
 
-            left: -15%;
-            top: 8%;
+            max-width: 800px;
+            max-height: 800px;
+
+            left: 50%;
+            top: 38%;
+
+            transform: translate(-50%, -50%);
 
             background:
-                linear-gradient(
-                    115deg,
-                    transparent 0%,
-                    transparent 18%,
-                    rgba(100, 0, 20, 0.45) 18.5%,
-                    rgba(100, 0, 20, 0.45) 32%,
-                    transparent 32.5%
-                ),
-
-                linear-gradient(
-                    65deg,
-                    transparent 0%,
-                    transparent 42%,
-                    rgba(130, 0, 25, 0.35) 42.5%,
-                    rgba(130, 0, 25, 0.35) 56%,
-                    transparent 56.5%
-                ),
-
-                linear-gradient(
-                    145deg,
-                    transparent 0%,
-                    transparent 62%,
-                    rgba(80, 0, 15, 0.55) 62.5%,
-                    rgba(80, 0, 15, 0.55) 76%,
-                    transparent 76.5%
+                radial-gradient(
+                    circle,
+                    rgba(110, 0, 20, 0.55) 0%,
+                    rgba(70, 0, 12, 0.30) 35%,
+                    rgba(20, 0, 4, 0.10) 55%,
+                    transparent 72%
                 );
 
-            transform: rotate(-5deg);
+            filter: blur(25px);
         }
 
-        /* Crystal light rays */
 
-        .crystals::after {
-            content: "";
+        /* =========================================
+           SKULL
+        ========================================= */
 
+        .skull {
             position: absolute;
-            inset: -30%;
 
-            background:
-                linear-gradient(
-                    112deg,
-                    transparent 47%,
-                    rgba(160, 10, 35, 0.45) 48%,
-                    rgba(160, 10, 35, 0.08) 49%,
-                    transparent 51%
-                ),
+            width: min(95vw, 620px);
 
-                linear-gradient(
-                    72deg,
-                    transparent 51%,
-                    rgba(120, 0, 25, 0.40) 52%,
-                    rgba(120, 0, 25, 0.06) 53%,
-                    transparent 55%
-                ),
+            height: auto;
 
-                linear-gradient(
-                    145deg,
-                    transparent 58%,
-                    rgba(190, 15, 40, 0.25) 59%,
-                    rgba(190, 15, 40, 0.04) 60%,
-                    transparent 62%
-                );
+            left: 50%;
+            top: 45%;
 
-            transform: rotate(4deg);
+            transform:
+                translate(-50%, -50%);
+
+            opacity: 0.78;
+
+            filter:
+                drop-shadow(0 0 10px rgba(130, 0, 25, 0.8))
+                drop-shadow(0 0 35px rgba(100, 0, 20, 0.5));
+
+            z-index: 1;
         }
 
-        /* =====================================
-           MAIN CONTENT
-           ===================================== */
+
+        /* Skull glow */
+
+        .skull-glow {
+            position: absolute;
+
+            width: min(80vw, 500px);
+            height: min(80vw, 500px);
+
+            left: 50%;
+            top: 43%;
+
+            transform: translate(-50%, -50%);
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(150, 0, 30, 0.18),
+                    transparent 68%
+                );
+
+            filter: blur(30px);
+
+            z-index: 0;
+        }
+
+
+        /* =========================================
+           MAIN PANEL
+        ========================================= */
 
         .container {
+
             position: relative;
+
             z-index: 10;
 
-            width: calc(100% - 32px);
-            max-width: 620px;
+            width: calc(100% - 30px);
+
+            max-width: 650px;
 
             margin: 55px auto 0;
 
-            padding: 30px 20px 35px;
+            padding: 32px 20px 35px;
 
             text-align: center;
 
-            background: rgba(0, 0, 0, 0.94);
+            background:
+                rgba(0, 0, 0, 0.90);
 
-            border: 1px solid #5b0b1c;
+            border:
+
+                1px solid rgba(130, 10, 30, 0.75);
+
+            border-radius: 14px;
 
             box-shadow:
-                0 0 25px rgba(120, 0, 25, 0.35),
-                0 20px 60px rgba(0, 0, 0, 0.9);
 
-            border-radius: 12px;
+                0 0 18px rgba(120, 0, 25, 0.35),
+
+                0 0 45px rgba(80, 0, 15, 0.20),
+
+                0 25px 70px rgba(0, 0, 0, 0.95);
         }
 
-        /* =====================================
+
+        /* Red line across top */
+
+        .container::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 12%;
+
+            width: 76%;
+            height: 1px;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #a30d2c,
+                    transparent
+                );
+
+            box-shadow:
+
+                0 0 10px rgba(170, 0, 35, 0.8);
+        }
+
+
+        /* =========================================
            TITLE
-           ===================================== */
+        ========================================= */
 
         h1 {
+
             margin: 0 0 10px;
 
-            font-size: clamp(28px, 8vw, 40px);
+            font-size:
+                clamp(28px, 8vw, 42px);
 
             line-height: 1.2;
 
             letter-spacing: 1px;
-        }
-
-        h1 span {
-            color: #9b1028;
 
             text-shadow:
-                0 0 12px rgba(155, 0, 30, 0.6);
+
+                0 0 15px rgba(255, 255, 255, 0.08);
         }
 
-        p {
-            margin: 0 0 25px;
 
-            color: #aaa;
+        h1 span {
+
+            color: #a50f2b;
+
+            text-shadow:
+
+                0 0 8px rgba(170, 0, 35, 0.8),
+
+                0 0 22px rgba(120, 0, 25, 0.5);
+        }
+
+
+        p {
+
+            margin:
+
+                0 0 27px;
+
+            color: #a8a8a8;
 
             font-size: 15px;
 
             line-height: 1.5;
         }
 
-        /* =====================================
+
+        /* =========================================
            SEARCH
-           ===================================== */
+        ========================================= */
 
         .search-box {
-            width: 100%;
 
             display: flex;
 
             flex-direction: column;
 
             gap: 10px;
+
+            width: 100%;
         }
 
+
         input {
+
             width: 100%;
 
-            min-height: 52px;
+            min-height: 53px;
 
-            padding: 14px;
+            padding: 15px;
 
             border-radius: 8px;
 
-            border: 1px solid #55101c;
+            border:
+
+                1px solid #4e0c1b;
 
             background: #000000;
 
@@ -232,29 +289,44 @@
             outline: none;
         }
 
+
         input::placeholder {
-            color: #666;
+
+            color: #666666;
         }
+
 
         input:focus {
-            border-color: #9b1028;
+
+            border-color: #a20f2b;
 
             box-shadow:
-                0 0 15px rgba(155, 0, 30, 0.35);
+
+                0 0 12px rgba(150, 0, 30, 0.35);
         }
 
+
         button {
+
             width: 100%;
 
-            min-height: 52px;
+            min-height: 53px;
 
             padding: 14px;
 
+            border:
+
+                1px solid #8e1029;
+
             border-radius: 8px;
 
-            border: 1px solid #79132a;
+            background:
 
-            background: #6d0b20;
+                linear-gradient(
+                    135deg,
+                    #65091d,
+                    #8e0d27
+                );
 
             color: white;
 
@@ -263,56 +335,379 @@
             font-weight: bold;
 
             cursor: pointer;
+
+            box-shadow:
+
+                0 0 12px rgba(130, 0, 25, 0.25);
         }
+
 
         button:active {
-            background: #94132d;
+
+            transform: scale(0.98);
+
+            background: #a20f2b;
         }
 
-        /* =====================================
-           LARGER SCREENS
-           ===================================== */
+
+        /* =========================================
+           DESKTOP
+        ========================================= */
 
         @media (min-width: 600px) {
 
             .container {
+
                 margin-top: 80px;
 
-                padding: 40px 30px 45px;
+                padding:
+
+                    40px 30px 45px;
             }
 
+
             .search-box {
+
                 flex-direction: row;
             }
 
-            input {
-                min-height: 52px;
-            }
 
             button {
+
                 width: auto;
 
-                min-width: 120px;
+                min-width: 125px;
+            }
+
+
+            .skull {
+
+                top: 48%;
+
+                opacity: 0.70;
             }
         }
+
+
+        /* =========================================
+           SMALL PHONES
+        ========================================= */
+
+        @media (max-width: 380px) {
+
+            .container {
+
+                width: calc(100% - 22px);
+
+                margin-top: 35px;
+
+                padding:
+
+                    27px 16px 30px;
+            }
+
+
+            h1 {
+
+                font-size: 27px;
+            }
+
+
+            p {
+
+                font-size: 14px;
+            }
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- Crystal background -->
-    <div class="crystals"></div>
 
-    <!-- Main content -->
+    <!-- =====================================
+         BACKGROUND
+    ====================================== -->
+
+    <div class="background">
+
+        <div class="red-glow"></div>
+
+        <div class="skull-glow"></div>
+
+
+        <!-- SVG SKULL -->
+
+        <svg
+            class="skull"
+            viewBox="0 0 500 600"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+
+            <defs>
+
+                <linearGradient
+                    id="skullGradient"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+
+                    <stop
+                        offset="0%"
+                        stop-color="#090909"
+                    />
+
+                    <stop
+                        offset="45%"
+                        stop-color="#1a080b"
+                    />
+
+                    <stop
+                        offset="70%"
+                        stop-color="#070707"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#000000"
+                    />
+
+                </linearGradient>
+
+
+                <linearGradient
+                    id="redEdge"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+
+                    <stop
+                        offset="0%"
+                        stop-color="#8e0c29"
+                    />
+
+                    <stop
+                        offset="50%"
+                        stop-color="#35000d"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#080000"
+                    />
+
+                </linearGradient>
+
+            </defs>
+
+
+            <!-- Skull head -->
+
+            <path
+                d="
+                M250 35
+
+                C145 35
+                75 115
+                80 225
+
+                C82 310
+                120 365
+                155 405
+
+                L165 500
+
+                L210 540
+
+                L290 540
+
+                L335 500
+
+                L345 405
+
+                C380 365
+                418 310
+                420 225
+
+                C425 115
+                355 35
+                250 35
+
+                Z
+                "
+
+                fill="url(#skullGradient)"
+
+                stroke="url(#redEdge)"
+
+                stroke-width="8"
+            />
+
+
+            <!-- Left eye -->
+
+            <path
+                d="
+                M115 205
+                C145 165
+                195 165
+                215 205
+                C195 250
+                145 255
+                115 205
+                Z
+                "
+
+                fill="#000000"
+
+                stroke="#5c0719"
+
+                stroke-width="5"
+            />
+
+
+            <!-- Right eye -->
+
+            <path
+                d="
+                M285 205
+                C305 165
+                355 165
+                385 205
+                C355 255
+                305 250
+                285 205
+                Z
+                "
+
+                fill="#000000"
+
+                stroke="#5c0719"
+
+                stroke-width="5"
+            />
+
+
+            <!-- Nose -->
+
+            <path
+                d="
+                M250 225
+                L215 315
+                L250 335
+                L285 315
+                Z
+                "
+
+                fill="#000000"
+
+                stroke="#4c0716"
+
+                stroke-width="5"
+            />
+
+
+            <!-- Jaw -->
+
+            <path
+                d="
+                M165 350
+
+                C175 410
+                195 445
+                250 450
+
+                C305 445
+                325 410
+                335 350
+
+                C300 375
+                200 375
+                165 350
+
+                Z
+                "
+
+                fill="#050505"
+
+                stroke="#5c0719"
+
+                stroke-width="6"
+            />
+
+
+            <!-- Teeth -->
+
+            <g
+                fill="#090909"
+                stroke="#641022"
+                stroke-width="3"
+            >
+
+                <path d="M185 365 L185 410 L205 410 L205 370 Z"/>
+
+                <path d="M210 370 L210 420 L230 420 L230 372 Z"/>
+
+                <path d="M235 372 L235 425 L255 425 L255 372 Z"/>
+
+                <path d="M260 372 L260 425 L280 425 L280 372 Z"/>
+
+                <path d="M285 370 L285 420 L305 420 L305 370 Z"/>
+
+                <path d="M310 365 L310 410 L330 410 L330 365 Z"/>
+
+            </g>
+
+
+            <!-- Red cracks -->
+
+            <g
+                stroke="#8d0c29"
+                stroke-width="5"
+                fill="none"
+                opacity="0.8"
+            >
+
+                <path d="M130 115 L170 155 L150 190"/>
+
+                <path d="M370 115 L330 155 L350 190"/>
+
+                <path d="M150 300 L180 325"/>
+
+                <path d="M350 300 L320 325"/>
+
+                <path d="M205 90 L225 130"/>
+
+                <path d="M295 90 L275 130"/>
+
+            </g>
+
+        </svg>
+
+    </div>
+
+
+    <!-- =====================================
+         MAIN PANEL
+    ====================================== -->
+
     <main class="container">
 
         <h1>
             🍿 <span>Anime</span> Finder
         </h1>
 
+
         <p>
             Find where to watch your favorite anime.
         </p>
+
 
         <div class="search-box">
 
@@ -322,6 +717,7 @@
                 aria-label="Search for an anime"
             >
 
+
             <button>
                 Search
             </button>
@@ -329,6 +725,7 @@
         </div>
 
     </main>
+
 
 </body>
 </html>
