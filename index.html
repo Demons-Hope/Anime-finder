@@ -7,235 +7,157 @@
   <title>Anime Finder</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
     body {
       margin: 0;
-      min-height: 100%;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #000;
-      color: white;
-    }
-
-    body {
       min-height: 100vh;
-
+      font-family: Arial, sans-serif;
+      color: white;
       background:
-        linear-gradient(
-          rgba(0, 0, 0, 0.28),
-          rgba(0, 0, 0, 0.55)
-        ),
-        url("./hooded-skull.png") center center / cover fixed no-repeat;
-
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-
-      background:
-        radial-gradient(
-          circle at center,
-          transparent 15%,
-          rgba(0, 0, 0, 0.18) 45%,
-          rgba(0, 0, 0, 0.72) 100%
-        );
-
-      z-index: 0;
+        linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.75)),
+        url("./hooded-skull.png");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
     }
 
     .container {
-      position: relative;
-      z-index: 2;
-
-      width: calc(100% - 30px);
-      max-width: 650px;
-
-      margin: 55px auto 0;
-      padding: 32px 20px 35px;
-
-      background: rgba(0, 0, 0, 0.72);
-
-      border: 1px solid rgba(150, 0, 0, 0.8);
-      border-radius: 18px;
-
-      box-shadow:
-        0 0 25px rgba(120, 0, 0, 0.35),
-        inset 0 0 30px rgba(80, 0, 0, 0.15);
-
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
       text-align: center;
     }
 
     h1 {
-      margin: 0 0 10px;
-
-      font-size: clamp(30px, 8vw, 48px);
-      letter-spacing: 1px;
-
-      text-shadow:
-        0 0 10px rgba(150, 0, 0, 0.8),
-        0 0 25px rgba(100, 0, 0, 0.5);
-    }
-
-    h1 span {
-      color: #8b0000;
+      font-size: 48px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 15px black;
     }
 
     .subtitle {
-      margin: 0 0 25px;
-
-      color: #cfcfcf;
-      font-size: 15px;
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #ddd;
     }
 
-    .search-area {
+    .search-box {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
     }
 
     input {
-      width: 100%;
-      padding: 16px 18px;
-
-      border: 1px solid #600000;
-      border-radius: 12px;
-
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-
+      width: 60%;
+      padding: 14px;
+      border-radius: 8px;
+      border: none;
       font-size: 16px;
       outline: none;
-
-      box-shadow:
-        inset 0 0 12px rgba(100, 0, 0, 0.2);
-    }
-
-    input::placeholder {
-      color: #888;
-    }
-
-    input:focus {
-      border-color: #a00000;
-
-      box-shadow:
-        0 0 12px rgba(140, 0, 0, 0.45),
-        inset 0 0 12px rgba(100, 0, 0, 0.2);
     }
 
     button {
-      width: 100%;
-      padding: 16px;
-
+      padding: 14px 22px;
       border: none;
-      border-radius: 12px;
-
-      background: linear-gradient(
-        135deg,
-        #7a0000,
-        #b00000
-      );
-
+      border-radius: 8px;
+      background: #6c5ce7;
       color: white;
-
       font-size: 16px;
       font-weight: bold;
-
       cursor: pointer;
-
-      box-shadow:
-        0 0 15px rgba(140, 0, 0, 0.45);
-
-      transition: 0.2s ease;
-    }
-
-    button:active {
-      transform: scale(0.98);
     }
 
     button:hover {
-      box-shadow:
-        0 0 25px rgba(180, 0, 0, 0.65);
+      background: #5747d1;
     }
 
     #results {
-      margin-top: 25px;
       text-align: left;
     }
 
-    .result-card {
-      padding: 20px;
-
-      background: rgba(10, 10, 10, 0.85);
-
-      border: 1px solid rgba(150, 0, 0, 0.7);
-      border-radius: 15px;
-
-      box-shadow:
-        0 0 20px rgba(120, 0, 0, 0.25);
-    }
-
-    .result-card h2 {
-      margin: 0 0 10px;
-
-      color: #ffffff;
-      font-size: 24px;
-    }
-
-    .result-card p {
-      margin: 8px 0;
-
-      color: #cfcfcf;
-      line-height: 1.5;
-    }
-
-    .watch-title {
-      margin-top: 18px !important;
-
-      color: #a00000 !important;
-      font-weight: bold;
-    }
-
-    .watch-option {
-      margin-top: 8px;
-      padding: 12px;
-
-      background: rgba(80, 0, 0, 0.25);
-
-      border-left: 3px solid #900000;
-      border-radius: 8px;
-    }
-
-    .error {
-      color: #ff7777;
+    .anime-title {
       text-align: center;
+      font-size: 32px;
+      margin-bottom: 25px;
     }
 
-    @media (min-width: 600px) {
-      .container {
-        margin-top: 80px;
-        padding: 35px 30px 40px;
+    .service-card {
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .service-info {
+      flex: 1;
+    }
+
+    .service-name {
+      font-size: 21px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .service-details {
+      color: #ccc;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .watch-button {
+      text-decoration: none;
+      white-space: nowrap;
+      background: #00b894;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .watch-button:hover {
+      background: #009f80;
+    }
+
+    .message {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.65);
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 18px;
+    }
+
+    .loading {
+      text-align: center;
+      font-size: 18px;
+      padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 36px;
       }
 
-      .search-area {
-        flex-direction: row;
+      .search-box {
+        flex-direction: column;
       }
 
       input {
-        flex: 1;
+        width: auto;
       }
 
-      button {
-        width: 130px;
+      .service-card {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .watch-button {
+        text-align: center;
       }
     }
   </style>
@@ -243,201 +165,324 @@
 
 <body>
 
-  <main class="container">
+  <div class="container">
 
-    <h1>🍿 Anime <span>Finder</span></h1>
+    <h1>Anime Finder</h1>
 
-    <p class="subtitle">
-      Find where to watch your favorite anime.
-    </p>
+    <div class="subtitle">
+      Find where you can legally watch your favorite anime.
+    </div>
 
-    <div class="search-area">
-
+    <div class="search-box">
       <input
         type="text"
         id="animeSearch"
-        placeholder="Search for an anime..."
+        placeholder="Enter anime name..."
         onkeydown="handleEnter(event)"
       >
 
       <button onclick="searchAnime()">
         Search
       </button>
-
     </div>
 
     <div id="results"></div>
 
-  </main>
+  </div>
 
   <script>
 
-    /*
-      Cloudflare Worker
-      This keeps the Watchmode API key hidden.
-    */
-
+    // Our Cloudflare Worker
     const WORKER_URL =
       "https://holy-lake-cba9.daviswillis232.workers.dev/";
 
+
+    // Prevent HTML from being injected into the page
+    function escapeHtml(text) {
+      return String(text ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    // Allow pressing Enter to search
     function handleEnter(event) {
       if (event.key === "Enter") {
         searchAnime();
       }
     }
 
+
     async function searchAnime() {
 
-      const anime =
-        document
-          .getElementById("animeSearch")
-          .value
-          .trim();
+      const input =
+        document.getElementById("animeSearch");
 
       const results =
         document.getElementById("results");
 
-      if (anime === "") {
+      const anime =
+        input.value.trim();
+
+
+      // Make sure something was entered
+      if (!anime) {
 
         results.innerHTML = `
-          <div class="result-card">
-            <p class="error">
-              Enter an anime first! 🍿
-            </p>
+          <div class="message">
+            Please enter an anime name.
           </div>
         `;
 
         return;
       }
 
+
+      // Show loading message
       results.innerHTML = `
-        <div class="result-card">
-
-          <h2>${anime}</h2>
-
-          <p>
-            Anime found! We're checking
-            where you can legally watch it.
-          </p>
-
-          <p class="watch-title">
-            Where to watch
-          </p>
-
-          <div class="watch-option">
-            🔎 Checking availability...
-          </div>
-
+        <div class="loading">
+          🔎 Searching for ${escapeHtml(anime)}...
         </div>
       `;
 
+
       try {
 
-        const response =
-          await fetch(
-            WORKER_URL +
-            "?q=" +
-            encodeURIComponent(anime)
-          );
+        // Ask our Cloudflare Worker
+        const response = await fetch(
+          WORKER_URL +
+          "?q=" +
+          encodeURIComponent(anime)
+        );
 
-        if (!response.ok) {
-          throw new Error(
-            "Worker returned HTTP " +
-            response.status
-          );
-        }
 
+        // Convert response to JSON
         const data =
           await response.json();
 
-        console.log(
-          "Watchmode response:",
-          data
-        );
 
-        const titles =
-          (data.title_results || [])
-            .filter(title =>
-              title.type === "tv_series"
-            )
-            .slice(0, 5);
-
-        if (titles.length === 0) {
+        // Worker returned an error
+        if (!response.ok) {
 
           results.innerHTML = `
-            <div class="result-card">
-
-              <h2>${anime}</h2>
-
-              <p class="error">
-                No matching anime series were found.
-              </p>
-
+            <div class="message">
+              ❌ ${escapeHtml(
+                data.error || "Something went wrong."
+              )}
             </div>
           `;
 
           return;
         }
 
-        results.innerHTML = `
-          <div class="result-card">
 
-            <h2>Results for "${anime}"</h2>
+        // Make sure the Worker returned a title
+        if (!data.title) {
 
-            <p>
-              Watchmode found ${titles.length}
-              matching anime series.
-            </p>
+          results.innerHTML = `
+            <div class="message">
+              ❌ No anime was found.
+            </div>
+          `;
 
-            <p class="watch-title">
-              Matches
-            </p>
+          return;
+        }
 
-            ${titles.map(title => `
 
-              <div class="watch-option">
+        const title =
+          data.title;
 
-                📺 <strong>${title.name}</strong>
 
-                ${
-                  title.year
-                    ? ` (${title.year})`
-                    : ""
-                }
+        // Get streaming sources
+        const sources =
+          Array.isArray(data.sources)
+            ? data.sources
+            : [];
+
+
+        // Only show US availability
+        const usSources =
+          sources.filter(source =>
+            source.region === "US"
+          );
+
+
+        // Remove duplicate services
+        const uniqueSources = [];
+
+        const seen = new Set();
+
+
+        for (const source of usSources) {
+
+          const key =
+            source.source_id +
+            "-" +
+            source.type;
+
+          if (!seen.has(key)) {
+
+            seen.add(key);
+
+            uniqueSources.push(source);
+          }
+        }
+
+
+        // No US sources
+        if (uniqueSources.length === 0) {
+
+          results.innerHTML = `
+            <div class="anime-title">
+              ${escapeHtml(title.name)}
+            </div>
+
+            <div class="message">
+              😕 No US streaming options were found.
+            </div>
+          `;
+
+          return;
+        }
+
+
+        // Put subscription services first
+        // and purchases afterward.
+        uniqueSources.sort((a, b) => {
+
+          if (a.type === "sub" && b.type !== "sub") {
+            return -1;
+          }
+
+          if (a.type !== "sub" && b.type === "sub") {
+            return 1;
+          }
+
+          return 0;
+        });
+
+
+        // Start the results HTML
+        let html = `
+
+          <div class="anime-title">
+            ${escapeHtml(title.name)}
+          </div>
+
+        `;
+
+
+        // Create a card for every service
+        for (const source of uniqueSources) {
+
+          let typeText = "Available";
+
+          if (source.type === "sub") {
+            typeText = "Subscription";
+          }
+
+          else if (source.type === "buy") {
+            typeText = "Buy";
+          }
+
+          else if (source.type === "rent") {
+            typeText = "Rent";
+          }
+
+
+          let priceText = "";
+
+
+          if (source.price !== null &&
+              source.price !== undefined) {
+
+            priceText =
+              ` • $${Number(source.price).toFixed(2)}`;
+          }
+
+
+          let formatText = "";
+
+          if (source.format) {
+
+            formatText =
+              ` • ${escapeHtml(source.format)}`;
+          }
+
+
+          let episodeText = "";
+
+          if (source.episodes) {
+
+            episodeText =
+              ` • ${source.episodes} episodes`;
+          }
+
+
+          html += `
+
+            <div class="service-card">
+
+              <div class="service-info">
+
+                <div class="service-name">
+                  ${escapeHtml(source.name)}
+                </div>
+
+                <div class="service-details">
+
+                  ${escapeHtml(typeText)}
+                  ${priceText}
+                  ${formatText}
+                  ${episodeText}
+
+                </div>
 
               </div>
 
-            `).join("")}
+              ${
+                source.web_url
+                  ? `
+                    <a
+                      class="watch-button"
+                      href="${escapeHtml(source.web_url)}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Watch Now
+                    </a>
+                  `
+                  : ""
+              }
 
-          </div>
-        `;
+            </div>
+
+          `;
+        }
+
+
+        // Put everything onto the page
+        results.innerHTML = html;
+
 
       } catch (error) {
 
-        console.error(
-          "Anime Finder error:",
-          error
-        );
+        console.error(error);
 
         results.innerHTML = `
-          <div class="result-card">
 
-            <h2>${anime}</h2>
+          <div class="message">
 
-            <p class="error">
-              ⚠️ We couldn't connect to
-              the availability service.
-            </p>
-
-            <p>
-              ${error.message}
-            </p>
+            ❌ Something went wrong while
+            searching for the anime.
 
           </div>
+
         `;
-
       }
-
     }
 
   </script>
