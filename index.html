@@ -250,39 +250,49 @@
 
     /*
       WATCH BUTTON
+      Dark red gradient with black text
     */
 
-.watch-button {
-  text-decoration: none;
+    .watch-button {
+      text-decoration: none;
 
-  white-space: nowrap;
+      white-space: nowrap;
 
-  background: #ff0000;
+      background:
+        linear-gradient(
+          180deg,
+          #8A0707 0%,
+          #5A1919 100%
+        );
 
-  color: #000000;
+      color: #000000;
 
-  padding: 12px 20px;
+      padding: 12px 20px;
 
-  border-radius: 9px;
+      border-radius: 9px;
 
-  font-weight: bold;
+      font-weight: bold;
 
-  transition:
-    background 0.2s,
-    transform 0.2s;
+      transition:
+        background 0.2s,
+        transform 0.2s;
 
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.3);
-}
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.3);
+    }
 
-.watch-button:hover {
-  background: #ff3333;
+    .watch-button:hover {
+      background:
+        linear-gradient(
+          180deg,
+          #A30A0A 0%,
+          #6A1D1D 100%
+        );
 
-  color: #000000;
+      color: #000000;
 
-  transform:
-    translateY(-2px);
-}
+      transform:
+        translateY(-2px);
     }
 
     /*
