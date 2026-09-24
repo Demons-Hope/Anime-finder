@@ -11,91 +11,205 @@
         body {
             margin: 0;
             min-height: 100vh;
+            overflow: hidden;
+
             font-family: Arial, sans-serif;
             color: white;
 
-            background:
-                radial-gradient(circle at top left, #5c0a0a 0%, transparent 35%),
-                radial-gradient(circle at bottom right, #3a0505 0%, transparent 40%),
-                linear-gradient(135deg, #050505, #170606, #050505);
+            background: #050505;
 
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+
+            position: relative;
         }
 
+        /* ===== GEOMETRIC BACKGROUND ===== */
+
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    transparent 0%,
+                    transparent 45%,
+                    rgba(120, 0, 0, 0.18) 45%,
+                    rgba(120, 0, 0, 0.18) 52%,
+                    transparent 52%
+                ),
+
+                linear-gradient(
+                    45deg,
+                    transparent 0%,
+                    transparent 62%,
+                    rgba(80, 0, 0, 0.25) 62%,
+                    rgba(80, 0, 0, 0.25) 70%,
+                    transparent 70%
+                );
+
+            z-index: 0;
+        }
+
+        /* Large angular red shapes */
+
+        body::after {
+            content: "";
+            position: absolute;
+            inset: -20%;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    transparent 0%,
+                    transparent 48%,
+                    rgba(180, 15, 15, 0.10) 48%,
+                    rgba(180, 15, 15, 0.10) 49%,
+                    transparent 49%
+                ),
+
+                linear-gradient(
+                    300deg,
+                    transparent 0%,
+                    transparent 55%,
+                    rgba(130, 0, 0, 0.12) 55%,
+                    rgba(130, 0, 0, 0.12) 56%,
+                    transparent 56%
+                );
+
+            transform: rotate(-3deg);
+            z-index: 0;
+        }
+
+        /* ===== MAIN PANEL ===== */
+
         .container {
-            width: 100%;
-            max-width: 600px;
-            padding: 40px 25px;
+            position: relative;
+            z-index: 2;
+
+            width: 90%;
+            max-width: 650px;
+
+            padding: 45px 30px;
+
             text-align: center;
 
-            background: rgba(15, 15, 15, 0.92);
-            border: 1px solid #5c1515;
-            border-radius: 18px;
+            background: rgba(10, 10, 10, 0.94);
+
+            border: 1px solid #641515;
+
+            border-radius: 16px;
 
             box-shadow:
-                0 0 25px rgba(150, 0, 0, 0.25),
-                0 15px 40px rgba(0, 0, 0, 0.6);
+                0 0 30px rgba(150, 0, 0, 0.22),
+                0 20px 60px rgba(0, 0, 0, 0.8);
+
+            clip-path: polygon(
+                0 12px,
+                12px 0,
+                100% 0,
+                100% calc(100% - 12px),
+                calc(100% - 12px) 100%,
+                0 100%
+            );
         }
 
         h1 {
             margin: 0 0 12px;
+
             font-size: 38px;
             letter-spacing: 1px;
         }
 
         h1 span {
-            color: #e32626;
+            color: #df2020;
         }
 
         p {
-            color: #c7c7c7;
-            font-size: 17px;
             margin-bottom: 30px;
+
+            color: #bdbdbd;
+
+            font-size: 17px;
         }
+
+        /* ===== SEARCH ===== */
 
         .search-box {
             display: flex;
             gap: 10px;
+
             width: 100%;
         }
 
         input {
             flex: 1;
+
             padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #542020;
-            background: #090909;
+
+            border-radius: 8px;
+            border: 1px solid #4b1717;
+
+            background: #070707;
+
             color: white;
+
             font-size: 16px;
+
             outline: none;
+        }
+
+        input::placeholder {
+            color: #777;
         }
 
         input:focus {
             border-color: #c52222;
-            box-shadow: 0 0 10px rgba(200, 0, 0, 0.25);
+
+            box-shadow:
+                0 0 12px rgba(190, 0, 0, 0.25);
         }
 
         button {
-            padding: 15px 22px;
-            border: none;
-            border-radius: 10px;
+            padding: 15px 24px;
 
-            background: #b71919;
+            border: none;
+            border-radius: 8px;
+
+            background: #a91515;
+
             color: white;
 
             font-size: 16px;
             font-weight: bold;
+
             cursor: pointer;
+
+            transition: 0.2s;
         }
 
         button:hover {
             background: #d52222;
+
+            box-shadow:
+                0 0 15px rgba(200, 0, 0, 0.35);
         }
 
+        /* ===== MOBILE ===== */
+
         @media (max-width: 500px) {
+
+            .container {
+                padding: 35px 20px;
+            }
+
+            h1 {
+                font-size: 31px;
+            }
+
             .search-box {
                 flex-direction: column;
             }
@@ -113,15 +227,21 @@
 
         <h1>🍿 <span>Anime</span> Finder</h1>
 
-        <p>Find where to watch your favorite anime.</p>
+        <p>
+            Find where to watch your favorite anime.
+        </p>
 
         <div class="search-box">
+
             <input
                 type="text"
                 placeholder="Search for an anime..."
             >
 
-            <button>Search</button>
+            <button>
+                Search
+            </button>
+
         </div>
 
     </div>
