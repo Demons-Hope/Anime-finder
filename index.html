@@ -276,7 +276,12 @@ input:focus{
 .recent-item:focus-visible,
 .favorite-item:focus-visible,
 .favorite-remove:focus-visible,
-.service-browser-card:focus-visible{
+.service-browser-card:focus-visible,
+.help-category:focus-visible,
+.help-primary:focus-visible,
+.help-submit:focus-visible,
+.help-open:focus-visible,
+.help-remove:focus-visible{
   outline:2px solid var(--red3);
   outline-offset:2px;
 }
@@ -764,7 +769,7 @@ input:focus{
 }
 
 /* =========================
-   HELP
+   HELP SOMEONE
 ========================= */
 
 .help{
@@ -774,6 +779,415 @@ input:focus{
 
 .help h2{
   color:#fff;
+  margin-top:0;
+}
+
+.help-hero{
+  padding:22px;
+  border:1px solid rgba(224,0,47,.25);
+  border-radius:18px;
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(176,0,32,.18),
+      transparent 42%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(176,0,32,.08),
+      rgba(0,0,0,.32)
+    );
+  margin-bottom:20px;
+}
+
+.help-hero h2{
+  margin:0 0 8px;
+  font-size:25px;
+}
+
+.help-hero p{
+  margin:0;
+  max-width:800px;
+}
+
+.help-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+
+.help-primary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:10px 18px;
+  border:1px solid rgba(255,49,85,.65);
+  border-radius:11px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:850;
+  background:
+    linear-gradient(
+      135deg,
+      #9d001d,
+      #e00035
+    );
+  box-shadow:0 7px 22px rgba(176,0,32,.24);
+  transition:
+    filter .18s ease,
+    transform .18s ease;
+}
+
+.help-primary:hover{
+  filter:brightness(1.12);
+  transform:translateY(-1px);
+}
+
+.help-safety{
+  margin:18px 0 22px;
+  padding:15px 17px;
+  border:1px solid rgba(255,196,87,.20);
+  border-radius:14px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,196,87,.07),
+      rgba(0,0,0,.30)
+    );
+}
+
+.help-safety strong{
+  display:block;
+  color:#f4d38c;
+  margin-bottom:5px;
+}
+
+.help-safety p{
+  margin:0;
+  color:#aaa;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.help-section{
+  margin-top:24px;
+}
+
+.help-section-title{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.help-section-title h3{
+  margin:0;
+  color:#fff;
+  font-size:18px;
+}
+
+.help-section-title p{
+  margin:3px 0 0;
+  color:#777;
+  font-size:12px;
+}
+
+.help-categories{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:2px 1px 8px;
+  scrollbar-width:thin;
+  scrollbar-color:#444 transparent;
+}
+
+.help-categories::-webkit-scrollbar{
+  height:5px;
+}
+
+.help-categories::-webkit-scrollbar-thumb{
+  background:#3a3a3d;
+  border-radius:999px;
+}
+
+.help-category{
+  white-space:nowrap;
+  border:1px solid #333;
+  background:rgba(0,0,0,.40);
+  color:#aaa;
+  border-radius:999px;
+  padding:8px 13px;
+  font-weight:750;
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    color .18s ease,
+    transform .18s ease;
+}
+
+.help-category:hover{
+  color:#fff;
+  border-color:rgba(224,0,47,.45);
+  transform:translateY(-1px);
+}
+
+.help-category.active{
+  color:#fff;
+  border-color:var(--red2);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(176,0,32,.35),
+      rgba(224,0,47,.14)
+    );
+}
+
+.help-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:12px;
+}
+
+.fundraiser-card{
+  position:relative;
+  padding:18px;
+  border:1px solid #29292c;
+  border-radius:17px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.025),
+      rgba(0,0,0,.44)
+    );
+  transition:
+    border-color .18s ease,
+    transform .18s ease,
+    background .18s ease;
+}
+
+.fundraiser-card:hover{
+  border-color:rgba(224,0,47,.45);
+  transform:translateY(-2px);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(176,0,32,.09),
+      rgba(0,0,0,.46)
+    );
+}
+
+.fundraiser-category{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 8px;
+  border-radius:7px;
+  background:rgba(176,0,32,.13);
+  border:1px solid rgba(224,0,47,.24);
+  color:#ff8297;
+  font-size:11px;
+  font-weight:850;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+.fundraiser-card h4{
+  margin:11px 0 7px;
+  color:#fff;
+  font-size:17px;
+}
+
+.fundraiser-description{
+  margin:0;
+  color:#999;
+  font-size:13px;
+  line-height:1.55;
+  display:-webkit-box;
+  -webkit-line-clamp:4;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.fundraiser-status{
+  display:inline-flex;
+  margin-top:12px;
+  padding:5px 8px;
+  border-radius:7px;
+  background:rgba(255,255,255,.045);
+  border:1px solid #303033;
+  color:#888;
+  font-size:11px;
+  font-weight:800;
+}
+
+.fundraiser-actions{
+  display:flex;
+  gap:8px;
+  margin-top:15px;
+}
+
+.help-open{
+  flex:1;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  border:1px solid rgba(255,49,85,.55);
+  border-radius:9px;
+  background:
+    linear-gradient(
+      135deg,
+      #92001b,
+      #d80032
+    );
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:800;
+}
+
+.help-remove{
+  width:38px;
+  min-width:38px;
+  border:1px solid #39393b;
+  border-radius:9px;
+  background:rgba(0,0,0,.45);
+  color:#999;
+  font-weight:900;
+}
+
+.help-remove:hover{
+  color:#fff;
+  border-color:var(--red2);
+  background:rgba(176,0,32,.18);
+}
+
+.help-form{
+  margin-top:24px;
+  padding:20px;
+  border:1px solid #29292c;
+  border-radius:18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.022),
+      rgba(0,0,0,.34)
+    );
+}
+
+.help-form h3{
+  margin:0 0 5px;
+  color:#fff;
+}
+
+.help-form-intro{
+  margin:0 0 18px;
+  color:#777;
+  font-size:13px;
+}
+
+.help-form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+}
+
+.help-field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.help-field.full{
+  grid-column:1/-1;
+}
+
+.help-field label{
+  color:#bbb;
+  font-size:13px;
+  font-weight:750;
+}
+
+.help-field input,
+.help-field textarea,
+.help-field select{
+  width:100%;
+  margin:0;
+  padding:11px 12px;
+  border-radius:10px;
+  border:1px solid #333;
+  background:#080808;
+  color:#fff;
+  outline:none;
+}
+
+.help-field input:focus,
+.help-field textarea:focus,
+.help-field select:focus{
+  border-color:var(--red3);
+  box-shadow:0 0 0 3px rgba(224,0,47,.10);
+}
+
+.help-field textarea{
+  min-height:105px;
+  resize:vertical;
+}
+
+.help-checkbox{
+  display:flex;
+  align-items:flex-start;
+  gap:9px;
+  margin-top:15px;
+  color:#999;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.help-checkbox input{
+  width:auto;
+  margin-top:3px;
+  flex:none;
+}
+
+.help-submit-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:17px;
+}
+
+.help-submit{
+  border:0;
+  border-radius:11px;
+  padding:11px 18px;
+  color:#fff;
+  font-weight:850;
+  background:
+    linear-gradient(
+      135deg,
+      #9d001d,
+      #e00035
+    );
+  box-shadow:0 7px 20px rgba(176,0,32,.22);
+}
+
+.help-note{
+  color:#666;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.help-empty{
+  grid-column:1/-1;
+  padding:24px;
+  text-align:center;
+  color:#777;
+  border:1px dashed #333;
+  border-radius:15px;
+  background:rgba(0,0,0,.15);
 }
 
 /* =========================
@@ -1048,6 +1462,31 @@ footer{
     min-height:84px;
   }
 
+  .help-hero{
+    padding:18px;
+  }
+
+  .help-hero h2{
+    font-size:21px;
+  }
+
+  .help-form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .help-field.full{
+    grid-column:auto;
+  }
+
+  .help-submit-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .help-submit{
+    width:100%;
+  }
+
 }
 
 @media(max-width:430px){
@@ -1268,17 +1707,237 @@ footer{
 
   <div class="help">
 
-    <h2>
-      Help Someone
-    </h2>
+    <div class="help-hero">
 
-    <p>
-      Anime Finder can eventually use this space to help people discover and support verified GoFundMe fundraisers for people in need.
-    </p>
+      <h2>
+        Help Someone ❤️
+      </h2>
 
-    <p>
-      This section is intentionally a starting point for now. We can build the fundraiser discovery, categories, safety information, and submission flow separately without changing the anime-search system.
-    </p>
+      <p>
+        Find and share GoFundMe fundraisers for people, families, animals,
+        emergencies, and communities that need support.
+      </p>
+
+      <div class="help-actions">
+
+        <a
+          id="findGoFundMeBtn"
+          class="help-primary"
+          href="https://www.gofundme.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Find a GoFundMe
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="help-safety">
+
+      <strong>
+        Before donating
+      </strong>
+
+      <p>
+        Anime Finder does not independently verify or guarantee fundraisers.
+        Always open the fundraiser directly and review the organizer,
+        beneficiary, fundraiser details, updates, and intended use of funds
+        before donating.
+      </p>
+
+    </div>
+
+    <div class="help-section">
+
+      <div class="help-section-title">
+
+        <div>
+          <h3>
+            Browse Causes
+          </h3>
+
+          <p>
+            Choose a category to filter submitted fundraisers.
+          </p>
+        </div>
+
+      </div>
+
+      <div
+        id="helpCategories"
+        class="help-categories"
+      ></div>
+
+    </div>
+
+    <div class="help-section">
+
+      <div class="help-section-title">
+
+        <div>
+          <h3>
+            Fundraisers
+          </h3>
+
+          <p>
+            Fundraisers submitted through Anime Finder are kept pending until
+            an approved review system is available.
+          </p>
+        </div>
+
+      </div>
+
+      <div
+        id="fundraiserList"
+        class="help-grid"
+      ></div>
+
+    </div>
+
+    <form
+      id="fundraiserForm"
+      class="help-form"
+    >
+
+      <h3>
+        Submit a Fundraiser
+      </h3>
+
+      <p class="help-form-intro">
+        Know someone who could use support? Submit their GoFundMe here so we
+        can build toward a future reviewed and featured fundraiser system.
+      </p>
+
+      <div class="help-form-grid">
+
+        <div class="help-field">
+
+          <label for="fundraiserTitle">
+            Fundraiser title
+          </label>
+
+          <input
+            id="fundraiserTitle"
+            name="title"
+            maxlength="120"
+            placeholder="Example: Help the Johnson Family Rebuild"
+            required
+          >
+
+        </div>
+
+        <div class="help-field">
+
+          <label for="fundraiserCategory">
+            Cause
+          </label>
+
+          <select
+            id="fundraiserCategory"
+            name="category"
+            required
+          >
+
+            <option value="Medical">
+              Medical
+            </option>
+
+            <option value="Emergency">
+              Emergency
+            </option>
+
+            <option value="Housing">
+              Housing
+            </option>
+
+            <option value="Family">
+              Family
+            </option>
+
+            <option value="Animals">
+              Animals
+            </option>
+
+            <option value="Community">
+              Community
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="help-field full">
+
+          <label for="fundraiserUrl">
+            GoFundMe URL
+          </label>
+
+          <input
+            id="fundraiserUrl"
+            name="url"
+            type="url"
+            placeholder="https://www.gofundme.com/..."
+            required
+          >
+
+        </div>
+
+        <div class="help-field full">
+
+          <label for="fundraiserDescription">
+            Short description
+          </label>
+
+          <textarea
+            id="fundraiserDescription"
+            name="description"
+            maxlength="500"
+            placeholder="Briefly explain who the fundraiser is helping and why support is needed..."
+            required
+          ></textarea>
+
+        </div>
+
+      </div>
+
+      <label class="help-checkbox">
+
+        <input
+          id="fundraiserPermission"
+          type="checkbox"
+          required
+        >
+
+        <span>
+          I have permission to share this fundraiser and any information I
+          provided about another person or organization.
+        </span>
+
+      </label>
+
+      <div class="help-submit-row">
+
+        <span class="help-note">
+          Submissions are stored locally on this device for now.
+        </span>
+
+        <button
+          id="submitFundraiserBtn"
+          class="help-submit"
+          type="submit"
+        >
+          Submit Fundraiser
+        </button>
+
+      </div>
+
+    </form>
 
   </div>
 
@@ -1384,6 +2043,9 @@ const RECENT_KEY =
 
 const REPORTS_KEY =
   "animeFinderReports";
+
+const FUNDRAISER_SUBMISSIONS_KEY =
+  "animeFinderFundraiserSubmissions";
 
 
 const SERVICE_CONFIG = [
@@ -1557,9 +2219,21 @@ const RETIRED_PROVIDERS = [
 ];
 
 
+const HELP_CATEGORIES = [
+  "Medical",
+  "Emergency",
+  "Housing",
+  "Family",
+  "Animals",
+  "Community",
+  "Other"
+];
+
+
 let currentAnime = null;
 let currentSources = [];
 let activeService = "All";
+let activeHelpCategory = "All";
 
 
 const $ = id =>
@@ -2906,6 +3580,551 @@ function renderFavorites(){
 }
 
 
+/* =========================================================
+   HELP SOMEONE
+========================================================= */
+
+function getFundraiserSubmissions(){
+
+  const v =
+    readStorage(
+      FUNDRAISER_SUBMISSIONS_KEY,
+      []
+    );
+
+  return Array.isArray(v)
+    ? v
+    : [];
+
+}
+
+
+function writeFundraiserSubmissions(
+  list
+){
+
+  writeStorage(
+    FUNDRAISER_SUBMISSIONS_KEY,
+    list
+  );
+
+}
+
+
+function getGoFundMeUrl(value){
+
+  const raw =
+    safeString(
+      value
+    ).trim();
+
+  if(!raw){
+    return "";
+  }
+
+  try{
+
+    const u =
+      new URL(
+        raw
+      );
+
+    const host =
+      u.hostname
+        .toLowerCase()
+        .replace(
+          /^www\./,
+          ""
+        );
+
+    if(
+      host === "gofundme.com" ||
+      host.endsWith(".gofundme.com") ||
+      host === "gofund.me"
+    ){
+
+      return u.href;
+
+    }
+
+  }catch{}
+
+  return "";
+
+}
+
+
+function renderHelpCategories(){
+
+  const box =
+    $("helpCategories");
+
+  if(!box){
+    return;
+  }
+
+  const submissions =
+    getFundraiserSubmissions();
+
+  const counts = {};
+
+  submissions.forEach(
+    item => {
+
+      const category =
+        safeString(
+          item.category
+        ) || "Other";
+
+      counts[category] =
+        (counts[category] || 0) + 1;
+
+    }
+  );
+
+  const allCount =
+    submissions.length;
+
+
+  box.innerHTML = `
+
+    <button
+      class="help-category ${
+        activeHelpCategory === "All"
+          ? "active"
+          : ""
+      }"
+      type="button"
+      data-help-category="All"
+    >
+      All (${allCount})
+    </button>
+
+    ${
+      HELP_CATEGORIES
+        .map(
+          category =>
+            `
+              <button
+                class="help-category ${
+                  activeHelpCategory === category
+                    ? "active"
+                    : ""
+                }"
+                type="button"
+                data-help-category="${escapeHtml(category)}"
+              >
+                ${escapeHtml(category)}
+                (${counts[category] || 0})
+              </button>
+            `
+        )
+        .join("")
+    }
+
+  `;
+
+}
+
+
+function renderFundraiserSubmissions(){
+
+  const box =
+    $("fundraiserList");
+
+  if(!box){
+    return;
+  }
+
+  const submissions =
+    getFundraiserSubmissions();
+
+  const filtered =
+    submissions.filter(
+      item =>
+        activeHelpCategory === "All" ||
+        safeString(
+          item.category
+        ) === activeHelpCategory
+    );
+
+
+  if(!filtered.length){
+
+    box.innerHTML = `
+
+      <div class="help-empty">
+
+        ${
+          submissions.length
+            ? "No submitted fundraisers match this cause."
+            : "No fundraisers have been submitted yet. You can be the first one."
+        }
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    filtered
+      .map(
+        item => {
+
+          const id =
+            safeString(
+              item.id
+            );
+
+          const title =
+            safeString(
+              item.title ||
+              "Untitled Fundraiser"
+            );
+
+          const category =
+            safeString(
+              item.category ||
+              "Other"
+            );
+
+          const description =
+            safeString(
+              item.description ||
+              "No description provided."
+            );
+
+          const url =
+            getGoFundMeUrl(
+              item.url
+            );
+
+
+          return `
+
+            <article
+              class="fundraiser-card"
+            >
+
+              <span class="fundraiser-category">
+                ${escapeHtml(category)}
+              </span>
+
+              <h4>
+                ${escapeHtml(title)}
+              </h4>
+
+              <p class="fundraiser-description">
+                ${escapeHtml(description)}
+              </p>
+
+              <span class="fundraiser-status">
+                Pending review
+              </span>
+
+              <div class="fundraiser-actions">
+
+                ${
+                  url
+
+                    ? `
+                      <a
+                        class="help-open"
+                        href="${escapeHtml(url)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Open GoFundMe
+                      </a>
+                    `
+
+                    : ""
+                }
+
+                <button
+                  class="help-remove"
+                  type="button"
+                  data-remove-fundraiser="${escapeHtml(id)}"
+                  aria-label="Remove ${escapeHtml(title)}"
+                  title="Remove submission"
+                >
+                  ×
+                </button>
+
+              </div>
+
+            </article>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+function renderHelp(){
+
+  renderHelpCategories();
+  renderFundraiserSubmissions();
+
+}
+
+
+function removeFundraiserSubmission(id){
+
+  const target =
+    safeString(id);
+
+  if(!target){
+    return;
+  }
+
+  const updated =
+    getFundraiserSubmissions()
+      .filter(
+        item =>
+          safeString(
+            item.id
+          ) !== target
+      );
+
+  writeFundraiserSubmissions(
+    updated
+  );
+
+  renderHelp();
+
+}
+
+
+function submitFundraiser(e){
+
+  e.preventDefault();
+
+
+  const title =
+    safeString(
+      $("fundraiserTitle")
+        ?.value
+    ).trim();
+
+  const category =
+    safeString(
+      $("fundraiserCategory")
+        ?.value
+    ).trim();
+
+  const url =
+    getGoFundMeUrl(
+      $("fundraiserUrl")
+        ?.value
+    );
+
+  const description =
+    safeString(
+      $("fundraiserDescription")
+        ?.value
+    ).trim();
+
+  const permission =
+    $("fundraiserPermission")
+      ?.checked;
+
+
+  if(!title){
+
+    showHelpStatus(
+      "Please enter a fundraiser title.",
+      "error"
+    );
+
+    $("fundraiserTitle")
+      ?.focus();
+
+    return;
+
+  }
+
+
+  if(
+    !HELP_CATEGORIES.includes(
+      category
+    )
+  ){
+
+    showHelpStatus(
+      "Please choose a valid cause category.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!url){
+
+    showHelpStatus(
+      "Please enter a valid GoFundMe URL.",
+      "error"
+    );
+
+    $("fundraiserUrl")
+      ?.focus();
+
+    return;
+
+  }
+
+
+  if(!description){
+
+    showHelpStatus(
+      "Please add a short description.",
+      "error"
+    );
+
+    $("fundraiserDescription")
+      ?.focus();
+
+    return;
+
+  }
+
+
+  if(!permission){
+
+    showHelpStatus(
+      "Please confirm that you have permission to share this fundraiser.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const submission = {
+
+    id:
+      `${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2,8)}`,
+
+    createdAt:
+      new Date()
+        .toISOString(),
+
+    title,
+
+    category,
+
+    description,
+
+    url,
+
+    status:
+      "pending"
+
+  };
+
+
+  const submissions =
+    getFundraiserSubmissions();
+
+  submissions.unshift(
+    submission
+  );
+
+
+  writeFundraiserSubmissions(
+    submissions
+  );
+
+
+  $("fundraiserForm")
+    ?.reset();
+
+
+  renderHelp();
+
+
+  showHelpStatus(
+    "Fundraiser submitted locally and marked Pending review.",
+    "success"
+  );
+
+}
+
+
+function showHelpStatus(
+  message,
+  type=""
+){
+
+  const existing =
+    $("helpFormStatus");
+
+  if(existing){
+
+    existing.textContent =
+      message;
+
+    existing.className =
+      "status " +
+      (
+        type ||
+        ""
+      );
+
+    return;
+
+  }
+
+
+  const note =
+    document.createElement(
+      "p"
+    );
+
+  note.id =
+    "helpFormStatus";
+
+  note.className =
+    "status " +
+    (
+      type ||
+      ""
+    );
+
+  note.textContent =
+    message;
+
+  const form =
+    $("fundraiserForm");
+
+  if(form){
+
+    form.insertBefore(
+      note,
+      form.firstElementChild
+    );
+
+  }
+
+}
+
+
+/* =========================
+   ANIME
+========================= */
+
 function getAnimeTitle(data){
 
   return safeString(
@@ -3611,6 +4830,10 @@ function showTab(tab){
     renderFavorites();
   }
 
+  if(tab === "help"){
+    renderHelp();
+  }
+
 }
 
 
@@ -3985,6 +5208,17 @@ $("reportForm")
 
 
 /*
+  FUNDRAISER SUBMISSION
+*/
+
+$("fundraiserForm")
+  .addEventListener(
+    "submit",
+    submitFundraiser
+  );
+
+
+/*
   EVENT DELEGATION
 */
 
@@ -4018,6 +5252,53 @@ document.addEventListener(
       searchAnime(
         recent.dataset.query ||
         ""
+      );
+
+      return;
+
+    }
+
+
+    /*
+      HELP CATEGORIES
+    */
+
+    const helpCategory =
+      e.target.closest(
+        ".help-category"
+      );
+
+    if(helpCategory){
+
+      activeHelpCategory =
+        safeString(
+          helpCategory.dataset
+            .helpCategory
+        ) || "All";
+
+      renderHelp();
+
+      return;
+
+    }
+
+
+    /*
+      REMOVE FUNDRAISER
+    */
+
+    const removeFundraiser =
+      e.target.closest(
+        ".help-remove"
+      );
+
+    if(removeFundraiser){
+
+      e.stopPropagation();
+
+      removeFundraiserSubmission(
+        removeFundraiser.dataset
+          .removeFundraiser
       );
 
       return;
@@ -4276,7 +5557,7 @@ document.addEventListener(
       safeString(
         favoriteItem.dataset
           .favoriteId
-      );
+    );
 
     const favorite =
       getFavorites().find(
@@ -4335,6 +5616,7 @@ document.addEventListener(
 renderRecent();
 renderServices();
 renderFavorites();
+renderHelp();
 attachLogoFallbacks();
 
 </script>
