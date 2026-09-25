@@ -110,6 +110,10 @@ button:disabled{
   -webkit-backdrop-filter:blur(13px);
 }
 
+/* =========================
+   HERO
+========================= */
+
 .hero{
   padding:28px 30px;
   margin-bottom:18px;
@@ -218,6 +222,10 @@ input:focus{
   filter:brightness(1.12);
 }
 
+/* =========================
+   TABS
+========================= */
+
 .tabs{
   display:flex;
   gap:8px;
@@ -233,11 +241,17 @@ input:focus{
   padding:12px 10px;
   border-radius:12px;
   font-weight:700;
+  transition:
+    background .18s ease,
+    color .18s ease,
+    border-color .18s ease,
+    transform .18s ease;
 }
 
 .tab:hover{
   color:#fff;
   background:rgba(176,0,32,.08);
+  transform:translateY(-1px);
 }
 
 .tab.active{
@@ -246,6 +260,10 @@ input:focus{
   border-color:var(--line);
   box-shadow:inset 0 0 20px rgba(176,0,32,.08);
 }
+
+/* =========================
+   ACCESSIBILITY
+========================= */
 
 .tab:focus-visible,
 .primary:focus-visible,
@@ -259,6 +277,10 @@ input:focus{
   outline:2px solid var(--red3);
   outline-offset:2px;
 }
+
+/* =========================
+   PANELS
+========================= */
 
 .panel{
   padding:22px;
@@ -315,12 +337,22 @@ input:focus{
   color:#ddd;
   border-radius:10px;
   padding:9px 12px;
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    transform .18s ease;
 }
 
 .recent-item:hover{
   border-color:var(--line);
   color:#fff;
+  background:rgba(176,0,32,.08);
+  transform:translateY(-1px);
 }
+
+/* =========================
+   ANIME HEADER
+========================= */
 
 .anime-head{
   display:flex;
@@ -336,6 +368,7 @@ input:focus{
   border-radius:12px;
   background:#111;
   border:1px solid #333;
+  box-shadow:0 10px 28px rgba(0,0,0,.35);
 }
 
 .anime-head h2{
@@ -357,30 +390,110 @@ input:focus{
   border-radius:12px;
   padding:10px 13px;
   font-size:18px;
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    transform .18s ease;
 }
+
+.fav:hover{
+  border-color:var(--red2);
+  background:rgba(176,0,32,.15);
+  transform:translateY(-1px);
+}
+
+/* =========================
+   SERVICE FILTERS
+========================= */
 
 .filters{
   display:flex;
   gap:8px;
   overflow-x:auto;
-  padding:3px 1px 12px;
-  margin-bottom:10px;
+  padding:4px 2px 13px;
+  margin-bottom:11px;
+  scrollbar-width:thin;
+  scrollbar-color:#444 transparent;
+}
+
+.filters::-webkit-scrollbar{
+  height:5px;
+}
+
+.filters::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.filters::-webkit-scrollbar-thumb{
+  background:#3a3a3d;
+  border-radius:999px;
 }
 
 .filter{
   white-space:nowrap;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
   border:1px solid #333;
-  background:rgba(0,0,0,.45);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.045),
+      rgba(0,0,0,.42)
+    );
   color:#aaa;
   border-radius:999px;
-  padding:8px 12px;
+  padding:8px 11px 8px 13px;
+  font-weight:700;
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    color .18s ease,
+    transform .18s ease;
+}
+
+.filter:hover{
+  color:#fff;
+  border-color:rgba(224,0,47,.42);
+  transform:translateY(-1px);
 }
 
 .filter.active{
   color:#fff;
   border-color:var(--red2);
-  background:rgba(176,0,32,.2);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(176,0,32,.35),
+      rgba(224,0,47,.14)
+    );
+  box-shadow:
+    0 5px 18px rgba(176,0,32,.12),
+    inset 0 0 16px rgba(176,0,32,.08);
 }
+
+.filter-count{
+  min-width:22px;
+  height:20px;
+  padding:0 6px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  color:#aaa;
+  font-size:11px;
+  line-height:1;
+}
+
+.filter.active .filter-count{
+  background:rgba(255,255,255,.12);
+  color:#fff;
+}
+
+/* =========================
+   OFFERS
+========================= */
 
 .offer-grid{
   display:grid;
@@ -389,26 +502,48 @@ input:focus{
 
 .offer{
   display:grid;
-  grid-template-columns:52px minmax(0,1fr) auto;
+  grid-template-columns:56px minmax(0,1fr) auto;
   gap:14px;
   align-items:center;
-  padding:15px;
+  padding:16px;
   border:1px solid #29292c;
-  border-radius:15px;
-  background:rgba(0,0,0,.42);
+  border-radius:16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.025),
+      rgba(0,0,0,.44)
+    );
+  transition:
+    border-color .2s ease,
+    background .2s ease,
+    transform .2s ease,
+    box-shadow .2s ease;
 }
 
 .offer:hover{
-  border-color:rgba(224,0,47,.42);
-  background:rgba(20,4,8,.55);
+  border-color:rgba(224,0,47,.5);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(176,0,32,.10),
+      rgba(0,0,0,.5)
+    );
+  transform:translateY(-1px);
+  box-shadow:0 10px 28px rgba(0,0,0,.25);
 }
 
 .logo,
 .service-card-logo{
-  width:52px;
-  height:52px;
-  border-radius:12px;
-  background:#111;
+  width:56px;
+  height:56px;
+  border-radius:13px;
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.06),
+      rgba(0,0,0,.55)
+    );
   border:1px solid #333;
   display:flex;
   align-items:center;
@@ -431,8 +566,9 @@ input:focus{
 }
 
 .offer-title{
-  font-weight:800;
+  font-weight:850;
   font-size:16px;
+  letter-spacing:.1px;
 }
 
 .offer-sub{
@@ -445,7 +581,7 @@ input:focus{
   display:flex;
   flex-wrap:wrap;
   gap:7px;
-  margin-top:8px;
+  margin-top:9px;
 }
 
 .badge{
@@ -460,16 +596,41 @@ input:focus{
 .badge.us{
   color:#8ee8ac;
   border-color:rgba(142,232,172,.25);
+  background:rgba(45,120,72,.09);
 }
 
 .open-offer{
-  border:1px solid rgba(224,0,47,.45);
-  background:rgba(176,0,32,.15);
+  min-width:116px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(255,49,85,.65);
+  background:
+    linear-gradient(
+      135deg,
+      #a50021,
+      #e00035
+    );
   color:#fff;
   border-radius:10px;
-  padding:9px 12px;
-  font-weight:700;
+  padding:10px 14px;
+  font-weight:800;
   text-decoration:none;
+  box-shadow:0 7px 20px rgba(176,0,32,.22);
+  transition:
+    filter .18s ease,
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.open-offer:hover{
+  filter:brightness(1.13);
+  transform:translateY(-1px);
+  box-shadow:0 10px 25px rgba(176,0,32,.34);
+}
+
+.no-link{
+  opacity:.6;
 }
 
 .empty{
@@ -478,7 +639,12 @@ input:focus{
   color:#888;
   border:1px dashed #333;
   border-radius:15px;
+  background:rgba(0,0,0,.18);
 }
+
+/* =========================
+   SERVICES
+========================= */
 
 .service-grid{
   display:grid;
@@ -491,6 +657,21 @@ input:focus{
   display:flex;
   align-items:center;
   gap:13px;
+  transition:
+    border-color .18s ease,
+    transform .18s ease,
+    background .18s ease;
+}
+
+.service-card:hover{
+  border-color:rgba(224,0,47,.42);
+  transform:translateY(-2px);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(176,0,32,.08),
+      rgba(0,0,0,.42)
+    );
 }
 
 .service-card h3{
@@ -504,6 +685,10 @@ input:focus{
   font-size:12px;
 }
 
+/* =========================
+   HELP
+========================= */
+
 .help{
   line-height:1.65;
   color:#bbb;
@@ -513,12 +698,20 @@ input:focus{
   color:#fff;
 }
 
+/* =========================
+   FAVORITES
+========================= */
+
 .favorite-item{
   width:100%;
   border:0;
   color:inherit;
   text-align:left;
 }
+
+/* =========================
+   MODAL
+========================= */
 
 .modal-backdrop{
   position:fixed;
@@ -584,6 +777,10 @@ footer{
   margin-top:20px;
 }
 
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:700px){
 
   .app{
@@ -619,8 +816,14 @@ footer{
     align-items:flex-start;
   }
 
+  .anime-head h2{
+    font-size:21px;
+  }
+
   .offer{
-    grid-template-columns:44px minmax(0,1fr);
+    grid-template-columns:46px minmax(0,1fr);
+    gap:12px;
+    padding:13px;
   }
 
   .offer .open-offer,
@@ -629,15 +832,59 @@ footer{
     justify-self:start;
   }
 
+  .open-offer{
+    min-width:0;
+    padding:9px 13px;
+  }
+
   .logo{
-    width:44px;
-    height:44px;
+    width:46px;
+    height:46px;
   }
 
   .fav{
     font-size:16px;
     padding:8px;
   }
+
+  .section-title{
+    align-items:flex-end;
+  }
+
+  .section-title h2{
+    font-size:17px;
+  }
+
+}
+
+@media(max-width:430px){
+
+  .anime-head{
+    gap:12px;
+  }
+
+  .poster{
+    width:76px;
+    height:106px;
+  }
+
+  .anime-head h2{
+    font-size:19px;
+  }
+
+  .offer-title{
+    font-size:14px;
+  }
+
+  .offer-sub{
+    font-size:11px;
+  }
+
+  .badge{
+    font-size:11px;
+    padding:4px 7px;
+  }
+
 }
 </style>
 </head>
@@ -1299,10 +1546,6 @@ function getCleanServiceName(name){
 }
 
 
-/* FIXED:
-   Crunchyroll Amazon Channels stay under Crunchyroll.
-   Prime Video stays separate from generic Amazon.
-*/
 function getProviderParentName(name){
 
   const n =
@@ -1572,21 +1815,6 @@ function getServiceNote(source){
 }
 
 
-/* =========================================================
-   FIXED URL EXTRACTION
-   =========================================================
-
-   The old version did this:
-
-     getSafeUrl(s.url)
-
-   That only worked when the worker put the URL directly
-   in "url".
-
-   This version checks common URL fields AND nested objects
-   such as offer, offers, availability, links, actions,
-   streaming, etc.
-*/
 function getSafeUrl(v){
 
   if(
@@ -1596,8 +1824,6 @@ function getSafeUrl(v){
     return "";
   }
 
-
-  /* Direct string URL */
   if(
     typeof v === "string"
   ){
@@ -1634,8 +1860,6 @@ function getSafeUrl(v){
 
   }
 
-
-  /* Arrays can contain URL objects */
   if(
     Array.isArray(v)
   ){
@@ -1660,8 +1884,6 @@ function getSafeUrl(v){
 
   }
 
-
-  /* Objects may hide the URL inside another property */
   if(
     typeof v === "object"
   ){
@@ -1670,44 +1892,32 @@ function getSafeUrl(v){
 
       v.url,
       v.link,
-
       v.watchUrl,
       v.watchURL,
       v.watch_url,
-
       v.href,
       v.uri,
-
       v.webUrl,
       v.web_url,
       v.website,
-
       v.deepLink,
       v.deeplink,
-
       v.targetUrl,
       v.target_url,
-
       v.destinationUrl,
       v.destination_url,
-
       v.externalUrl,
       v.external_url,
-
       v.streamingLink,
       v.streaming_url,
-
       v.playUrl,
       v.play_url,
-
       v.offerUrl,
       v.offer_url,
-
       v.sourceUrl,
       v.source_url
 
     ];
-
 
     for(
       const candidate
@@ -1725,26 +1935,19 @@ function getSafeUrl(v){
 
     }
 
-
-    /* Common nested locations */
     const nested = [
 
       v.offer,
       v.offers,
-
       v.availability,
-
       v.source,
       v.provider,
-
       v.links,
       v.actions,
-
       v.watch,
       v.streaming
 
     ];
-
 
     for(
       const candidate
@@ -1763,7 +1966,6 @@ function getSafeUrl(v){
     }
 
   }
-
 
   return "";
 
@@ -1839,9 +2041,6 @@ function isUsSource(source){
 }
 
 
-/* FIXED:
-   Source keys now include the actual extracted URL.
-*/
 function getSourceKey(source){
 
   return [
@@ -2529,6 +2728,38 @@ function normalizeResponse(json){
 }
 
 
+/* =========================================================
+   NEW:
+   Count services for the filter buttons.
+========================================================= */
+
+function getServiceCounts(){
+
+  const counts = {};
+
+  currentSources.forEach(
+    source => {
+
+      const service =
+        getProviderParentName(
+          getRawServiceName(source)
+        );
+
+      if(!service){
+        return;
+      }
+
+      counts[service] =
+        (counts[service] || 0) + 1;
+
+    }
+  );
+
+  return counts;
+
+}
+
+
 function renderResults(){
 
   const box =
@@ -2552,6 +2783,9 @@ function renderResults(){
       currentAnime
     );
 
+  const counts =
+    getServiceCounts();
+
   const filtered =
     currentSources.filter(
       s =>
@@ -2562,19 +2796,14 @@ function renderResults(){
     );
 
   const services =
-    [
-      ...new Set(
-        currentSources
-          .map(
-            s =>
-              getProviderParentName(
-                getRawServiceName(s)
-              )
-          )
-          .filter(Boolean)
-      )
-    ];
+    Object.keys(
+      counts
+    );
 
+
+  /* =========================
+     FILTER BAR
+  ========================= */
 
   const filters = `
 
@@ -2589,7 +2818,15 @@ function renderResults(){
         data-service="All"
         type="button"
       >
-        All
+
+        <span>
+          All
+        </span>
+
+        <span class="filter-count">
+          ${currentSources.length}
+        </span>
+
       </button>
 
       ${
@@ -2608,7 +2845,15 @@ function renderResults(){
                   )}"
                   type="button"
                 >
-                  ${escapeHtml(s)}
+
+                  <span>
+                    ${escapeHtml(s)}
+                  </span>
+
+                  <span class="filter-count">
+                    ${counts[s]}
+                  </span>
+
                 </button>
               `
           )
@@ -2619,6 +2864,10 @@ function renderResults(){
 
   `;
 
+
+  /* =========================
+     OFFER CARDS
+  ========================= */
 
   const offers =
     filtered.length
@@ -2653,26 +2902,6 @@ function renderResults(){
               const note =
                 getServiceNote(s);
 
-
-              /* =================================================
-                 FIXED OPEN OFFER URL
-                 =================================================
-
-                 Before:
-                   getSafeUrl(
-                     firstNonEmpty(
-                       s.url,
-                       s.link,
-                       s.watchUrl
-                     )
-                   )
-
-                 Now:
-                   getSafeUrl(s)
-
-                 This lets getSafeUrl search the complete
-                 offer object, including nested URL fields.
-              */
               const url =
                 getSafeUrl(s);
 
@@ -2771,6 +3000,10 @@ function renderResults(){
           </div>
         `;
 
+
+  /* =========================
+     COMPLETE RESULTS AREA
+  ========================= */
 
   box.innerHTML = `
 
