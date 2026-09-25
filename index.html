@@ -4902,55 +4902,416 @@ attachLogoFallbacks();
 <script>
 (function(){
 
-  function bindCriticalControls(){
+  /*
+    HARD FALLBACK UI CONTROLLER
 
-    const form =
-      document.getElementById(
-        "searchForm"
+    This intentionally does NOT depend on the
+    main Anime Finder initialization completing.
+  */
+
+  function get(id){
+    return document.getElementById(id);
+  }
+
+  function showFallbackStatus(
+    message,
+    type
+  ){
+
+    const status =
+      get("status");
+
+    if(!status){
+      return;
+    }
+
+    status.textContent =
+      message;
+
+    status.className =
+      "status" +
+      (
+        type
+          ? " " + type
+          : ""
       );
 
-    const input =
-      document.getElementById(
-        "searchInput"
-      );
+  }
+
+  function closeMenu(){
 
     const menu =
-      document.getElementById(
-        "menuToggle"
+      get("tabMenu");
+
+    const toggle =
+      get("menuToggle");
+
+    if(menu){
+      menu.classList.add(
+        "hidden"
+      );
+    }
+
+    if(toggle){
+
+      toggle.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      toggle.setAttribute(
+        "aria-label",
+        "Open navigation menu"
+      );
+
+    }
+
+  }
+
+  function toggleMenu(){
+
+    const menu =
+      get("tabMenu");
+
+    const toggle =
+      get("menuToggle");
+
+    if(!menu){
+      return;
+    }
+
+    const isClosed =
+      menu.classList.contains(
+        "hidden"
+      );
+
+    if(isClosed){
+
+      menu.classList.remove(
+        "hidden"
+      );
+
+    }else{
+
+      menu.classList.add(
+        "hidden"
+      );
+
+    }
+
+    if(toggle){
+
+      toggle.setAttribute(
+        "aria-expanded",
+        String(
+          isClosed
+        )
+      );
+
+      toggle.setAttribute(
+        "aria-label",
+        isClosed
+          ? "Close navigation menu"
+          : "Open navigation menu"
+      );
+
+    }
+
+  }
+
+  function clearOldResults(){
+
+    const results =
+      get("results");
+
+    if(results){
+
+      results.innerHTML =
+        "";
+
+    }
+
+    /*
+      Clear any old status/result
+      containers that may contain
+      the previous Solo Leveling data.
+    */
+
+    const resultArea =
+      document.querySelector(
+        ".results"
       );
 
     if(
-      form &&
-      input
+      resultArea &&
+      resultArea !== results
     ){
+
+      resultArea.innerHTML =
+        "";
+
+    }
+
+  }
+
+  async function hardSearch(
+    rawQuery
+  ){
+
+    const input =
+      get("searchInput");
+
+    const query =
+      String(
+        rawQuery ??
+        input?.value ??
+        ""
+      ).trim();
+
+    if(!query){
+
+      if(input){
+        input.focus();
+      }
+
+      showFallbackStatus(
+        "Enter an anime title to search.",
+        "error"
+      );
+
+      return;
+
+    }
+
+    /*
+      Immediately remove the old result.
+      This is what prevents Solo Leveling
+      from remaining visible while the
+      new search is happening.
+    */
+
+    clearOldResults();
+
+    if(input){
+      input.value =
+        query;
+    }
+
+    showFallbackStatus(
+      "Searching..."
+    );
+
+    const button =
+      get("searchButton");
+
+    if(button){
+      button.disabled =
+        true;
+    }
+
+    try{
+
+      const workerUrl =
+        "https://holy-lake-cba9.daviswillis232.workers.dev/";
+
+      const url =
+        new URL(
+          workerUrl
+        );
+
+      url.searchParams.set(
+        "q",
+        query
+      );
+
+      const response =
+        await fetch(
+          url.toString(),
+          {
+            method:
+              "GET",
+
+            headers:{
+              "Accept":
+                "application/json"
+            }
+          }
+        );
+
+      if(
+        !response.ok
+      ){
+
+        throw new Error(
+          "Worker returned HTTP " +
+          response.status
+        );
+
+      }
+
+      const data =
+        await response.json();
+
+      /*
+        If the normal app search function
+        exists, hand the response back to
+        the normal renderer by updating
+        the existing state.
+
+        Otherwise show a basic fallback
+        result so the search can never
+        appear completely dead.
+      */
+
+      if(
+        typeof window.normalizeResponse ===
+        "function"
+      ){
+
+        const normalized =
+          window.normalizeResponse(
+            data
+          );
+
+        window.currentAnime =
+          normalized.anime;
+
+        window.currentSources =
+          normalized.sources;
+
+        if(
+          typeof window.renderResults ===
+          "function"
+        ){
+
+          window.renderResults();
+
+        }
+
+        if(
+          typeof window.renderServices ===
+          "function"
+        ){
+
+          window.renderServices();
+
+        }
+
+      }else if(
+        typeof window.searchAnime ===
+        "function"
+      ){
+
+        /*
+          The main function exists, so let
+          the normal app handle the search.
+        */
+
+        await window.searchAnime(
+          query
+        );
+
+      }else{
+
+        /*
+          Last-resort display.
+          This proves the Worker itself
+          responded instead of leaving the
+          old Solo Leveling result visible.
+        */
+
+        const results =
+          get("results");
+
+        if(results){
+
+          const pre =
+            document.createElement(
+              "pre"
+            );
+
+          pre.className =
+            "fallback-search-result";
+
+          pre.textContent =
+            JSON.stringify(
+              data,
+              null,
+              2
+            );
+
+          results.appendChild(
+            pre
+          );
+
+        }
+
+      }
+
+      showFallbackStatus(
+        "Search complete.",
+        "success"
+      );
+
+    }catch(error){
+
+      console.error(
+        "Anime Finder search error:",
+        error
+      );
+
+      clearOldResults();
+
+      showFallbackStatus(
+        "Search failed: " +
+        (
+          error?.message ||
+          "Unknown error"
+        ),
+        "error"
+      );
+
+    }finally{
+
+      if(button){
+        button.disabled =
+          false;
+      }
+
+    }
+
+  }
+
+  function bind(){
+
+    const form =
+      get("searchForm");
+
+    const input =
+      get("searchInput");
+
+    const button =
+      get("searchButton");
+
+    const menu =
+      get("menuToggle");
+
+    /*
+      SEARCH FORM
+    */
+
+    if(form){
 
       form.onsubmit =
         function(event){
 
           event.preventDefault();
-          event.stopPropagation();
+          event.stopImmediatePropagation();
 
-          const query =
-            input.value.trim();
-
-          if(!query){
-
-            input.focus();
-
-            return false;
-
-          }
-
-          if(
-            typeof window.searchAnime ===
-            "function"
-          ){
-
-            window.searchAnime(
-              query
-            );
-
-          }
+          hardSearch(
+            input?.value ||
+            ""
+          );
 
           return false;
 
@@ -4958,22 +5319,51 @@ attachLogoFallbacks();
 
     }
 
-    if(
-      menu
-    ){
+    /*
+      SEARCH BUTTON
+    */
 
-      menu.onclick =
+    if(button){
+
+      button.onclick =
         function(event){
 
           event.preventDefault();
-          event.stopPropagation();
+          event.stopImmediatePropagation();
+
+          hardSearch(
+            input?.value ||
+            ""
+          );
+
+          return false;
+
+        };
+
+    }
+
+    /*
+      ENTER KEY
+    */
+
+    if(input){
+
+      input.onkeydown =
+        function(event){
 
           if(
-            typeof window.toggleTabMenu ===
-            "function"
+            event.key ===
+            "Enter"
           ){
 
-            window.toggleTabMenu();
+            event.preventDefault();
+            event.stopImmediatePropagation();
+
+            hardSearch(
+              input.value
+            );
+
+            return false;
 
           }
 
@@ -4981,7 +5371,116 @@ attachLogoFallbacks();
 
     }
 
+    /*
+      HAMBURGER / DROPDOWN
+    */
+
+    if(menu){
+
+      menu.onclick =
+        function(event){
+
+          event.preventDefault();
+          event.stopImmediatePropagation();
+
+          toggleMenu();
+
+          return false;
+
+        };
+
+    }
+
+    /*
+      MENU ITEMS
+    */
+
+    document
+      .querySelectorAll(
+        "#tabMenu .tab"
+      )
+      .forEach(
+        tab => {
+
+          tab.onclick =
+            function(event){
+
+              event.preventDefault();
+              event.stopImmediatePropagation();
+
+              const name =
+                tab.dataset.tab;
+
+              /*
+                Use the main showTab function
+                if it exists.
+              */
+
+              if(
+                typeof window.showTab ===
+                "function"
+              ){
+
+                window.showTab(
+                  name
+                );
+
+              }else{
+
+                /*
+                  Direct fallback tab switching.
+                */
+
+                const sections = {
+                  search:
+                    "searchSection",
+
+                  services:
+                    "servicesSection",
+
+                  favorites:
+                    "favoritesSection",
+
+                  help:
+                    "helpSection"
+                };
+
+                Object.entries(
+                  sections
+                ).forEach(
+                  ([key,id]) => {
+
+                    const section =
+                      get(id);
+
+                    if(section){
+
+                      section.classList.toggle(
+                        "hidden",
+                        key !== name
+                      );
+
+                    }
+
+                  }
+                );
+
+              }
+
+              closeMenu();
+
+              return false;
+
+            };
+
+        }
+      );
+
   }
+
+  /*
+    Wait until the DOM exists.
+  */
 
   if(
     document.readyState ===
@@ -4990,17 +5489,19 @@ attachLogoFallbacks();
 
     document.addEventListener(
       "DOMContentLoaded",
-      bindCriticalControls
+      bind,
+      {
+        once:true
+      }
     );
 
   }else{
 
-    bindCriticalControls();
+    bind();
 
   }
 
 })();
-
 </script>
 
 </body>
