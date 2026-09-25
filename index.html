@@ -77,6 +77,11 @@ button{
   cursor:pointer;
 }
 
+button:disabled{
+  cursor:wait;
+  opacity:.65;
+}
+
 .hidden{
   display:none!important;
 }
@@ -173,6 +178,7 @@ h1 .finder{
   top:50%;
   transform:translateY(-50%);
   color:#aaa;
+  pointer-events:none;
 }
 
 input{
@@ -247,7 +253,9 @@ input:focus{
 .fav:focus-visible,
 .open-offer:focus-visible,
 .secondary:focus-visible,
-.danger:focus-visible{
+.danger:focus-visible,
+.filter:focus-visible,
+.recent-item:focus-visible{
   outline:2px solid var(--red3);
   outline-offset:2px;
 }
@@ -505,6 +513,13 @@ input:focus{
   color:#fff;
 }
 
+.favorite-item{
+  width:100%;
+  border:0;
+  color:inherit;
+  text-align:left;
+}
+
 .modal-backdrop{
   position:fixed;
   inset:0;
@@ -608,7 +623,8 @@ footer{
     grid-template-columns:44px minmax(0,1fr);
   }
 
-  .offer .open-offer{
+  .offer .open-offer,
+  .offer .no-link{
     grid-column:2;
     justify-self:start;
   }
@@ -622,7 +638,6 @@ footer{
     font-size:16px;
     padding:8px;
   }
-
 }
 </style>
 </head>
@@ -667,6 +682,7 @@ footer{
     </div>
 
     <button
+      id="searchButton"
       class="primary"
       type="submit"
     >
@@ -677,12 +693,13 @@ footer{
 
 </header>
 
-
-<nav class="tabs glass">
+<nav
+  class="tabs glass"
+  aria-label="Main navigation"
+>
 
   <button
     class="tab active"
-    id="searchNavTab"
     data-tab="search"
     type="button"
   >
@@ -691,7 +708,6 @@ footer{
 
   <button
     class="tab"
-    id="servicesNavTab"
     data-tab="services"
     type="button"
   >
@@ -700,7 +716,6 @@ footer{
 
   <button
     class="tab"
-    id="favoritesNavTab"
     data-tab="favorites"
     type="button"
   >
@@ -709,7 +724,6 @@ footer{
 
   <button
     class="tab"
-    id="helpNavTab"
     data-tab="help"
     type="button"
   >
@@ -717,7 +731,6 @@ footer{
   </button>
 
 </nav>
-
 
 <main>
 
@@ -734,7 +747,6 @@ footer{
   </p>
 
   <div id="results"></div>
-
 
   <div
     id="recentWrap"
@@ -766,7 +778,6 @@ footer{
 
 </section>
 
-
 <section
   id="servicesSection"
   class="panel glass hidden"
@@ -787,7 +798,6 @@ footer{
 
 </section>
 
-
 <section
   id="favoritesSection"
   class="panel glass hidden"
@@ -807,7 +817,6 @@ footer{
   ></div>
 
 </section>
-
 
 <section
   id="helpSection"
@@ -834,22 +843,23 @@ footer{
 
 </main>
 
-
 <footer>
   Anime Finder
 </footer>
 
 </div>
 
-
 <div
   id="reportModal"
   class="modal-backdrop hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="reportTitle"
 >
 
   <div class="modal glass">
 
-    <h2>
+    <h2 id="reportTitle">
       Report incorrect information
     </h2>
 
@@ -886,12 +896,10 @@ footer{
 
       </select>
 
-
       <textarea
         id="reportDetails"
         placeholder="Optional details..."
       ></textarea>
-
 
       <div class="modal-actions">
 
@@ -904,6 +912,7 @@ footer{
         </button>
 
         <button
+          id="saveReport"
           class="danger"
           type="submit"
         >
@@ -918,8 +927,8 @@ footer{
 
 </div>
 
-
 <script>
+"use strict";
 
 const WORKER_URL =
   "https://holy-lake-cba9.daviswillis232.workers.dev/";
@@ -971,8 +980,8 @@ const SERVICE_CONFIG = [
       "disneyplus"
     ],
     displayName:"Disney+",
-    logo:"https://cdn.simpleicons.org/disneyplus/FFFFFF",
-    fallbackLogo:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg"
+    logo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Disney%2B_2024.svg",
+    fallbackLogo:"https://upload.wikimedia.org/wikipedia/commons/7/77/Disney_Plus_logo.svg"
   },
 
   {
@@ -1012,8 +1021,8 @@ const SERVICE_CONFIG = [
   {
     matches:["peacock"],
     displayName:"Peacock",
-    logo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/NBCUniversal_Peacock_Logo_(2026;_icon).svg",
-    fallbackLogo:"https://cdn.simpleicons.org/peacock/FFFFFF"
+    logo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/NBCUniversal_Peacock_Logo_(2026%3B_icon).svg",
+    fallbackLogo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/NBCUniversal_Peacock_Logo_(2026).svg"
   },
 
   {
@@ -1323,9 +1332,7 @@ function getProviderParentName(name){
   }
 
   return (
-    findServiceConfig(
-      name
-    )?.displayName ||
+    findServiceConfig(name)?.displayName ||
     safeString(name)
   );
 
@@ -1446,21 +1453,6 @@ function formatPrice(value){
         value.price
       );
 
-    const currency =
-      safeString(
-        firstNonEmpty(
-          value.currency,
-          ""
-        )
-      ).toUpperCase();
-
-    if(
-      amount !== "" &&
-      currency === "USD"
-    ){
-      return formatPrice(amount);
-    }
-
     if(amount !== ""){
       return formatPrice(amount);
     }
@@ -1481,7 +1473,25 @@ function formatPrice(value){
   if(
     raw.startsWith("$")
   ){
+
+    const m =
+      raw.match(
+        /\$\s*(\d+(?:\.\d{1,2})?)/
+      );
+
+    if(m){
+
+      const n =
+        Number(m[1]);
+
+      return Number.isFinite(n)
+        ? `$${n.toFixed(2)}`
+        : raw;
+
+    }
+
     return raw;
+
   }
 
   const m =
@@ -1578,7 +1588,9 @@ function getSafeUrl(v){
     return [
       "http:",
       "https:"
-    ].includes(u.protocol)
+    ].includes(
+      u.protocol
+    )
       ? u.href
       : "";
 
@@ -1739,14 +1751,12 @@ function getServiceLogoCandidates(name){
   const c =
     findServiceConfig(name);
 
-  if(!c){
-    return [];
-  }
-
-  return [
-    c.logo,
-    c.fallbackLogo
-  ].filter(Boolean);
+  return c
+    ? [
+        c.logo,
+        c.fallbackLogo
+      ].filter(Boolean)
+    : [];
 
 }
 
@@ -1807,11 +1817,9 @@ function buildLogoHtml(
           serviceName
         )}"
       >
-
         <span class="logo-initials">
           ${escapeHtml(initials)}
         </span>
-
       </div>
     `;
 
@@ -1859,6 +1867,15 @@ function attachLogoFallbacks(
     .forEach(
       img => {
 
+        if(
+          img.dataset.logoBound === "1"
+        ){
+          return;
+        }
+
+        img.dataset.logoBound =
+          "1";
+
         img.addEventListener(
           "error",
           () => {
@@ -1871,12 +1888,15 @@ function attachLogoFallbacks(
               img.src !== fb
             ){
 
-              img.src = fb;
+              img.src =
+                fb;
+
               return;
 
             }
 
-            img.hidden = true;
+            img.hidden =
+              true;
 
             const span =
               img.parentElement
@@ -1885,7 +1905,8 @@ function attachLogoFallbacks(
                 );
 
             if(span){
-              span.hidden = false;
+              span.hidden =
+                false;
             }
 
           }
@@ -1957,7 +1978,9 @@ function getRecent(){
 function addRecent(query){
 
   const q =
-    safeString(query).trim();
+    safeString(
+      query
+    ).trim();
 
   if(!q){
     return;
@@ -1988,6 +2011,10 @@ function renderRecent(){
   const list =
     $("recentList");
 
+  if(!list){
+    return;
+  }
+
   const recent =
     getRecent();
 
@@ -2015,19 +2042,6 @@ function renderRecent(){
           </span>
         `;
 
-  list
-    .querySelectorAll(
-      "[data-query]"
-    )
-    .forEach(
-      b =>
-        b.onclick =
-          () =>
-            searchAnime(
-              b.dataset.query
-            )
-    );
-
 }
 
 
@@ -2046,20 +2060,33 @@ function getFavorites(){
 }
 
 
+function getAnimeId(anime){
+
+  return safeString(
+    anime?.id ||
+    anime?.mal_id ||
+    anime?.title
+  );
+
+}
+
+
 function isFavorite(){
 
   const id =
-    safeString(
-      currentAnime?.id ||
-      currentAnime?.mal_id ||
-      currentAnime?.title
+    getAnimeId(
+      currentAnime
     );
+
+  if(!id){
+    return false;
+  }
 
   return getFavorites().some(
     x =>
       safeString(
-        x.id ||
-        x.title
+        x?.id ||
+        x?.title
       ) === id
   );
 
@@ -2073,11 +2100,13 @@ function toggleFavorite(){
   }
 
   const id =
-    safeString(
-      currentAnime.id ||
-      currentAnime.mal_id ||
-      currentAnime.title
+    getAnimeId(
+      currentAnime
     );
+
+  if(!id){
+    return;
+  }
 
   let list =
     getFavorites();
@@ -2086,8 +2115,8 @@ function toggleFavorite(){
     list.some(
       x =>
         safeString(
-          x.id ||
-          x.title
+          x?.id ||
+          x?.title
         ) === id
     )
   ){
@@ -2096,8 +2125,8 @@ function toggleFavorite(){
       list.filter(
         x =>
           safeString(
-            x.id ||
-            x.title
+            x?.id ||
+            x?.title
           ) !== id
       );
 
@@ -2141,6 +2170,10 @@ function renderFavorites(){
   const box =
     $("favoriteList");
 
+  if(!box){
+    return;
+  }
+
   const list =
     getFavorites();
 
@@ -2151,8 +2184,14 @@ function renderFavorites(){
           .map(
             x =>
               `
-                <div
-                  class="service-card glass"
+                <button
+                  class="service-card glass favorite-item"
+                  data-favorite-id="${escapeHtml(
+                    x.id ||
+                    x.title ||
+                    ""
+                  )}"
+                  type="button"
                 >
 
                   <div
@@ -2185,7 +2224,6 @@ function renderFavorites(){
 
                   </div>
 
-
                   <div>
 
                     <h3>
@@ -2201,7 +2239,7 @@ function renderFavorites(){
 
                   </div>
 
-                </div>
+                </button>
               `
           )
           .join("")
@@ -2269,7 +2307,8 @@ function normalizeResponse(json){
       : json;
 
   const anime =
-    getAnimeObject(root) || {};
+    getAnimeObject(root) ||
+    {};
 
   const sources =
     extractSources(root)
@@ -2281,7 +2320,9 @@ function normalizeResponse(json){
             r =>
               normalizeServiceName(
                 getRawServiceName(s)
-              ).includes(r)
+              ).includes(
+                normalizeServiceName(r)
+              )
           )
       );
 
@@ -2327,15 +2368,23 @@ function renderResults(){
   const box =
     $("results");
 
+  if(!box){
+    return;
+  }
+
   if(!currentAnime){
 
-    box.innerHTML = "";
+    box.innerHTML =
+      "";
+
     return;
 
   }
 
   const poster =
-    getPoster(currentAnime);
+    getPoster(
+      currentAnime
+    );
 
   const filtered =
     currentSources.filter(
@@ -2388,7 +2437,9 @@ function renderResults(){
                       ? "active"
                       : ""
                   }"
-                  data-service="${escapeHtml(s)}"
+                  data-service="${escapeHtml(
+                    s
+                  )}"
                   type="button"
                 >
                   ${escapeHtml(s)}
@@ -2479,7 +2530,6 @@ function renderResults(){
                         : ""
                     }
 
-
                     <div class="offer-details">
 
                       ${
@@ -2505,7 +2555,6 @@ function renderResults(){
 
                   </div>
 
-
                   ${
                     url
 
@@ -2521,7 +2570,7 @@ function renderResults(){
                       `
 
                       : `
-                        <span class="badge">
+                        <span class="badge no-link">
                           No link
                         </span>
                       `
@@ -2561,7 +2610,6 @@ function renderResults(){
           : ""
       }
 
-
       <div>
 
         <h2>
@@ -2584,12 +2632,16 @@ function renderResults(){
 
       </div>
 
-
       <button
         class="fav"
         id="favBtn"
         title="Favorite"
         type="button"
+        aria-label="${
+          isFavorite()
+            ? "Remove from favorites"
+            : "Add to favorites"
+        }"
       >
         ${
           isFavorite()
@@ -2599,7 +2651,6 @@ function renderResults(){
       </button>
 
     </div>
-
 
     <div class="section-title">
 
@@ -2618,14 +2669,11 @@ function renderResults(){
 
     </div>
 
-
     ${filters}
-
 
     <div class="offer-grid">
       ${offers}
     </div>
-
 
     <button
       class="report-btn"
@@ -2638,34 +2686,9 @@ function renderResults(){
   `;
 
 
-  box
-    .querySelectorAll(".filter")
-    .forEach(
-      b =>
-        b.onclick =
-          () => {
-
-            activeService =
-              b.dataset.service;
-
-            renderResults();
-
-          }
-    );
-
-
-  $("favBtn").onclick =
-    toggleFavorite;
-
-
-  $("reportBtn").onclick =
-    () =>
-      $("reportModal")
-        .classList
-        .remove("hidden");
-
-
-  attachLogoFallbacks(box);
+  attachLogoFallbacks(
+    box
+  );
 
 }
 
@@ -2677,6 +2700,10 @@ function showStatus(
 
   const el =
     $("status");
+
+  if(!el){
+    return;
+  }
 
   el.textContent =
     msg;
@@ -2695,10 +2722,21 @@ function showStatus(
 async function searchAnime(query){
 
   const q =
-    safeString(query).trim();
+    safeString(
+      query
+    ).trim();
 
   if(!q){
+
+    showStatus(
+      "Enter an anime title to search.",
+      "error"
+    );
+
+    $("searchInput")?.focus();
+
     return;
+
   }
 
   $("searchInput").value =
@@ -2707,6 +2745,14 @@ async function searchAnime(query){
   showStatus(
     "Searching..."
   );
+
+  const button =
+    $("searchButton");
+
+  if(button){
+    button.disabled =
+      true;
+  }
 
 
   try{
@@ -2780,8 +2826,14 @@ async function searchAnime(query){
 
   }catch(err){
 
-    currentAnime = null;
-    currentSources = [];
+    currentAnime =
+      null;
+
+    currentSources =
+      [];
+
+    activeService =
+      "All";
 
     renderResults();
 
@@ -2789,12 +2841,19 @@ async function searchAnime(query){
     showStatus(
       `Search failed: ${
         safeString(
-          err.message ||
+          err?.message ||
           err
         )
       }`,
       "error"
     );
+
+  }finally{
+
+    if(button){
+      button.disabled =
+        false;
+    }
 
   }
 
@@ -2839,7 +2898,9 @@ function showTab(tab){
 
 
   document
-    .querySelectorAll(".tab")
+    .querySelectorAll(
+      ".tab"
+    )
     .forEach(
       button => {
 
@@ -2856,7 +2917,6 @@ function showTab(tab){
     renderServices();
   }
 
-
   if(tab === "favorites"){
     renderFavorites();
   }
@@ -2868,6 +2928,10 @@ function renderServices(){
 
   const box =
     $("serviceGrid");
+
+  if(!box){
+    return;
+  }
 
   box.innerHTML =
     SERVICE_CONFIG
@@ -2883,7 +2947,6 @@ function renderServices(){
       .map(
         c =>
           `
-
             <div
               class="service-card glass"
             >
@@ -2892,7 +2955,6 @@ function renderServices(){
                 c.displayName,
                 true
               )}
-
 
               <div>
 
@@ -2909,13 +2971,13 @@ function renderServices(){
               </div>
 
             </div>
-
           `
       )
       .join("");
 
-
-  attachLogoFallbacks(box);
+  attachLogoFallbacks(
+    box
+  );
 
 }
 
@@ -2935,7 +2997,48 @@ function getReports(){
 }
 
 
-/* SEARCH */
+function openReport(){
+
+  if(
+    !currentAnime ||
+    !currentSources.length
+  ){
+
+    showStatus(
+      "Search an anime before reporting offer information.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  $("reportModal")
+    ?.classList
+    .remove(
+      "hidden"
+    );
+
+  $("reportReason")
+    ?.focus();
+
+}
+
+
+function closeReport(){
+
+  $("reportModal")
+    ?.classList
+    .add(
+      "hidden"
+    );
+
+}
+
+
+/*
+  SEARCH
+*/
 
 $("searchForm")
   .addEventListener(
@@ -2952,50 +3055,31 @@ $("searchForm")
   );
 
 
-/* RECENT SEARCHES */
+/*
+  STATIC BUTTONS
+*/
 
-$("clearRecent").onclick =
-  () => {
+$("clearRecent")
+  .addEventListener(
+    "click",
+    () => {
 
-    writeStorage(
-      RECENT_KEY,
-      []
-    );
-
-    renderRecent();
-
-  };
-
-
-/* MAIN NAVIGATION */
-
-document
-  .querySelectorAll(".tab")
-  .forEach(
-    button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          showTab(
-            button.dataset.tab
-          );
-
-        }
+      writeStorage(
+        RECENT_KEY,
+        []
       );
+
+      renderRecent();
 
     }
   );
 
 
-/* REPORT MODAL */
-
-$("closeReport").onclick =
-  () =>
-    $("reportModal")
-      .classList
-      .add("hidden");
+$("closeReport")
+  .addEventListener(
+    "click",
+    closeReport
+  );
 
 
 $("reportModal")
@@ -3004,13 +3088,11 @@ $("reportModal")
     e => {
 
       if(
-        e.target ===
-        $("reportModal")
+        e.target.id ===
+        "reportModal"
       ){
 
-        $("reportModal")
-          .classList
-          .add("hidden");
+        closeReport();
 
       }
 
@@ -3025,6 +3107,13 @@ $("reportForm")
 
       e.preventDefault();
 
+      if(!currentAnime){
+
+        closeReport();
+
+        return;
+
+      }
 
       const report = {
 
@@ -3074,12 +3163,10 @@ $("reportForm")
 
 
       $("reportDetails")
-        .value = "";
+        .value =
+        "";
 
-
-      $("reportModal")
-        .classList
-        .add("hidden");
+      closeReport();
 
 
       showStatus(
@@ -3091,7 +3178,167 @@ $("reportForm")
   );
 
 
-/* INITIAL LOAD */
+/*
+  EVENT DELEGATION
+
+  This is the big button fix.
+  Anything rendered later inside the page
+  still gets its click event.
+*/
+
+document.addEventListener(
+  "click",
+  e => {
+
+    const tab =
+      e.target.closest(
+        ".tab"
+      );
+
+    if(tab){
+
+      showTab(
+        tab.dataset.tab
+      );
+
+      return;
+
+    }
+
+
+    const recent =
+      e.target.closest(
+        ".recent-item"
+      );
+
+    if(recent){
+
+      searchAnime(
+        recent.dataset.query ||
+        ""
+      );
+
+      return;
+
+    }
+
+
+    const filter =
+      e.target.closest(
+        ".filter"
+      );
+
+    if(filter){
+
+      activeService =
+        filter.dataset.service ||
+        "All";
+
+      renderResults();
+
+      return;
+
+    }
+
+
+    const fav =
+      e.target.closest(
+        "#favBtn"
+      );
+
+    if(fav){
+
+      toggleFavorite();
+
+      return;
+
+    }
+
+
+    const report =
+      e.target.closest(
+        "#reportBtn"
+      );
+
+    if(report){
+
+      openReport();
+
+      return;
+
+    }
+
+
+    const favoriteItem =
+      e.target.closest(
+        ".favorite-item"
+      );
+
+    if(favoriteItem){
+
+      const id =
+        safeString(
+          favoriteItem.dataset
+            .favoriteId
+        );
+
+      const favorite =
+        getFavorites().find(
+          x =>
+            safeString(
+              x?.id ||
+              x?.title
+            ) === id
+        );
+
+      if(
+        favorite?.title
+      ){
+
+        showTab(
+          "search"
+        );
+
+        searchAnime(
+          favorite.title
+        );
+
+      }
+
+      return;
+
+    }
+
+  }
+);
+
+
+/*
+  ESCAPE CLOSES REPORT MODAL
+*/
+
+document.addEventListener(
+  "keydown",
+  e => {
+
+    if(
+      e.key === "Escape" &&
+      !$("reportModal")
+        .classList
+        .contains("hidden")
+    ){
+
+      closeReport();
+
+    }
+
+  }
+);
+
+
+/*
+  INITIAL LOAD
+*/
 
 renderRecent();
 renderServices();
