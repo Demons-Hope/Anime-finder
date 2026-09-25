@@ -275,7 +275,8 @@ input:focus{
 .filter:focus-visible,
 .recent-item:focus-visible,
 .favorite-item:focus-visible,
-.favorite-remove:focus-visible{
+.favorite-remove:focus-visible,
+.service-browser-card:focus-visible{
   outline:2px solid var(--red3);
   outline-offset:2px;
 }
@@ -676,6 +677,92 @@ input:focus{
     );
 }
 
+.service-browser-card{
+  width:100%;
+  min-height:92px;
+  border:1px solid var(--line);
+  color:inherit;
+  text-align:left;
+  padding:16px;
+  position:relative;
+}
+
+.service-browser-card.has-offer{
+  border-color:rgba(224,0,47,.48);
+}
+
+.service-browser-card.active{
+  border-color:var(--red2);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(176,0,32,.16),
+      rgba(0,0,0,.45)
+    );
+  box-shadow:
+    0 8px 24px rgba(176,0,32,.12),
+    inset 0 0 20px rgba(176,0,32,.06);
+}
+
+.service-browser-card:hover{
+  border-color:rgba(224,0,47,.62);
+}
+
+.service-browser-info{
+  min-width:0;
+  flex:1;
+}
+
+.service-browser-info h3{
+  margin:0 0 5px;
+  color:#fff;
+  font-size:16px;
+}
+
+.service-browser-info p{
+  margin:0;
+  color:#777;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.service-browser-count{
+  margin-left:auto;
+  flex:none;
+  min-width:30px;
+  height:24px;
+  padding:0 8px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  border:1px solid #333;
+  color:#888;
+  font-size:11px;
+  font-weight:800;
+}
+
+.service-browser-card.has-offer .service-browser-count{
+  color:#8ee8ac;
+  border-color:rgba(142,232,172,.22);
+  background:rgba(45,120,72,.09);
+}
+
+.service-browser-arrow{
+  color:#555;
+  font-size:16px;
+  margin-left:2px;
+  transition:
+    color .18s ease,
+    transform .18s ease;
+}
+
+.service-browser-card:hover .service-browser-arrow{
+  color:#fff;
+  transform:translateX(2px);
+}
+
 /* =========================
    HELP
 ========================= */
@@ -957,6 +1044,10 @@ footer{
     padding-right:52px;
   }
 
+  .service-browser-card{
+    min-height:84px;
+  }
+
 }
 
 @media(max-width:430px){
@@ -1131,7 +1222,20 @@ footer{
 >
 
   <div class="section-title">
-    <h2>All Services</h2>
+
+    <div>
+      <h2>
+        All Services
+      </h2>
+
+      <div
+        id="serviceStatus"
+        class="meta"
+      >
+        Search an anime to see which services currently have it.
+      </div>
+    </div>
+
   </div>
 
   <div
@@ -2664,11 +2768,6 @@ function removeFavorite(id){
 
   renderFavorites();
 
-  /*
-    If the anime currently being viewed was removed
-    from favorites, refresh the heart button too.
-  */
-
   if(currentAnime){
     renderResults();
   }
@@ -2986,10 +3085,6 @@ function renderResults(){
     );
 
 
-  /* =========================
-     FILTER BAR
-  ========================= */
-
   const filters = `
 
     <div class="filters">
@@ -3049,10 +3144,6 @@ function renderResults(){
 
   `;
 
-
-  /* =========================
-     OFFER CARDS
-  ========================= */
 
   const offers =
     filtered.length
@@ -3185,10 +3276,6 @@ function renderResults(){
           </div>
         `;
 
-
-  /* =========================
-     COMPLETE RESULTS AREA
-  ========================= */
 
   box.innerHTML = `
 
@@ -3412,6 +3499,8 @@ async function searchAnime(query){
 
     renderResults();
 
+    renderServices();
+
 
     showStatus(
       `Found ${currentSources.length} U.S. option${
@@ -3435,6 +3524,8 @@ async function searchAnime(query){
       "All";
 
     renderResults();
+
+    renderServices();
 
 
     showStatus(
@@ -3528,51 +3619,167 @@ function renderServices(){
   const box =
     $("serviceGrid");
 
+  const status =
+    $("serviceStatus");
+
   if(!box){
     return;
   }
 
-  box.innerHTML =
-    SERVICE_CONFIG
-      .filter(
-        c =>
-          c.displayName &&
-          !RETIRED_PROVIDERS.includes(
-            normalizeServiceName(
-              c.displayName
-            )
+  const configs =
+    SERVICE_CONFIG.filter(
+      c =>
+        c.displayName &&
+        !RETIRED_PROVIDERS.includes(
+          normalizeServiceName(
+            c.displayName
           )
-      )
+        )
+    );
+
+  const counts =
+    getServiceCounts();
+
+  const hasAnime =
+    Boolean(
+      currentAnime
+    );
+
+  const totalServices =
+    Object.keys(
+      counts
+    ).length;
+
+
+  if(status){
+
+    status.textContent =
+      hasAnime
+
+        ? `Current search: ${
+            safeString(
+              getAnimeTitle(
+                currentAnime
+              )
+            )
+          } • ${
+            totalServices
+          } service${
+            totalServices === 1
+              ? ""
+              : "s"
+          } with U.S. offers.`
+
+        : "Search an anime to see which services currently have it.";
+
+  }
+
+
+  box.innerHTML =
+    configs
       .map(
-        c =>
-          `
-            <div
-              class="service-card glass"
+        c => {
+
+          const service =
+            c.displayName;
+
+          const count =
+            counts[service] || 0;
+
+          const hasOffer =
+            count > 0;
+
+          const active =
+            activeService === service &&
+            hasAnime;
+
+
+          let description;
+
+          if(!hasAnime){
+
+            description =
+              "Search an anime to check availability.";
+
+          }else if(hasOffer){
+
+            description =
+              `${count} current U.S. offer${
+                count === 1
+                  ? ""
+                  : "s"
+              } • Tap to view`;
+
+          }else{
+
+            description =
+              "No current U.S. offer for this anime.";
+
+          }
+
+
+          return `
+
+            <button
+              class="
+                service-card
+                glass
+                service-browser-card
+                ${hasOffer ? "has-offer" : ""}
+                ${active ? "active" : ""}
+              "
+              type="button"
+              data-browser-service="${escapeHtml(service)}"
+              aria-label="${
+                hasOffer
+                  ? `View ${escapeHtml(service)} offers`
+                  : `Check ${escapeHtml(service)} availability`
+              }"
             >
 
               ${buildLogoHtml(
-                c.displayName,
+                service,
                 true
               )}
 
-              <div>
+              <div class="service-browser-info">
 
                 <h3>
-                  ${escapeHtml(
-                    c.displayName
-                  )}
+                  ${escapeHtml(service)}
                 </h3>
 
                 <p>
-                  Anime availability service
+                  ${escapeHtml(description)}
                 </p>
 
               </div>
 
-            </div>
-          `
+              <span
+                class="service-browser-count"
+                aria-hidden="true"
+              >
+                ${
+                  hasAnime
+                    ? count
+                    : "—"
+                }
+              </span>
+
+              <span
+                class="service-browser-arrow"
+                aria-hidden="true"
+              >
+                ›
+              </span>
+
+            </button>
+
+          `;
+
+        }
       )
       .join("");
+
 
   attachLogoFallbacks(
     box
@@ -3818,6 +4025,101 @@ document.addEventListener(
     }
 
 
+    /*
+      ALL SERVICES BROWSER
+    */
+
+    const browserService =
+      e.target.closest(
+        ".service-browser-card"
+      );
+
+    if(browserService){
+
+      const service =
+        safeString(
+          browserService.dataset
+            .browserService
+        );
+
+      if(!service){
+        return;
+      }
+
+
+      if(!currentAnime){
+
+        showTab(
+          "search"
+        );
+
+        showStatus(
+          `Search an anime first to check ${
+            service
+          } availability.`,
+          "error"
+        );
+
+        $("searchInput")
+          ?.focus();
+
+        return;
+
+      }
+
+
+      activeService =
+        service;
+
+      showTab(
+        "search"
+      );
+
+      renderResults();
+
+
+      const count =
+        getServiceCounts()[service] ||
+        0;
+
+
+      if(count > 0){
+
+        showStatus(
+          `Showing ${count} U.S. offer${
+            count === 1
+              ? ""
+              : "s"
+          } for ${
+            getAnimeTitle(
+              currentAnime
+            )
+          } on ${
+            service
+          }.`,
+          "success"
+        );
+
+      }else{
+
+        showStatus(
+          `No current U.S. offer found for ${
+            getAnimeTitle(
+              currentAnime
+            )
+          } on ${
+            service
+          }.`,
+          "error"
+        );
+
+      }
+
+      return;
+
+    }
+
+
     const filter =
       e.target.closest(
         ".filter"
@@ -3830,6 +4132,7 @@ document.addEventListener(
         "All";
 
       renderResults();
+      renderServices();
 
       return;
 
@@ -3959,11 +4262,6 @@ document.addEventListener(
       return;
     }
 
-    /*
-      Don't trigger the card when the user
-      is focused on the remove button.
-    */
-
     if(
       e.target.closest(
         ".favorite-remove"
@@ -4042,4 +4340,4 @@ attachLogoFallbacks();
 </script>
 
 </body>
-</html>
+  </html>
