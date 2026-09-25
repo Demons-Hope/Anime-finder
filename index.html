@@ -67,7 +67,9 @@ body::before{
 }
 
 button,
-input{
+input,
+textarea,
+select{
   font:inherit;
 }
 
@@ -225,6 +227,11 @@ input:focus{
   padding:12px 10px;
   border-radius:12px;
   font-weight:700;
+}
+
+.tab:hover{
+  color:#fff;
+  background:rgba(176,0,32,.08);
 }
 
 .tab.active{
@@ -528,6 +535,7 @@ textarea{
   background:#080808;
   border:1px solid #333;
   outline:none;
+  margin-top:10px;
 }
 
 .modal-actions{
@@ -562,6 +570,7 @@ footer{
 }
 
 @media(max-width:700px){
+
   .app{
     width:96vw;
     padding-top:14px;
@@ -613,6 +622,7 @@ footer{
     font-size:16px;
     padding:8px;
   }
+
 }
 </style>
 </head>
@@ -621,182 +631,213 @@ footer{
 
 <div class="app">
 
-  <header class="hero glass">
+<header class="hero glass">
 
-    <div class="brand">
-      <h1>
-        <span class="anime">Anime</span>
-        <span class="finder">Finder</span>
-      </h1>
+  <div class="brand">
+
+    <h1>
+      <span class="anime">Anime</span>
+      <span class="finder">Finder</span>
+    </h1>
+
+  </div>
+
+  <p class="subtitle">
+    Find where to watch your favorite anime.
+  </p>
+
+  <form
+    id="searchForm"
+    class="search-row"
+  >
+
+    <div class="search-box">
+
+      <span class="search-icon">
+        ⌕
+      </span>
+
+      <input
+        id="searchInput"
+        autocomplete="off"
+        placeholder="Search for an anime..."
+        required
+      >
+
     </div>
 
-    <p class="subtitle">
-      Find where to watch your favorite anime.
-    </p>
+    <button
+      class="primary"
+      type="submit"
+    >
+      Search
+    </button>
 
-    <form id="searchForm" class="search-row">
+  </form>
 
-      <div class="search-box">
-        <span class="search-icon">⌕</span>
+</header>
 
-        <input
-          id="searchInput"
-          autocomplete="off"
-          placeholder="Search for an anime..."
-          required
-        >
-      </div>
 
-      <button class="primary" type="submit">
-        Search
+<nav class="tabs glass">
+
+  <button
+    class="tab active"
+    id="searchNavTab"
+    data-tab="search"
+    type="button"
+  >
+    Search Anime
+  </button>
+
+  <button
+    class="tab"
+    id="servicesNavTab"
+    data-tab="services"
+    type="button"
+  >
+    All Services
+  </button>
+
+  <button
+    class="tab"
+    id="favoritesNavTab"
+    data-tab="favorites"
+    type="button"
+  >
+    My Anime
+  </button>
+
+  <button
+    class="tab"
+    id="helpNavTab"
+    data-tab="help"
+    type="button"
+  >
+    Help Someone
+  </button>
+
+</nav>
+
+
+<main>
+
+<section
+  id="searchSection"
+  class="panel glass"
+>
+
+  <p
+    id="status"
+    class="status"
+  >
+    Search an anime and see the services, offers, and U.S. availability returned by Anime Finder.
+  </p>
+
+  <div id="results"></div>
+
+
+  <div
+    id="recentWrap"
+    class="recent-wrap"
+  >
+
+    <div class="section-title">
+
+      <h2>
+        Recent searches
+      </h2>
+
+      <button
+        id="clearRecent"
+        class="small-btn"
+        type="button"
+      >
+        Clear
       </button>
 
-    </form>
+    </div>
 
-  </header>
+    <div
+      id="recentList"
+      class="recent-list"
+    ></div>
+
+  </div>
+
+</section>
 
 
-  <nav class="tabs glass">
+<section
+  id="servicesSection"
+  class="panel glass hidden"
+>
 
-    <button
-      class="tab active"
-      id="searchNavTab"
-      data-tab="search"
-      type="button"
-    >
-      Search Anime
-    </button>
+  <div class="section-title">
 
-    <button
-      class="tab"
-      id="servicesNavTab"
-      data-tab="services"
-      type="button"
-    >
+    <h2>
       All Services
-    </button>
+    </h2>
 
-    <button
-      class="tab"
-      id="favoritesNavTab"
-      data-tab="favorites"
-      type="button"
-    >
+  </div>
+
+  <div
+    id="serviceGrid"
+    class="service-grid"
+  ></div>
+
+</section>
+
+
+<section
+  id="favoritesSection"
+  class="panel glass hidden"
+>
+
+  <div class="section-title">
+
+    <h2>
       My Anime
-    </button>
+    </h2>
 
-    <button
-      class="tab"
-      id="helpNavTab"
-      data-tab="help"
-      type="button"
-    >
+  </div>
+
+  <div
+    id="favoriteList"
+    class="service-grid"
+  ></div>
+
+</section>
+
+
+<section
+  id="helpSection"
+  class="panel glass hidden"
+>
+
+  <div class="help">
+
+    <h2>
       Help Someone
-    </button>
+    </h2>
 
-  </nav>
+    <p>
+      Anime Finder can eventually use this space to help people discover and support verified GoFundMe fundraisers for people in need.
+    </p>
 
+    <p>
+      This section is intentionally a starting point for now. We can build the fundraiser discovery, categories, safety information, and submission flow separately without changing the anime-search system.
+    </p>
 
-  <main>
+  </div>
 
-    <section
-      id="searchSection"
-      class="panel glass"
-    >
+</section>
 
-      <p id="status" class="status">
-        Search an anime and see the services, offers, and U.S. availability returned by Anime Finder.
-      </p>
-
-      <div id="results"></div>
-
-      <div id="recentWrap" class="recent-wrap">
-
-        <div class="section-title">
-
-          <h2>Recent searches</h2>
-
-          <button
-            id="clearRecent"
-            class="small-btn"
-            type="button"
-          >
-            Clear
-          </button>
-
-        </div>
-
-        <div
-          id="recentList"
-          class="recent-list"
-        ></div>
-
-      </div>
-
-    </section>
+</main>
 
 
-    <section
-      id="servicesSection"
-      class="panel glass hidden"
-    >
-
-      <div class="section-title">
-        <h2>All Services</h2>
-      </div>
-
-      <div
-        id="serviceGrid"
-        class="service-grid"
-      ></div>
-
-    </section>
-
-
-    <section
-      id="favoritesSection"
-      class="panel glass hidden"
-    >
-
-      <div class="section-title">
-        <h2>My Anime</h2>
-      </div>
-
-      <div
-        id="favoriteList"
-        class="service-grid"
-      ></div>
-
-    </section>
-
-
-    <section
-      id="helpSection"
-      class="panel glass hidden"
-    >
-
-      <div class="help">
-
-        <h2>Help Someone</h2>
-
-        <p>
-          Anime Finder can eventually use this space to help people discover and support verified GoFundMe fundraisers for people in need.
-        </p>
-
-        <p>
-          This section is intentionally a starting point for now. We can build the fundraiser discovery, categories, safety information, and submission flow separately without changing the anime-search system.
-        </p>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <footer>
-    Anime Finder
-  </footer>
+<footer>
+  Anime Finder
+</footer>
 
 </div>
 
@@ -1088,10 +1129,12 @@ function safeString(v){
   }
 
   if(Array.isArray(v)){
+
     return v
       .map(safeString)
       .filter(Boolean)
       .join(", ");
+
   }
 
   if(typeof v === "object"){
@@ -1112,11 +1155,16 @@ function safeString(v){
     for(const key of keys){
 
       if(
-        Object.prototype.hasOwnProperty.call(v,key)
+        Object.prototype.hasOwnProperty.call(
+          v,
+          key
+        )
       ){
 
         const result =
-          safeString(v[key]).trim();
+          safeString(
+            v[key]
+          ).trim();
 
         if(
           result &&
@@ -1130,9 +1178,11 @@ function safeString(v){
     }
 
     return "";
+
   }
 
   return String(v);
+
 }
 
 
@@ -1141,7 +1191,9 @@ function firstNonEmpty(...v){
   for(const value of v){
 
     const result =
-      safeString(value).trim();
+      safeString(
+        value
+      ).trim();
 
     if(
       result &&
@@ -1153,6 +1205,7 @@ function firstNonEmpty(...v){
   }
 
   return "";
+
 }
 
 
@@ -1160,8 +1213,14 @@ function normalizeServiceName(v){
 
   return safeString(v)
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g," ")
-    .replace(/\s+/g," ")
+    .replace(
+      /[^a-z0-9]+/g,
+      " "
+    )
+    .replace(
+      /\s+/g,
+      " "
+    )
     .trim();
 
 }
@@ -1232,9 +1291,11 @@ function getCleanServiceName(name){
   const c =
     findServiceConfig(raw);
 
-  return c?.displayName ||
+  return (
+    c?.displayName ||
     raw ||
-    "Unknown Service";
+    "Unknown Service"
+  );
 
 }
 
@@ -1248,7 +1309,9 @@ function getProviderParentName(name){
     return "";
   }
 
-  if(n.includes("crunchyroll")){
+  if(
+    n.includes("crunchyroll")
+  ){
     return "Crunchyroll";
   }
 
@@ -1260,7 +1323,9 @@ function getProviderParentName(name){
   }
 
   return (
-    findServiceConfig(name)?.displayName ||
+    findServiceConfig(
+      name
+    )?.displayName ||
     safeString(name)
   );
 
@@ -1401,6 +1466,7 @@ function formatPrice(value){
     }
 
     return "";
+
   }
 
   const raw =
@@ -1528,9 +1594,11 @@ function getSafeUrl(v){
 function valueContainsUs(value){
 
   if(Array.isArray(value)){
+
     return value.some(
       valueContainsUs
     );
+
   }
 
   const n =
@@ -1605,7 +1673,9 @@ function getSourceKey(source){
     ),
 
     normalizeServiceName(
-      formatPrice(source?.price)
+      formatPrice(
+        source?.price
+      )
     ),
 
     normalizeServiceName(
@@ -1697,9 +1767,12 @@ function getProviderInitials(name){
     s.length > 1
       ? s
           .slice(0,2)
-          .map(x => x[0])
+          .map(
+            x => x[0]
+          )
           .join("")
-      : s[0]?.slice(0,2) || "TV"
+      : s[0]?.slice(0,2) ||
+        "TV"
   ).toUpperCase();
 
 }
@@ -1730,11 +1803,15 @@ function buildLogoHtml(
     return `
       <div
         class="${cls}"
-        aria-label="${escapeHtml(serviceName)}"
+        aria-label="${escapeHtml(
+          serviceName
+        )}"
       >
+
         <span class="logo-initials">
           ${escapeHtml(initials)}
         </span>
+
       </div>
     `;
 
@@ -1743,11 +1820,15 @@ function buildLogoHtml(
   return `
     <div
       class="${cls}"
-      aria-label="${escapeHtml(serviceName)}"
+      aria-label="${escapeHtml(
+        serviceName
+      )}"
     >
 
       <img
-        src="${escapeHtml(candidates[0])}"
+        src="${escapeHtml(
+          candidates[0]
+        )}"
         alt=""
         data-fallback="${escapeHtml(
           candidates[1] || ""
@@ -1775,44 +1856,43 @@ function attachLogoFallbacks(
     .querySelectorAll(
       "img[data-fallback]"
     )
-    .forEach(img => {
+    .forEach(
+      img => {
 
-      img.addEventListener(
-        "error",
-        () => {
+        img.addEventListener(
+          "error",
+          () => {
 
-          const fb =
-            img.dataset.fallback;
+            const fb =
+              img.dataset.fallback;
 
-          if(
-            fb &&
-            img.src !== fb
-          ){
+            if(
+              fb &&
+              img.src !== fb
+            ){
 
-            img.src = fb;
-            return;
+              img.src = fb;
+              return;
+
+            }
+
+            img.hidden = true;
+
+            const span =
+              img.parentElement
+                ?.querySelector(
+                  ".logo-initials"
+                );
+
+            if(span){
+              span.hidden = false;
+            }
 
           }
+        );
 
-          img.hidden = true;
-
-          const span =
-            img.parentElement
-              ?.querySelector(
-                ".logo-initials"
-              );
-
-          if(span){
-            span.hidden = false;
-          }
-
-        },
-        {
-          once:false
-        }
-      );
-
-    });
+      }
+    );
 
 }
 
@@ -1826,8 +1906,9 @@ function readStorage(
 
     const v =
       JSON.parse(
-        localStorage.getItem(key) ||
-        "null"
+        localStorage.getItem(
+          key
+        ) || "null"
       );
 
     return v ?? fallback;
@@ -1847,10 +1928,12 @@ function writeStorage(
 ){
 
   try{
+
     localStorage.setItem(
       key,
       JSON.stringify(value)
     );
+
   }catch{}
 
 }
@@ -1910,6 +1993,7 @@ function renderRecent(){
 
   list.innerHTML =
     recent.length
+
       ? recent
           .map(
             q =>
@@ -1924,6 +2008,7 @@ function renderRecent(){
               `
           )
           .join("")
+
       : `
           <span class="meta">
             No recent searches yet.
@@ -1936,10 +2021,11 @@ function renderRecent(){
     )
     .forEach(
       b =>
-        b.onclick = () =>
-          searchAnime(
-            b.dataset.query
-          )
+        b.onclick =
+          () =>
+            searchAnime(
+              b.dataset.query
+            )
     );
 
 }
@@ -2060,16 +2146,22 @@ function renderFavorites(){
 
   box.innerHTML =
     list.length
+
       ? list
           .map(
             x =>
               `
-                <div class="service-card glass">
+                <div
+                  class="service-card glass"
+                >
 
-                  <div class="service-card-logo">
+                  <div
+                    class="service-card-logo"
+                  >
 
                     ${
                       x.poster
+
                         ? `
                           <img
                             src="${escapeHtml(
@@ -2081,14 +2173,18 @@ function renderFavorites(){
                             onerror="this.style.display='none'"
                           >
                         `
+
                         : `
-                          <span class="logo-initials">
+                          <span
+                            class="logo-initials"
+                          >
                             TV
                           </span>
                         `
                     }
 
                   </div>
+
 
                   <div>
 
@@ -2109,6 +2205,7 @@ function renderFavorites(){
               `
           )
           .join("")
+
       : `
           <div
             class="empty"
@@ -2191,7 +2288,9 @@ function normalizeResponse(json){
   const unique = [];
   const seen = new Set();
 
-  for(const s of sources){
+  for(
+    const s of sources
+  ){
 
     if(!isUsSource(s)){
       continue;
@@ -2231,7 +2330,6 @@ function renderResults(){
   if(!currentAnime){
 
     box.innerHTML = "";
-
     return;
 
   }
@@ -2262,7 +2360,9 @@ function renderResults(){
       )
     ];
 
+
   const filters = `
+
     <div class="filters">
 
       <button
@@ -2299,11 +2399,13 @@ function renderResults(){
       }
 
     </div>
+
   `;
 
 
   const offers =
     filtered.length
+
       ? filtered
           .map(
             s => {
@@ -2354,6 +2456,7 @@ function renderResults(){
 
 
               return `
+
                 <article class="offer">
 
                   ${buildLogoHtml(name)}
@@ -2366,13 +2469,16 @@ function renderResults(){
 
                     ${
                       sub
+
                         ? `
                           <div class="offer-sub">
                             ${escapeHtml(sub)}
                           </div>
                         `
+
                         : ""
                     }
+
 
                     <div class="offer-details">
 
@@ -2402,6 +2508,7 @@ function renderResults(){
 
                   ${
                     url
+
                       ? `
                         <a
                           class="open-offer"
@@ -2412,6 +2519,7 @@ function renderResults(){
                           Open Offer
                         </a>
                       `
+
                       : `
                         <span class="badge">
                           No link
@@ -2420,11 +2528,13 @@ function renderResults(){
                   }
 
                 </article>
+
               `;
 
             }
           )
           .join("")
+
       : `
           <div class="empty">
             No matching U.S. offers found for this filter.
@@ -2438,6 +2548,7 @@ function renderResults(){
 
       ${
         poster
+
           ? `
             <img
               class="poster"
@@ -2446,6 +2557,7 @@ function renderResults(){
               onerror="this.style.display='none'"
             >
           `
+
           : ""
       }
 
@@ -2527,30 +2639,31 @@ function renderResults(){
 
 
   box
-    .querySelectorAll(
-      ".filter"
-    )
+    .querySelectorAll(".filter")
     .forEach(
       b =>
-        b.onclick = () => {
+        b.onclick =
+          () => {
 
-          activeService =
-            b.dataset.service;
+            activeService =
+              b.dataset.service;
 
-          renderResults();
+            renderResults();
 
-        }
+          }
     );
 
 
   $("favBtn").onclick =
     toggleFavorite;
 
+
   $("reportBtn").onclick =
     () =>
       $("reportModal")
         .classList
         .remove("hidden");
+
 
   attachLogoFallbacks(box);
 
@@ -2570,9 +2683,11 @@ function showStatus(
 
   el.className =
     "status" +
-    (type
-      ? " " + type
-      : "");
+    (
+      type
+        ? " " + type
+        : ""
+    );
 
 }
 
@@ -2688,30 +2803,27 @@ async function searchAnime(query){
 
 function showTab(tab){
 
-  const sectionMap = {
+  const sections = {
 
     search:
-      "searchSection",
+      $("searchSection"),
 
     services:
-      "servicesSection",
+      $("servicesSection"),
 
     favorites:
-      "favoritesSection",
+      $("favoritesSection"),
 
     help:
-      "helpSection"
+      $("helpSection")
 
   };
 
 
   Object.entries(
-    sectionMap
+    sections
   ).forEach(
-    ([name,id]) => {
-
-      const section =
-        $(id);
+    ([name,section]) => {
 
       if(section){
 
@@ -2727,9 +2839,7 @@ function showTab(tab){
 
 
   document
-    .querySelectorAll(
-      ".tab"
-    )
+    .querySelectorAll(".tab")
     .forEach(
       button => {
 
@@ -2745,6 +2855,7 @@ function showTab(tab){
   if(tab === "services"){
     renderServices();
   }
+
 
   if(tab === "favorites"){
     renderFavorites();
@@ -2772,12 +2883,16 @@ function renderServices(){
       .map(
         c =>
           `
-            <div class="service-card glass">
+
+            <div
+              class="service-card glass"
+            >
 
               ${buildLogoHtml(
                 c.displayName,
                 true
               )}
+
 
               <div>
 
@@ -2794,6 +2909,7 @@ function renderServices(){
               </div>
 
             </div>
+
           `
       )
       .join("");
@@ -2819,19 +2935,24 @@ function getReports(){
 }
 
 
-$("searchForm").addEventListener(
-  "submit",
-  e => {
+/* SEARCH */
 
-    e.preventDefault();
+$("searchForm")
+  .addEventListener(
+    "submit",
+    e => {
 
-    searchAnime(
-      $("searchInput").value
-    );
+      e.preventDefault();
 
-  }
-);
+      searchAnime(
+        $("searchInput").value
+      );
 
+    }
+  );
+
+
+/* RECENT SEARCHES */
 
 $("clearRecent").onclick =
   () => {
@@ -2846,19 +2967,29 @@ $("clearRecent").onclick =
   };
 
 
+/* MAIN NAVIGATION */
+
 document
-  .querySelectorAll(
-    ".tab"
-  )
+  .querySelectorAll(".tab")
   .forEach(
-    b =>
-      b.onclick =
-        () =>
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
           showTab(
-            b.dataset.tab
-          )
+            button.dataset.tab
+          );
+
+        }
+      );
+
+    }
   );
 
+
+/* REPORT MODAL */
 
 $("closeReport").onclick =
   () =>
@@ -2959,6 +3090,8 @@ $("reportForm")
     }
   );
 
+
+/* INITIAL LOAD */
 
 renderRecent();
 renderServices();
