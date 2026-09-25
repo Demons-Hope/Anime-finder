@@ -1,3507 +1,2971 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-  <title>Anime Finder</title>
-
-  <style>
-    :root {
-      --bg: #08090d;
-      --panel: #11131a;
-      --panel-2: #171923;
-      --panel-3: #1d202b;
-      --border: #292d3a;
-      --text: #f5f5f7;
-      --muted: #a8acb8;
-      --dim: #747987;
-      --red: #e63946;
-      --red-2: #ff5964;
-      --green: #54d68b;
-      --yellow: #f5c451;
-      --blue: #6da8ff;
-      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
-      --radius: 18px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top right, rgba(230, 57, 70, 0.08), transparent 32%),
-        radial-gradient(circle at bottom left, rgba(109, 168, 255, 0.05), transparent 28%),
-        var(--bg);
-      color: var(--text);
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    .app-shell {
-      width: min(1200px, calc(100% - 28px));
-      margin: 0 auto;
-      padding: 24px 0 50px;
-    }
-
-    /* ---------- HEADER ---------- */
-
-    .site-header {
-      margin-bottom: 20px;
-    }
-
-    .brand-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-
-    .brand-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background:
-        linear-gradient(145deg, var(--red-2), var(--red));
-      box-shadow: 0 10px 30px rgba(230, 57, 70, 0.22);
-      font-size: 22px;
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: clamp(1.45rem, 4vw, 2rem);
-      letter-spacing: -0.04em;
-    }
-
-    .brand p {
-      margin: 3px 0 0;
-      color: var(--muted);
-      font-size: 0.86rem;
-    }
-
-    /* ---------- NAV ---------- */
-
-    .tabs {
-      display: flex;
-      gap: 7px;
-      overflow-x: auto;
-      padding: 5px;
-      background: rgba(17, 19, 26, 0.9);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      scrollbar-width: none;
-    }
-
-    .tabs::-webkit-scrollbar {
-      display: none;
-    }
-
-    .tab-btn {
-      flex: 1 0 auto;
-      border: 0;
-      border-radius: 11px;
-      padding: 11px 15px;
-      background: transparent;
-      color: var(--muted);
-      transition: 0.2s ease;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .tab-btn:hover {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .tab-btn.active {
-      color: white;
-      background: var(--red);
-      box-shadow: 0 8px 24px rgba(230, 57, 70, 0.2);
-    }
-
-    /* ---------- PANELS ---------- */
-
-    .tab-content {
-      animation: fadeIn 0.2s ease;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(3px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero-panel {
-      padding: clamp(20px, 5vw, 38px);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      background:
-        linear-gradient(
-          145deg,
-          rgba(230, 57, 70, 0.09),
-          rgba(17, 19, 26, 0.98) 45%
-        );
-      box-shadow: var(--shadow);
-    }
-
-    .hero-panel h2 {
-      margin: 0;
-      font-size: clamp(1.6rem, 5vw, 2.5rem);
-      letter-spacing: -0.045em;
-    }
-
-    .hero-panel > p {
-      margin: 9px 0 24px;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    /* ---------- SEARCH ---------- */
-
-    .search-row {
-      display: flex;
-      gap: 10px;
-    }
-
-    .search-input {
-      min-width: 0;
-      flex: 1;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 16px;
-      outline: none;
-      color: var(--text);
-      background: rgba(0, 0, 0, 0.24);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .search-input::placeholder {
-      color: var(--dim);
-    }
-
-    .search-input:focus {
-      border-color: rgba(230, 57, 70, 0.75);
-      box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.09);
-    }
-
-    .primary-btn,
-    .secondary-btn,
-    .danger-btn {
-      border: 0;
-      border-radius: 13px;
-      padding: 12px 17px;
-      font-weight: 800;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-
-    .primary-btn:hover,
-    .secondary-btn:hover,
-    .danger-btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .primary-btn {
-      color: white;
-      background: var(--red);
-    }
-
-    .secondary-btn {
-      color: var(--text);
-      background: var(--panel-3);
-      border: 1px solid var(--border);
-    }
-
-    .danger-btn {
-      color: white;
-      background: #8d2029;
-    }
-
-    .primary-btn:disabled,
-    .secondary-btn:disabled,
-    .danger-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* ---------- RECENT ---------- */
-
-    .recent-section {
-      margin-top: 24px;
-    }
-
-    .section-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 11px;
-    }
-
-    .section-heading h3 {
-      margin: 0;
-      font-size: 0.96rem;
-    }
-
-    .text-btn {
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.82rem;
-      padding: 5px;
-    }
-
-    .text-btn:hover {
-      color: white;
-    }
-
-    .recent-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .recent-chip {
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 8px 12px;
-      background: rgba(255, 255, 255, 0.025);
-      color: var(--muted);
-      cursor: pointer;
-      transition: 0.18s ease;
-    }
-
-    .recent-chip:hover {
-      color: white;
-      border-color: rgba(230, 57, 70, 0.55);
-      background: rgba(230, 57, 70, 0.08);
-    }
-
-    /* ---------- STATUS ---------- */
-
-    .status {
-      margin-top: 15px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(0, 0, 0, 0.18);
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .status.error {
-      color: #ffb6bb;
-      border-color: rgba(230, 57, 70, 0.45);
-      background: rgba(230, 57, 70, 0.08);
-    }
-
-    .status.success {
-      color: #b6f3d0;
-      border-color: rgba(84, 214, 139, 0.35);
-      background: rgba(84, 214, 139, 0.07);
-    }
-
-    /* ---------- ANIME OVERVIEW ---------- */
-
-    .anime-overview {
-      display: none;
-      margin-top: 18px;
-      grid-template-columns: 130px 1fr auto;
-      gap: 18px;
-      align-items: center;
-      padding: 18px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--panel);
-    }
-
-    .anime-overview.show {
-      display: grid;
-    }
-
-    .anime-poster {
-      width: 130px;
-      aspect-ratio: 2 / 3;
-      object-fit: cover;
-      border-radius: 12px;
-      background: var(--panel-3);
-    }
-
-    .anime-poster.hidden-poster {
-      display: none;
-    }
-
-    .anime-overview-info h2 {
-      margin: 0 0 8px;
-      font-size: 1.4rem;
-    }
-
-    .anime-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-bottom: 10px;
-    }
-
-    .meta-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 9px;
-      border-radius: 999px;
-      background: var(--panel-3);
-      color: var(--muted);
-      font-size: 0.77rem;
-    }
-
-    .anime-overview-description {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 0.9rem;
-    }
-
-    .favorite-btn {
-      width: 45px;
-      height: 45px;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      background: var(--panel-3);
-      color: white;
-      font-size: 1.3rem;
-    }
-
-    .favorite-btn.is-favorite {
-      color: #ff6570;
-      border-color: rgba(230, 57, 70, 0.45);
-    }
-
-    /* ---------- RESULTS ---------- */
-
-    .results-panel {
-      margin-top: 18px;
-    }
-
-    .results-panel[hidden] {
-      display: none;
-    }
-
-    .results-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .results-header h3 {
-      margin: 0;
-      font-size: 1.1rem;
-    }
-
-    .results-count {
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    /* ---------- FILTERS ---------- */
-
-    .service-filters {
-      display: flex;
-      gap: 7px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-      scrollbar-width: thin;
-    }
-
-    .filter-btn {
-      flex: 0 0 auto;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 8px 12px;
-      background: var(--panel);
-      color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-
-    .filter-btn.active {
-      color: white;
-      background: var(--red);
-      border-color: var(--red);
-    }
-
-    /* ---------- OFFER CARDS ---------- */
-
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .offer-card {
-      min-width: 0;
-      display: grid;
-      grid-template-columns: 48px minmax(0, 1fr);
-      grid-template-rows: auto auto auto;
-      column-gap: 12px;
-      row-gap: 8px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 17px;
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.025),
-          rgba(17, 19, 26, 0.98)
-        );
-      transition: transform 0.18s ease, border-color 0.18s ease;
-    }
-
-    .offer-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(230, 57, 70, 0.3);
-    }
-
-    .service-logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      position: relative;
-      overflow: hidden;
-      background: var(--panel-3);
-      border: 1px solid var(--border);
-      grid-row: 1 / span 2;
-    }
-
-    .service-logo img {
-      width: 100%;
-      height: 100%;
-      padding: 9px;
-      object-fit: contain;
-      display: block;
-    }
-
-    .logo-initials {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      color: white;
-      font-size: 0.72rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-    }
-
-    .offer-title {
-      min-width: 0;
-      font-weight: 850;
-      line-height: 1.2;
-      overflow-wrap: anywhere;
-    }
-
-    .offer-subline {
-      margin-top: 3px;
-      color: var(--dim);
-      font-size: 0.72rem;
-    }
-
-    .offer-details {
-      grid-column: 2;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-
-    .offer-detail {
-      color: var(--muted);
-      font-size: 0.75rem;
-    }
-
-    .offer-actions {
-      grid-column: 1 / -1;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      margin-top: 3px;
-    }
-
-    .offer-type {
-      color: white;
-      font-size: 0.77rem;
-      font-weight: 800;
-    }
-
-    .offer-price {
-      color: var(--green);
-      font-weight: 850;
-    }
-
-    .offer-location {
-      color: var(--muted);
-      font-size: 0.73rem;
-    }
-
-    .open-offer-btn {
-      border: 0;
-      border-radius: 10px;
-      padding: 8px 11px;
-      color: white;
-      background: var(--panel-3);
-      border: 1px solid var(--border);
-      font-size: 0.76rem;
-      font-weight: 800;
-    }
-
-    .open-offer-btn:hover {
-      border-color: rgba(230, 57, 70, 0.5);
-    }
-
-    .empty-state {
-      display: none;
-      padding: 35px 20px;
-      text-align: center;
-      border: 1px dashed var(--border);
-      border-radius: var(--radius);
-      color: var(--muted);
-    }
-
-    .empty-state.show {
-      display: block;
-    }
-
-    .empty-state strong {
-      display: block;
-      color: white;
-      margin-bottom: 6px;
-    }
-
-    /* ---------- SERVICES ---------- */
-
-    .page-panel {
-      padding: clamp(20px, 4vw, 30px);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-    }
-
-    .page-panel h2 {
-      margin: 0;
-      letter-spacing: -0.035em;
-    }
-
-    .page-panel > p {
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 11px;
-      margin-top: 20px;
-    }
-
-    .service-card {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      min-width: 0;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.018);
-    }
-
-    .service-card-logo {
-      width: 40px;
-      height: 40px;
-      flex: 0 0 40px;
-      position: relative;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      border-radius: 11px;
-      background: var(--panel-3);
-      border: 1px solid var(--border);
-    }
-
-    .service-card-logo img {
-      width: 100%;
-      height: 100%;
-      padding: 7px;
-      object-fit: contain;
-    }
-
-    .service-card-logo .logo-initials {
-      font-size: 0.62rem;
-    }
-
-    .service-card-name {
-      min-width: 0;
-      overflow-wrap: anywhere;
-      font-size: 0.82rem;
-      font-weight: 800;
-    }
-
-    /* ---------- FAVORITES ---------- */
-
-    .favorites-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .favorite-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 14px;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.018);
-    }
-
-    .favorite-item-title {
-      font-weight: 850;
-    }
-
-    .favorite-item-meta {
-      color: var(--muted);
-      font-size: 0.78rem;
-      margin-top: 3px;
-    }
-
-    /* ---------- HELP ---------- */
-
-    .help-card {
-      margin-top: 20px;
-      padding: 22px;
-      border-radius: 18px;
-      border: 1px solid rgba(84, 214, 139, 0.2);
-      background:
-        linear-gradient(
-          145deg,
-          rgba(84, 214, 139, 0.06),
-          rgba(17, 19, 26, 0.95)
-        );
-    }
-
-    .help-card h3 {
-      margin: 0 0 8px;
-    }
-
-    .help-card p {
-      color: var(--muted);
-      line-height: 1.6;
-      margin: 0 0 15px;
-    }
-
-    .help-note {
-      color: var(--dim);
-      font-size: 0.78rem;
-      margin-top: 12px;
-    }
-
-    /* ---------- MODAL ---------- */
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(7px);
-    }
-
-    .modal-backdrop.show {
-      display: flex;
-    }
-
-    .modal {
-      width: min(520px, 100%);
-      max-height: calc(100vh - 36px);
-      overflow-y: auto;
-      padding: 22px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: #11131a;
-      box-shadow: var(--shadow);
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      align-items: flex-start;
-    }
-
-    .modal-header h2 {
-      margin: 0;
-    }
-
-    .modal-close {
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      font-size: 1.4rem;
-    }
-
-    .modal p {
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .form-group {
-      margin-top: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 7px;
-      font-size: 0.82rem;
-      font-weight: 750;
-    }
-
-    .form-control {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 11px 12px;
-      color: var(--text);
-      background: var(--panel-3);
-      outline: none;
-    }
-
-    .form-control:focus {
-      border-color: rgba(230, 57, 70, 0.65);
-    }
-
-    textarea.form-control {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    /* ---------- FOOTER ---------- */
-
-    footer {
-      padding: 25px 0 0;
-      color: var(--dim);
-      text-align: center;
-      font-size: 0.75rem;
-    }
-
-    /* ---------- RESPONSIVE ---------- */
-
-    @media (max-width: 950px) {
-      .results-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .services-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 700px) {
-      .app-shell {
-        width: min(100% - 18px, 1200px);
-        padding-top: 12px;
-      }
-
-      .brand-row {
-        margin-bottom: 12px;
-      }
-
-      .hero-panel {
-        padding: 18px;
-        border-radius: 19px;
-      }
-
-      .search-row {
-        flex-direction: column;
-      }
-
-      .search-input,
-      .primary-btn {
-        width: 100%;
-      }
-
-      .anime-overview {
-        grid-template-columns: 76px 1fr auto;
-        gap: 12px;
-      }
-
-      .anime-poster {
-        width: 76px;
-      }
-
-      .anime-overview-info h2 {
-        font-size: 1.08rem;
-      }
-
-      .anime-overview-description {
-        display: none;
-      }
-
-      .results-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .services-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 430px) {
-      .brand p {
-        display: none;
-      }
-
-      .anime-overview {
-        grid-template-columns: 64px 1fr auto;
-      }
-
-      .anime-poster {
-        width: 64px;
-      }
-
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .offer-card {
-        padding: 13px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anime Finder</title>
+
+<style>
+:root{
+  --bg:#050505;
+  --panel:rgba(8,8,10,.86);
+  --panel2:rgba(15,10,12,.9);
+  --red:#b00020;
+  --red2:#e0002f;
+  --red3:#ff3155;
+  --text:#f2f2f2;
+  --muted:#aaa;
+  --line:rgba(224,0,47,.34);
+  --shadow:0 20px 60px rgba(0,0,0,.65);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.44) 0%,
+      rgba(0,0,0,.72) 100%
+    ),
+    url("./hooded-skull.png")
+    center center /
+    cover fixed
+    no-repeat;
+  background-color:#050505;
+  position:relative;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(
+      circle at 50% 24%,
+      rgba(138,7,7,.16),
+      transparent 36%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0,0,0,.24) 54%,
+      rgba(0,0,0,.58) 100%
+    );
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.app{
+  position:relative;
+  z-index:1;
+  width:min(1180px,94vw);
+  margin:0 auto;
+  padding:30px 0 70px;
+}
+
+.glass{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(9,9,11,.88),
+      rgba(10,6,8,.76)
+    );
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:
+    var(--shadow),
+    0 0 35px rgba(176,0,32,.08);
+  backdrop-filter:blur(13px);
+  -webkit-backdrop-filter:blur(13px);
+}
+
+.hero{
+  padding:28px 30px;
+  margin-bottom:18px;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  left:6%;
+  right:6%;
+  top:0;
+  height:1px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--red3),
+      transparent
+    );
+  opacity:.7;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+h1{
+  margin:0;
+  font-family:Georgia,serif;
+  font-size:clamp(30px,5vw,52px);
+  letter-spacing:-1px;
+}
+
+h1 .anime{
+  color:#e00032;
+  text-shadow:0 0 18px rgba(224,0,50,.22);
+}
+
+h1 .finder{
+  color:#eee;
+}
+
+.subtitle{
+  color:#aaa;
+  margin:8px 0 22px;
+  font-size:15px;
+}
+
+.search-row{
+  display:flex;
+  gap:10px;
+}
+
+.search-box{
+  position:relative;
+  flex:1;
+}
+
+.search-icon{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#aaa;
+}
+
+input{
+  width:100%;
+  padding:14px 16px 14px 43px;
+  border-radius:13px;
+  border:1px solid rgba(224,0,47,.45);
+  background:rgba(0,0,0,.62);
+  color:#fff;
+  outline:none;
+  box-shadow:inset 0 0 20px rgba(0,0,0,.35);
+}
+
+input:focus{
+  border-color:var(--red3);
+  box-shadow:0 0 0 3px rgba(224,0,47,.10);
+}
+
+.primary,
+.danger{
+  border:0;
+  border-radius:13px;
+  padding:0 23px;
+  color:white;
+  font-weight:800;
+  background:
+    linear-gradient(
+      135deg,
+      #9d001d,
+      #e00035
+    );
+  box-shadow:0 7px 24px rgba(176,0,32,.28);
+}
+
+.primary:hover,
+.danger:hover{
+  filter:brightness(1.12);
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  padding:8px;
+  margin-bottom:18px;
+}
+
+.tab{
+  flex:1;
+  border:1px solid transparent;
+  background:transparent;
+  color:#aaa;
+  padding:12px 10px;
+  border-radius:12px;
+  font-weight:700;
+}
+
+.tab.active{
+  color:#fff;
+  background:rgba(176,0,32,.2);
+  border-color:var(--line);
+  box-shadow:inset 0 0 20px rgba(176,0,32,.08);
+}
+
+.tab:focus-visible,
+.primary:focus-visible,
+.small-btn:focus-visible,
+.fav:focus-visible,
+.open-offer:focus-visible,
+.secondary:focus-visible,
+.danger:focus-visible{
+  outline:2px solid var(--red3);
+  outline-offset:2px;
+}
+
+.panel{
+  padding:22px;
+}
+
+.status{
+  margin:0 0 15px;
+  color:#bbb;
+  font-size:14px;
+}
+
+.status.success{
+  color:#71e6a0;
+}
+
+.status.error{
+  color:#ff7890;
+}
+
+.recent-wrap{
+  margin-top:20px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.section-title h2{
+  font-size:19px;
+  margin:0;
+}
+
+.small-btn{
+  border:1px solid #333;
+  background:rgba(255,255,255,.04);
+  color:#bbb;
+  border-radius:9px;
+  padding:7px 10px;
+}
+
+.recent-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.recent-item{
+  border:1px solid #303033;
+  background:rgba(0,0,0,.45);
+  color:#ddd;
+  border-radius:10px;
+  padding:9px 12px;
+}
+
+.recent-item:hover{
+  border-color:var(--line);
+  color:#fff;
+}
+
+.anime-head{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.poster{
+  width:92px;
+  height:126px;
+  object-fit:cover;
+  border-radius:12px;
+  background:#111;
+  border:1px solid #333;
+}
+
+.anime-head h2{
+  margin:0 0 5px;
+  font-size:25px;
+}
+
+.meta{
+  color:#aaa;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.fav{
+  margin-left:auto;
+  border:1px solid #444;
+  background:rgba(0,0,0,.4);
+  color:#fff;
+  border-radius:12px;
+  padding:10px 13px;
+  font-size:18px;
+}
+
+.filters{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:3px 1px 12px;
+  margin-bottom:10px;
+}
+
+.filter{
+  white-space:nowrap;
+  border:1px solid #333;
+  background:rgba(0,0,0,.45);
+  color:#aaa;
+  border-radius:999px;
+  padding:8px 12px;
+}
+
+.filter.active{
+  color:#fff;
+  border-color:var(--red2);
+  background:rgba(176,0,32,.2);
+}
+
+.offer-grid{
+  display:grid;
+  gap:12px;
+}
+
+.offer{
+  display:grid;
+  grid-template-columns:52px minmax(0,1fr) auto;
+  gap:14px;
+  align-items:center;
+  padding:15px;
+  border:1px solid #29292c;
+  border-radius:15px;
+  background:rgba(0,0,0,.42);
+}
+
+.offer:hover{
+  border-color:rgba(224,0,47,.42);
+  background:rgba(20,4,8,.55);
+}
+
+.logo,
+.service-card-logo{
+  width:52px;
+  height:52px;
+  border-radius:12px;
+  background:#111;
+  border:1px solid #333;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  flex:none;
+}
+
+.logo img,
+.service-card-logo img{
+  width:72%;
+  height:72%;
+  object-fit:contain;
+}
+
+.logo-initials{
+  font-weight:900;
+  color:#eee;
+  font-size:13px;
+}
+
+.offer-title{
+  font-weight:800;
+  font-size:16px;
+}
+
+.offer-sub{
+  font-size:12px;
+  color:#888;
+  margin-top:2px;
+}
+
+.offer-details{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:8px;
+}
+
+.badge{
+  font-size:12px;
+  padding:5px 8px;
+  border-radius:7px;
+  background:#151517;
+  color:#bbb;
+  border:1px solid #29292d;
+}
+
+.badge.us{
+  color:#8ee8ac;
+  border-color:rgba(142,232,172,.25);
+}
+
+.open-offer{
+  border:1px solid rgba(224,0,47,.45);
+  background:rgba(176,0,32,.15);
+  color:#fff;
+  border-radius:10px;
+  padding:9px 12px;
+  font-weight:700;
+  text-decoration:none;
+}
+
+.empty{
+  padding:30px;
+  text-align:center;
+  color:#888;
+  border:1px dashed #333;
+  border-radius:15px;
+}
+
+.service-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:12px;
+}
+
+.service-card{
+  padding:16px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.service-card h3{
+  margin:0 0 3px;
+  font-size:15px;
+}
+
+.service-card p{
+  margin:0;
+  color:#777;
+  font-size:12px;
+}
+
+.help{
+  line-height:1.65;
+  color:#bbb;
+}
+
+.help h2{
+  color:#fff;
+}
+
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:20;
+}
+
+.modal{
+  width:min(560px,100%);
+  padding:22px;
+}
+
+.modal h2{
+  margin-top:0;
+}
+
+textarea{
+  width:100%;
+  min-height:130px;
+  resize:vertical;
+  border-radius:12px;
+  padding:12px;
+  color:#fff;
+  background:#080808;
+  border:1px solid #333;
+  outline:none;
+}
+
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+  margin-top:12px;
+}
+
+.secondary{
+  border:1px solid #444;
+  background:#111;
+  color:#ddd;
+  border-radius:10px;
+  padding:10px 14px;
+}
+
+.report-btn{
+  margin-top:18px;
+  color:#999;
+  text-decoration:underline;
+  background:none;
+  border:0;
+  padding:0;
+}
+
+footer{
+  text-align:center;
+  color:#666;
+  font-size:12px;
+  margin-top:20px;
+}
+
+@media(max-width:700px){
+  .app{
+    width:96vw;
+    padding-top:14px;
+  }
+
+  .hero{
+    padding:21px 18px;
+  }
+
+  .panel{
+    padding:16px;
+  }
+
+  .search-row{
+    flex-direction:column;
+  }
+
+  .primary{
+    height:46px;
+  }
+
+  .tabs{
+    overflow-x:auto;
+  }
+
+  .tab{
+    min-width:120px;
+  }
+
+  .anime-head{
+    align-items:flex-start;
+  }
+
+  .offer{
+    grid-template-columns:44px minmax(0,1fr);
+  }
+
+  .offer .open-offer{
+    grid-column:2;
+    justify-self:start;
+  }
+
+  .logo{
+    width:44px;
+    height:44px;
+  }
+
+  .fav{
+    font-size:16px;
+    padding:8px;
+  }
+}
+</style>
 </head>
 
 <body>
-  <div class="app-shell">
 
-    <header class="site-header">
-      <div class="brand-row">
-        <div class="brand">
-          <div class="brand-icon">🎬</div>
-          <div>
-            <h1>Anime Finder</h1>
-            <p>Find where anime is available in the U.S.</p>
-          </div>
-        </div>
+<div class="app">
+
+  <header class="hero glass">
+
+    <div class="brand">
+      <h1>
+        <span class="anime">Anime</span>
+        <span class="finder">Finder</span>
+      </h1>
+    </div>
+
+    <p class="subtitle">
+      Find where to watch your favorite anime.
+    </p>
+
+    <form id="searchForm" class="search-row">
+
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+
+        <input
+          id="searchInput"
+          autocomplete="off"
+          placeholder="Search for an anime..."
+          required
+        >
       </div>
 
-      <nav class="tabs" aria-label="Main navigation">
-        <button
-          class="tab-btn active"
-          type="button"
-          data-tab="search"
-          aria-selected="true"
-        >
-          Search Anime
-        </button>
+      <button class="primary" type="submit">
+        Search
+      </button>
 
-        <button
-          class="tab-btn"
-          type="button"
-          data-tab="services"
-          aria-selected="false"
-        >
-          All Services
-        </button>
+    </form>
 
-        <button
-          class="tab-btn"
-          type="button"
-          data-tab="favorites"
-          aria-selected="false"
-        >
-          My Anime
-        </button>
+  </header>
 
-        <button
-          class="tab-btn"
-          type="button"
-          data-tab="help"
-          aria-selected="false"
-        >
-          Help Someone
-        </button>
-      </nav>
-    </header>
 
-    <!-- SEARCH TAB -->
-    <main
-      id="tab-search"
-      class="tab-content"
-      role="tabpanel"
+  <nav class="tabs glass">
+
+    <button
+      class="tab active"
+      id="searchNavTab"
+      data-tab="search"
+      type="button"
     >
-      <section class="hero-panel">
-        <h2>Where can I watch it?</h2>
-        <p>
-          Search an anime and see the services, offers, and U.S. availability
-          returned by Anime Finder.
-        </p>
+      Search Anime
+    </button>
 
-        <form id="searchForm" class="search-row">
-          <input
-            id="searchInput"
-            class="search-input"
-            type="search"
-            autocomplete="off"
-            placeholder="Search for an anime..."
-            aria-label="Anime title"
-          />
+    <button
+      class="tab"
+      id="servicesNavTab"
+      data-tab="services"
+      type="button"
+    >
+      All Services
+    </button>
 
-          <button
-            id="searchButton"
-            class="primary-btn"
-            type="submit"
-          >
-            Search
-          </button>
-        </form>
+    <button
+      class="tab"
+      id="favoritesNavTab"
+      data-tab="favorites"
+      type="button"
+    >
+      My Anime
+    </button>
 
-        <div id="status" class="status" hidden></div>
+    <button
+      class="tab"
+      id="helpNavTab"
+      data-tab="help"
+      type="button"
+    >
+      Help Someone
+    </button>
 
-        <section class="recent-section">
-          <div class="section-heading">
-            <h3>Recent searches</h3>
-            <button
-              id="clearRecentButton"
-              class="text-btn"
-              type="button"
-            >
-              Clear
-            </button>
-          </div>
+  </nav>
 
-          <div
-            id="recentList"
-            class="recent-list"
-            aria-live="polite"
-          ></div>
-        </section>
-      </section>
 
-      <!-- ANIME OVERVIEW -->
-      <section
-        id="animeOverview"
-        class="anime-overview"
-        aria-live="polite"
-      >
-        <img
-          id="animePoster"
-          class="anime-poster"
-          alt=""
-          hidden
-        />
+  <main>
 
-        <div class="anime-overview-info">
-          <h2 id="animeTitle">Anime</h2>
-
-          <div
-            id="animeMeta"
-            class="anime-meta"
-          ></div>
-
-          <p
-            id="animeDescription"
-            class="anime-overview-description"
-          ></p>
-        </div>
-
-        <button
-          id="favoriteButton"
-          class="favorite-btn"
-          type="button"
-          aria-label="Add anime to favorites"
-          title="Add to favorites"
-        >
-          ♡
-        </button>
-      </section>
-
-      <!-- RESULTS -->
-      <section
-        id="resultsPanel"
-        class="results-panel"
-        hidden
-      >
-        <div class="results-header">
-          <h3>Where to Watch</h3>
-          <span
-            id="resultsCount"
-            class="results-count"
-          ></span>
-        </div>
-
-        <div
-          id="serviceFilters"
-          class="service-filters"
-          aria-label="Filter streaming services"
-        ></div>
-
-        <div
-          id="resultsGrid"
-          class="results-grid"
-        ></div>
-
-        <div
-          id="resultsEmpty"
-          class="empty-state"
-        >
-          <strong>No matching services</strong>
-          Try another service filter.
-        </div>
-
-        <div style="margin-top: 12px; text-align: right;">
-          <button
-            id="reportButton"
-            class="text-btn"
-            type="button"
-          >
-            ⚠️ Report incorrect information
-          </button>
-        </div>
-      </section>
-    </main>
-
-    <!-- SERVICES TAB -->
     <section
-      id="tab-services"
-      class="tab-content"
-      role="tabpanel"
-      hidden
+      id="searchSection"
+      class="panel glass"
     >
-      <div class="page-panel">
-        <h2>All Services</h2>
-        <p>
-          Services currently recognized by Anime Finder. Provider variants
-          such as Amazon channels and Crunchyroll channels are grouped where
-          appropriate while their individual offers remain visible.
-        </p>
 
-        <div
-          id="servicesGrid"
-          class="services-grid"
-        ></div>
-      </div>
-    </section>
-
-    <!-- FAVORITES TAB -->
-    <section
-      id="tab-favorites"
-      class="tab-content"
-      role="tabpanel"
-      hidden
-    >
-      <div class="page-panel">
-        <h2>My Anime</h2>
-        <p>
-          Your saved anime are stored locally in this browser.
-        </p>
-
-        <div
-          id="favoriteEmpty"
-          class="empty-state"
-        >
-          <strong>No favorites yet</strong>
-          Search for an anime and tap ♡ to save it here.
-        </div>
-
-        <div
-          id="favoritesList"
-          class="favorites-list"
-        ></div>
-      </div>
-    </section>
-
-    <!-- HELP TAB -->
-    <section
-      id="tab-help"
-      class="tab-content"
-      role="tabpanel"
-      hidden
-    >
-      <div class="page-panel">
-        <h2>Help Someone</h2>
-        <p>
-          This section is designed to eventually help people discover and
-          support legitimate fundraisers for people who need assistance.
-        </p>
-
-        <div class="help-card">
-          <h3>❤️ Support someone in need</h3>
-          <p>
-            Anime Finder will eventually have a place where people can
-            discover fundraisers and choose whether they want to help.
-          </p>
-
-          <button
-            id="helpComingSoonButton"
-            class="primary-btn"
-            type="button"
-          >
-            Coming Soon
-          </button>
-
-          <div class="help-note">
-            Fundraisers will need to be presented carefully so people can make
-            their own decisions about where they send money.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      Anime Finder • Availability information is provided by connected data
-      sources and may change.
-    </footer>
-  </div>
-
-  <!-- REPORT MODAL -->
-  <div
-    id="reportModal"
-    class="modal-backdrop"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="reportModalTitle"
-  >
-    <div class="modal">
-      <div class="modal-header">
-        <div>
-          <h2 id="reportModalTitle">Report incorrect information</h2>
-        </div>
-
-        <button
-          id="closeReportButton"
-          class="modal-close"
-          type="button"
-          aria-label="Close report window"
-        >
-          ×
-        </button>
-      </div>
-
-      <p>
-        Tell us what looks incorrect. For now, reports are saved locally in
-        this browser so the report workflow can be tested before a backend is
-        connected.
+      <p id="status" class="status">
+        Search an anime and see the services, offers, and U.S. availability returned by Anime Finder.
       </p>
 
-      <form id="reportForm">
-        <div class="form-group">
-          <label for="reportReason">Reason</label>
+      <div id="results"></div>
 
-          <select
-            id="reportReason"
-            class="form-control"
-            required
-          >
-            <option value="">Select a reason</option>
-            <option value="wrong-service">
-              Wrong streaming service
-            </option>
-            <option value="wrong-price">
-              Wrong price
-            </option>
-            <option value="wrong-region">
-              Wrong U.S. availability
-            </option>
-            <option value="broken-link">
-              Broken link
-            </option>
-            <option value="other">
-              Other
-            </option>
-          </select>
-        </div>
+      <div id="recentWrap" class="recent-wrap">
 
-        <div class="form-group">
-          <label for="reportDetails">Details</label>
+        <div class="section-title">
 
-          <textarea
-            id="reportDetails"
-            class="form-control"
-            placeholder="What looks incorrect?"
-          ></textarea>
-        </div>
+          <h2>Recent searches</h2>
 
-        <div class="modal-actions">
           <button
-            id="cancelReportButton"
-            class="secondary-btn"
+            id="clearRecent"
+            class="small-btn"
             type="button"
           >
-            Cancel
+            Clear
           </button>
 
-          <button
-            class="primary-btn"
-            type="submit"
-          >
-            Save Report
-          </button>
         </div>
-      </form>
-    </div>
+
+        <div
+          id="recentList"
+          class="recent-list"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <section
+      id="servicesSection"
+      class="panel glass hidden"
+    >
+
+      <div class="section-title">
+        <h2>All Services</h2>
+      </div>
+
+      <div
+        id="serviceGrid"
+        class="service-grid"
+      ></div>
+
+    </section>
+
+
+    <section
+      id="favoritesSection"
+      class="panel glass hidden"
+    >
+
+      <div class="section-title">
+        <h2>My Anime</h2>
+      </div>
+
+      <div
+        id="favoriteList"
+        class="service-grid"
+      ></div>
+
+    </section>
+
+
+    <section
+      id="helpSection"
+      class="panel glass hidden"
+    >
+
+      <div class="help">
+
+        <h2>Help Someone</h2>
+
+        <p>
+          Anime Finder can eventually use this space to help people discover and support verified GoFundMe fundraisers for people in need.
+        </p>
+
+        <p>
+          This section is intentionally a starting point for now. We can build the fundraiser discovery, categories, safety information, and submission flow separately without changing the anime-search system.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    Anime Finder
+  </footer>
+
+</div>
+
+
+<div
+  id="reportModal"
+  class="modal-backdrop hidden"
+>
+
+  <div class="modal glass">
+
+    <h2>
+      Report incorrect information
+    </h2>
+
+    <p class="meta">
+      Tell us what looks wrong with the current offer information.
+    </p>
+
+    <form id="reportForm">
+
+      <select
+        id="reportReason"
+        style="width:100%;padding:11px;border-radius:10px;background:#090909;color:#fff;border:1px solid #333"
+      >
+
+        <option value="wrong-service">
+          Wrong service
+        </option>
+
+        <option value="wrong-region">
+          Wrong U.S. availability
+        </option>
+
+        <option value="wrong-price">
+          Wrong price
+        </option>
+
+        <option value="broken-link">
+          Broken offer link
+        </option>
+
+        <option value="other">
+          Other
+        </option>
+
+      </select>
+
+
+      <textarea
+        id="reportDetails"
+        placeholder="Optional details..."
+      ></textarea>
+
+
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          class="secondary"
+          id="closeReport"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="danger"
+          type="submit"
+        >
+          Save Report
+        </button>
+
+      </div>
+
+    </form>
+
   </div>
 
-  <script>
-    "use strict";
+</div>
 
-    /* ============================================================
-       CONFIG
-    ============================================================ */
 
-    const WORKER_URL =
-      "https://holy-lake-cba9.daviswillis232.workers.dev/";
+<script>
 
-    const FAVORITES_KEY =
-      "animeFinderFavorites";
+const WORKER_URL =
+  "https://holy-lake-cba9.daviswillis232.workers.dev/";
 
-    const RECENT_KEY =
-      "animeFinderRecentSearches";
+const FAVORITES_KEY =
+  "animeFinderFavorites";
 
-    const REPORTS_KEY =
-      "animeFinderReports";
+const RECENT_KEY =
+  "animeFinderRecentSearches";
 
-    /*
-      Provider configuration.
+const REPORTS_KEY =
+  "animeFinderReports";
 
-      Important:
-      - Disney+ and Peacock mappings are intentionally preserved.
-      - RetroCrush does NOT use the RetroArch logo.
-      - If a logo fails, initials are shown instead.
-    */
 
-    const SERVICE_CONFIG = [
-      {
-        matches: ["crunchyroll"],
-        displayName: "Crunchyroll",
-        logo: "https://cdn.simpleicons.org/crunchyroll/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/crunchyroll.svg"
-      },
+const SERVICE_CONFIG = [
 
-      {
-        matches: ["hidive"],
-        displayName: "HIDIVE",
-        logo: "https://cdn.simpleicons.org/hidive/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/hidive.svg"
-      },
+  {
+    matches:["crunchyroll"],
+    displayName:"Crunchyroll",
+    logo:"https://cdn.simpleicons.org/crunchyroll/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/crunchyroll.svg"
+  },
 
-      {
-        matches: ["netflix"],
-        displayName: "Netflix",
-        logo: "https://cdn.simpleicons.org/netflix/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/netflix.svg"
-      },
+  {
+    matches:["hidive"],
+    displayName:"HIDIVE",
+    logo:"https://cdn.simpleicons.org/hidive/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/hidive.svg"
+  },
 
-      {
-        matches: ["hulu"],
-        displayName: "Hulu",
-        logo: "https://cdn.simpleicons.org/hulu/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/hulu.svg"
-      },
+  {
+    matches:["netflix"],
+    displayName:"Netflix",
+    logo:"https://cdn.simpleicons.org/netflix/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/netflix.svg"
+  },
 
-      {
-        matches: [
-          "disney plus",
-          "disney+",
-          "disneyplus"
-        ],
-        displayName: "Disney+",
-        logo: "https://cdn.simpleicons.org/disneyplus/FFFFFF",
-        fallbackLogo:
-          "https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg"
-      },
+  {
+    matches:["hulu"],
+    displayName:"Hulu",
+    logo:"https://cdn.simpleicons.org/hulu/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/hulu.svg"
+  },
 
-      {
-        matches: ["max", "hbo max"],
-        displayName: "Max",
-        logo: "https://cdn.simpleicons.org/max/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/max.svg"
-      },
+  {
+    matches:[
+      "disney plus",
+      "disney+",
+      "disneyplus"
+    ],
+    displayName:"Disney+",
+    logo:"https://cdn.simpleicons.org/disneyplus/FFFFFF",
+    fallbackLogo:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg"
+  },
 
-      {
-        matches: ["tubi"],
-        displayName: "Tubi",
-        logo: "https://cdn.simpleicons.org/tubi/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/tubi.svg"
-      },
+  {
+    matches:["max"],
+    displayName:"Max",
+    logo:"https://cdn.simpleicons.org/max/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/max.svg"
+  },
 
-      {
-        matches: [
-          "the roku channel",
-          "roku channel"
-        ],
-        displayName: "The Roku Channel",
-        logo: "https://cdn.simpleicons.org/roku/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/roku.svg"
-      },
+  {
+    matches:["tubi"],
+    displayName:"Tubi",
+    logo:"https://cdn.simpleicons.org/tubi/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/tubi.svg"
+  },
 
-      {
-        matches: ["pluto tv", "plutotv"],
-        displayName: "Pluto TV",
-        logo: "https://cdn.simpleicons.org/plutotv/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/plutotv.svg"
-      },
+  {
+    matches:[
+      "the roku channel",
+      "roku channel"
+    ],
+    displayName:"The Roku Channel",
+    logo:"https://cdn.simpleicons.org/roku/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/roku.svg"
+  },
 
-      {
-        matches: ["peacock"],
-        displayName: "Peacock",
-        logo:
-          "https://commons.wikimedia.org/wiki/Special:Redirect/file/NBCUniversal_Peacock_Logo_(2026;_icon).svg",
-        fallbackLogo:
-          "https://cdn.simpleicons.org/peacock/FFFFFF"
-      },
+  {
+    matches:[
+      "pluto tv",
+      "pluto"
+    ],
+    displayName:"Pluto TV",
+    logo:"https://cdn.simpleicons.org/plutotv/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/plutotv.svg"
+  },
 
-      {
-        matches: ["youtube", "youtube movies"],
-        displayName: "YouTube",
-        logo: "https://cdn.simpleicons.org/youtube/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/youtube.svg"
-      },
+  {
+    matches:["peacock"],
+    displayName:"Peacock",
+    logo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/NBCUniversal_Peacock_Logo_(2026;_icon).svg",
+    fallbackLogo:"https://cdn.simpleicons.org/peacock/FFFFFF"
+  },
 
-      {
-        matches: ["google tv", "googletv"],
-        displayName: "Google TV",
-        logo: "https://cdn.simpleicons.org/googletv/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/googletv.svg"
-      },
+  {
+    matches:["youtube"],
+    displayName:"YouTube",
+    logo:"https://cdn.simpleicons.org/youtube/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/youtube.svg"
+  },
 
-      {
-        /*
-          No incorrect third-party logo here.
-          RetroCrush will use initials if a dedicated logo is not supplied.
-        */
-        matches: ["retrocrush"],
-        displayName: "RetroCrush"
-      },
+  {
+    matches:["google tv"],
+    displayName:"Google TV",
+    logo:"https://cdn.simpleicons.org/googletv/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/googletv.svg"
+  },
 
-      {
-        matches: [
-          "paramount plus",
-          "paramount+",
-          "paramountplus"
-        ],
-        displayName: "Paramount+",
-        logo: "https://cdn.simpleicons.org/paramountplus/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/paramountplus.svg"
-      },
+  {
+    matches:["retrocrush"],
+    displayName:"RetroCrush"
+  },
 
-      {
-        matches: [
-          "amazon prime video",
-          "prime video"
-        ],
-        displayName: "Amazon Prime Video",
-        logo: "https://cdn.simpleicons.org/primevideo/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/primevideo.svg"
-      },
+  {
+    matches:[
+      "paramount plus",
+      "paramount+"
+    ],
+    displayName:"Paramount+"
+  },
 
-      {
-        matches: [
-          "amazon",
-          "amazon.com",
-          "amazon video",
-          "amazon instant video"
-        ],
-        displayName: "Amazon",
-        logo: "https://cdn.simpleicons.org/amazon/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/amazon.svg"
-      },
+  {
+    matches:[
+      "amazon prime video",
+      "prime video"
+    ],
+    displayName:"Amazon Prime Video",
+    logo:"./Prime-video.png"
+  },
 
-      {
-        matches: ["apple tv", "appletv"],
-        displayName: "Apple TV",
-        logo: "https://cdn.simpleicons.org/appletv/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/appletv.svg"
-      },
+  {
+    matches:[
+      "amazon",
+      "amazon.com",
+      "amazon video",
+      "amazon instant video"
+    ],
+    displayName:"Amazon",
+    logo:"https://cdn.simpleicons.org/amazon/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/amazon.svg"
+  },
 
-      {
-        matches: ["fandango at home"],
-        displayName: "Fandango at Home",
-        logo: "https://cdn.simpleicons.org/fandango/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/fandango.svg"
-      },
+  {
+    matches:[
+      "apple tv",
+      "itunes"
+    ],
+    displayName:"Apple TV",
+    logo:"https://cdn.simpleicons.org/appletv/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/appletv.svg"
+  },
 
-      {
-        matches: ["hoopla"],
-        displayName: "Hoopla",
-        logo: "https://cdn.simpleicons.org/hoopla/FFFFFF",
-        fallbackLogo:
-          "https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/hoopla.svg"
-      },
+  {
+    matches:[
+      "fandango at home",
+      "vudu"
+    ],
+    displayName:"Fandango at Home",
+    logo:"https://cdn.simpleicons.org/vudu/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/vudu.svg"
+  },
 
-      {
-        matches: [
-          "directv on demand",
-          "directv"
-        ],
-        displayName: "DIRECTV On Demand"
-      }
+  {
+    matches:["hoopla"],
+    displayName:"Hoopla"
+  },
+
+  {
+    matches:[
+      "directv on demand",
+      "directv"
+    ],
+    displayName:"DIRECTV On Demand"
+  }
+
+];
+
+
+const RETIRED_PROVIDERS = [
+  "freevee"
+];
+
+
+let currentAnime = null;
+let currentSources = [];
+let activeService = "All";
+
+
+const $ = id =>
+  document.getElementById(id);
+
+
+function safeString(v){
+
+  if(v === null || v === undefined){
+    return "";
+  }
+
+  if(
+    typeof v === "string" ||
+    typeof v === "number" ||
+    typeof v === "boolean"
+  ){
+    return String(v);
+  }
+
+  if(Array.isArray(v)){
+    return v
+      .map(safeString)
+      .filter(Boolean)
+      .join(", ");
+  }
+
+  if(typeof v === "object"){
+
+    const keys = [
+      "name",
+      "title",
+      "label",
+      "displayName",
+      "service",
+      "provider",
+      "source",
+      "platform",
+      "value",
+      "text"
     ];
 
-    const RETIRED_PROVIDERS = [
-      "freevee"
-    ];
+    for(const key of keys){
 
-    /* ============================================================
-       DOM
-    ============================================================ */
+      if(
+        Object.prototype.hasOwnProperty.call(v,key)
+      ){
 
-    const searchForm =
-      document.getElementById("searchForm");
+        const result =
+          safeString(v[key]).trim();
 
-    const searchInput =
-      document.getElementById("searchInput");
-
-    const searchButton =
-      document.getElementById("searchButton");
-
-    const statusEl =
-      document.getElementById("status");
-
-    const recentList =
-      document.getElementById("recentList");
-
-    const clearRecentButton =
-      document.getElementById("clearRecentButton");
-
-    const animeOverview =
-      document.getElementById("animeOverview");
-
-    const animePoster =
-      document.getElementById("animePoster");
-
-    const animeTitle =
-      document.getElementById("animeTitle");
-
-    const animeMeta =
-      document.getElementById("animeMeta");
-
-    const animeDescription =
-      document.getElementById("animeDescription");
-
-    const favoriteButton =
-      document.getElementById("favoriteButton");
-
-    const resultsPanel =
-      document.getElementById("resultsPanel");
-
-    const resultsGrid =
-      document.getElementById("resultsGrid");
-
-    const resultsCount =
-      document.getElementById("resultsCount");
-
-    const resultsEmpty =
-      document.getElementById("resultsEmpty");
-
-    const serviceFilters =
-      document.getElementById("serviceFilters");
-
-    const servicesGrid =
-      document.getElementById("servicesGrid");
-
-    const favoritesList =
-      document.getElementById("favoritesList");
-
-    const favoriteEmpty =
-      document.getElementById("favoriteEmpty");
-
-    const reportModal =
-      document.getElementById("reportModal");
-
-    const reportForm =
-      document.getElementById("reportForm");
-
-    const reportReason =
-      document.getElementById("reportReason");
-
-    const reportDetails =
-      document.getElementById("reportDetails");
-
-    const closeReportButton =
-      document.getElementById("closeReportButton");
-
-    const cancelReportButton =
-      document.getElementById("cancelReportButton");
-
-    let currentAnime = null;
-    let currentSources = [];
-    let activeServiceFilter = "All";
-
-    /* ============================================================
-       STORAGE
-    ============================================================ */
-
-    function readStorage(key, fallback) {
-      try {
-        const raw = localStorage.getItem(key);
-
-        if (!raw) {
-          return fallback;
+        if(
+          result &&
+          result !== "[object Object]"
+        ){
+          return result;
         }
 
-        const parsed = JSON.parse(raw);
-
-        return parsed ?? fallback;
-      } catch {
-        return fallback;
-      }
-    }
-
-    function writeStorage(key, value) {
-      try {
-        localStorage.setItem(
-          key,
-          JSON.stringify(value)
-        );
-      } catch {
-        /* Storage can fail in private/restricted browsers. */
-      }
-    }
-
-    /* ============================================================
-       GENERAL HELPERS
-    ============================================================ */
-
-    function firstNonEmpty(...values) {
-      for (const value of values) {
-        if (
-          value !== null &&
-          value !== undefined &&
-          String(value).trim() !== ""
-        ) {
-          return value;
-        }
       }
 
-      return "";
     }
 
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return "";
+  }
+
+  return String(v);
+}
+
+
+function firstNonEmpty(...v){
+
+  for(const value of v){
+
+    const result =
+      safeString(value).trim();
+
+    if(
+      result &&
+      result !== "[object Object]"
+    ){
+      return result;
     }
 
-    function normalizeServiceName(value) {
-      return String(value ?? "")
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-    }
+  }
 
-    function getSafeUrl(value) {
-      try {
-        const url = new URL(String(value));
+  return "";
+}
 
-        if (
-          url.protocol === "https:" ||
-          url.protocol === "http:"
-        ) {
-          return url.href;
-        }
 
-        return "";
-      } catch {
-        return "";
-      }
-    }
+function normalizeServiceName(v){
 
-    function getSafeImageUrl(value) {
-      try {
-        const url = new URL(String(value));
+  return safeString(v)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g," ")
+    .replace(/\s+/g," ")
+    .trim();
 
-        if (url.protocol === "https:") {
-          return url.href;
-        }
+}
 
-        return "";
-      } catch {
-        return "";
-      }
-    }
 
-    /* ============================================================
-       SERVICE HELPERS
-    ============================================================ */
+function escapeHtml(v){
 
-    function getRawServiceName(source) {
-      return String(
-        firstNonEmpty(
-          source?.service,
-          source?.provider,
-          source?.providerName,
-          source?.platform,
-          source?.name
-        )
-      ).trim();
-    }
+  return safeString(v).replace(
+    /[&<>"']/g,
+    c => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[c])
+  );
 
-    function findServiceConfig(serviceName) {
-      const normalized =
-        normalizeServiceName(serviceName);
+}
 
-      if (!normalized) {
-        return null;
-      }
 
-      return (
-        SERVICE_CONFIG.find(config =>
-          config.matches.some(
-            match =>
-              normalizeServiceName(match) === normalized
+function getRawServiceName(source){
+
+  if(
+    !source ||
+    typeof source !== "object"
+  ){
+    return safeString(source);
+  }
+
+  return safeString(
+    firstNonEmpty(
+      source.service,
+      source.provider,
+      source.source,
+      source.name,
+      source.title,
+      source.platform
+    )
+  );
+
+}
+
+
+function findServiceConfig(name){
+
+  const n =
+    normalizeServiceName(name);
+
+  return SERVICE_CONFIG.find(
+    c =>
+      c.matches.some(
+        m =>
+          n.includes(
+            normalizeServiceName(m)
           )
-        ) || null
-      );
-    }
+      )
+  );
 
-    function getProviderParentName(serviceName) {
-      const normalized =
-        normalizeServiceName(serviceName);
+}
 
-      if (!normalized) {
-        return "";
-      }
 
-      /*
-        Crunchyroll gets checked first because some Crunchyroll
-        offers also contain "Amazon" in their source name.
-      */
-      if (normalized.includes("crunchyroll")) {
-        return "Crunchyroll";
-      }
+function getCleanServiceName(name){
 
-      if (
-        normalized === "prime video" ||
-        normalized.includes("amazon")
-      ) {
-        return "Amazon";
-      }
+  const raw =
+    safeString(name);
 
-      const config =
-        findServiceConfig(serviceName);
+  const c =
+    findServiceConfig(raw);
 
-      return config?.displayName ||
-        String(serviceName).trim();
-    }
+  return c?.displayName ||
+    raw ||
+    "Unknown Service";
 
-    function getCleanServiceName(serviceName) {
-      const config =
-        findServiceConfig(serviceName);
+}
 
-      return (
-        config?.displayName ||
-        String(serviceName || "Unknown Service")
-      );
-    }
 
-    function getOfferTitle(source) {
-      const raw =
-        getRawServiceName(source);
+function getProviderParentName(name){
 
-      const normalized =
-        normalizeServiceName(raw);
+  const n =
+    normalizeServiceName(name);
 
-      if (
-        normalized.includes("crunchyroll") &&
-        normalized !== "crunchyroll"
-      ) {
-        return "Crunchyroll Premium";
-      }
+  if(!n){
+    return "";
+  }
 
-      return getCleanServiceName(raw);
-    }
+  if(n.includes("crunchyroll")){
+    return "Crunchyroll";
+  }
 
-    function getOfferSubline(source) {
-      const normalized =
-        normalizeServiceName(
-          getRawServiceName(source)
-        );
+  if(
+    n === "prime video" ||
+    n.includes("amazon")
+  ){
+    return "Amazon";
+  }
 
-      if (
-        normalized.includes("via prime") ||
-        normalized.includes("amazon channel")
-      ) {
-        return "Via Amazon Prime";
-      }
+  return (
+    findServiceConfig(name)?.displayName ||
+    safeString(name)
+  );
 
-      if (
-        normalized.includes("roku channel")
-      ) {
-        return "Via Roku Channel";
-      }
+}
 
-      return "";
-    }
 
-    function isRetiredProvider(serviceName) {
-      const normalized =
-        normalizeServiceName(serviceName);
+function getOfferTitle(source){
 
-      return RETIRED_PROVIDERS.some(
-        provider =>
-          normalized ===
-          normalizeServiceName(provider) ||
-          normalized.includes(
-            normalizeServiceName(provider)
-          )
-      );
-    }
+  const raw =
+    getRawServiceName(source);
 
-    /* ============================================================
-       LOGOS
-    ============================================================ */
+  const n =
+    normalizeServiceName(raw);
 
-    function getProviderInitials(name) {
-      const cleaned =
-        String(name || "Service")
-          .trim()
-          .split(/\s+/)
-          .filter(Boolean);
+  if(
+    n.includes("crunchyroll") &&
+    n !== "crunchyroll"
+  ){
+    return "Crunchyroll Premium";
+  }
 
-      if (!cleaned.length) {
-        return "?";
-      }
+  return getCleanServiceName(raw);
 
-      if (cleaned.length === 1) {
-        return cleaned[0]
-          .slice(0, 2)
-          .toUpperCase();
-      }
+}
 
-      return cleaned
-        .slice(0, 2)
-        .map(word => word[0])
-        .join("")
-        .toUpperCase();
-    }
 
-    function getServiceLogoCandidates(serviceName) {
-      const candidates = [];
+function getOfferSubline(source){
 
-      const addCandidate = value => {
-        const safe =
-          getSafeImageUrl(value);
+  const n =
+    normalizeServiceName(
+      getRawServiceName(source)
+    );
 
-        if (
-          safe &&
-          !candidates.includes(safe)
-        ) {
-          candidates.push(safe);
-        }
-      };
+  if(
+    n.includes("via prime") ||
+    n.includes("amazon channel")
+  ){
+    return "Via Amazon Prime";
+  }
 
-      const exact =
-        findServiceConfig(serviceName);
+  if(
+    n.includes("roku channel")
+  ){
+    return "Via Roku Channel";
+  }
 
-      if (exact) {
-        addCandidate(exact.logo);
-        addCandidate(exact.fallbackLogo);
-      }
+  return "";
 
-      const parentName =
-        getProviderParentName(serviceName);
+}
 
-      const parent =
-        findServiceConfig(parentName);
 
-      if (parent) {
-        addCandidate(parent.logo);
-        addCandidate(parent.fallbackLogo);
-      }
+function getTypeText(source){
 
-      return candidates;
-    }
-
-    function buildLogoHtml(
-      serviceName,
-      small = false
-    ) {
-      const candidates =
-        getServiceLogoCandidates(serviceName);
-
-      const initials =
-        getProviderInitials(serviceName);
-
-      const fallback =
-        candidates[1] || "";
-
-      const logoClass =
-        small
-          ? "service-card-logo"
-          : "service-logo";
-
-      if (!candidates.length) {
-        return `
-          <div
-            class="${logoClass}"
-            aria-label="${escapeHtml(serviceName)}"
-          >
-            <span class="logo-initials">
-              ${escapeHtml(initials)}
-            </span>
-          </div>
-        `;
-      }
-
-      return `
-        <div
-          class="${logoClass}"
-          aria-label="${escapeHtml(serviceName)}"
-        >
-          <img
-            src="${escapeHtml(candidates[0])}"
-            alt=""
-            data-fallback="${escapeHtml(fallback)}"
-          />
-
-          <span
-            class="logo-initials"
-            hidden
-          >
-            ${escapeHtml(initials)}
-          </span>
-        </div>
-      `;
-    }
-
-    function setupLogoFallbacks() {
-      document
-        .querySelectorAll(
-          ".service-logo img, .service-card-logo img"
-        )
-        .forEach(img => {
-          const fallback =
-            img.dataset.fallback || "";
-
-          const parent =
-            img.parentElement;
-
-          const initials =
-            parent?.querySelector(
-              ".logo-initials"
-            );
-
-          const useFallback = () => {
-            if (
-              fallback &&
-              img.src !== fallback &&
-              !img.dataset.fallbackUsed
-            ) {
-              img.dataset.fallbackUsed = "true";
-              img.src = fallback;
-              return;
-            }
-
-            img.hidden = true;
-
-            if (initials) {
-              initials.hidden = false;
-            }
-          };
-
-          img.addEventListener(
-            "error",
-            useFallback,
-            { once: false }
-          );
-
-          /*
-            Handles images that were already broken before
-            the event listener was attached.
-          */
-          if (
-            img.complete &&
-            img.naturalWidth === 0
-          ) {
-            useFallback();
-          }
-        });
-    }
-
-    /* ============================================================
-       SOURCE / OFFER DATA
-    ============================================================ */
-
-    function getTypeText(source) {
-      const raw =
-        String(
-          firstNonEmpty(
-            source?.type,
-            source?.offerType,
-            source?.accessType
-          )
-        )
-          .trim()
-          .toLowerCase();
-
-      if (
-        raw === "sub" ||
-        raw.includes("subscription") ||
-        raw === "subscribe"
-      ) {
-        return "Subscription";
-      }
-
-      if (
-        raw.includes("free") ||
-        raw === "ads"
-      ) {
-        return "Free";
-      }
-
-      if (
-        raw.includes("rent")
-      ) {
-        return "Rent";
-      }
-
-      if (
-        raw.includes("buy") ||
-        raw.includes("purchase")
-      ) {
-        return "Buy";
-      }
-
-      return firstNonEmpty(
+  const raw =
+    safeString(
+      firstNonEmpty(
         source?.type,
         source?.offerType,
-        "Watch"
+        source?.accessType
+      )
+    ).toLowerCase();
+
+  if(
+    raw === "sub" ||
+    raw.includes("subscription") ||
+    raw === "subscribe"
+  ){
+    return "Subscription";
+  }
+
+  if(
+    raw.includes("free") ||
+    raw === "ads"
+  ){
+    return "Free";
+  }
+
+  if(
+    raw.includes("rent")
+  ){
+    return "Rent";
+  }
+
+  if(
+    raw.includes("buy") ||
+    raw.includes("purchase")
+  ){
+    return "Buy";
+  }
+
+  return safeString(
+    firstNonEmpty(
+      source?.type,
+      source?.offerType,
+      "Watch"
+    )
+  );
+
+}
+
+
+function formatPrice(value){
+
+  if(
+    value === null ||
+    value === undefined ||
+    String(value).trim() === ""
+  ){
+    return "";
+  }
+
+  if(typeof value === "object"){
+
+    const amount =
+      firstNonEmpty(
+        value.amount,
+        value.value,
+        value.price
       );
-    }
 
-    function formatPrice(value) {
-      if (
-        value === null ||
-        value === undefined ||
-        String(value).trim() === ""
-      ) {
-        return "";
-      }
-
-      if (
-        typeof value === "object"
-      ) {
-        const amount =
-          firstNonEmpty(
-            value.amount,
-            value.value,
-            value.price
-          );
-
-        const currency =
-          String(
-            firstNonEmpty(
-              value.currency,
-              ""
-            )
-          ).toUpperCase();
-
-        if (
-          amount !== "" &&
-          currency === "USD"
-        ) {
-          return formatPrice(amount);
-        }
-
-        if (amount !== "") {
-          return String(amount);
-        }
-
-        return "";
-      }
-
-      const raw =
-        String(value).trim();
-
-      if (
-        raw.toLowerCase() === "free"
-      ) {
-        return "Free";
-      }
-
-      if (
-        raw.startsWith("$")
-      ) {
-        return raw;
-      }
-
-      /*
-        Preserve useful text such as:
-        "From $2.99"
-        "$2.99/month"
-      */
-      const dollarMatch =
-        raw.match(
-          /\$?\s*(\d+(?:\.\d{1,2})?)/
-        );
-
-      if (!dollarMatch) {
-        return raw;
-      }
-
-      const number =
-        Number(dollarMatch[1]);
-
-      if (!Number.isFinite(number)) {
-        return raw;
-      }
-
-      const prefix =
-        /^from\b/i.test(raw)
-          ? "From "
-          : "";
-
-      return `${prefix}$${number.toFixed(2)}`;
-    }
-
-    function getFormatText(source) {
-      return String(
+    const currency =
+      safeString(
         firstNonEmpty(
-          source?.format,
-          source?.quality,
-          source?.videoQuality
-        )
-      ).trim();
-    }
-
-    function getEpisodeText(source) {
-      const value =
-        firstNonEmpty(
-          source?.episodes,
-          source?.episodeCount,
-          source?.numberOfEpisodes
-        );
-
-      if (
-        value === "" ||
-        value === null ||
-        value === undefined
-      ) {
-        return "";
-      }
-
-      return `${value} eps`;
-    }
-
-    function getServiceNote(source) {
-      const value =
-        firstNonEmpty(
-          source?.note,
-          source?.availabilityNote,
-          source?.details
-        );
-
-      if (
-        typeof value === "string" ||
-        typeof value === "number"
-      ) {
-        return String(value);
-      }
-
-      return "";
-    }
-
-    /* ============================================================
-       U.S. AVAILABILITY
-    ============================================================ */
-
-    function valueContainsUs(value) {
-      if (Array.isArray(value)) {
-        return value.some(
-          item => valueContainsUs(item)
-        );
-      }
-
-      if (
-        value === null ||
-        value === undefined
-      ) {
-        return false;
-      }
-
-      const normalized =
-        normalizeServiceName(value);
-
-      if (!normalized) {
-        return false;
-      }
-
-      const tokens =
-        normalized.split(" ");
-
-      return (
-        tokens.includes("us") ||
-        tokens.includes("usa") ||
-        normalized.includes("united states") ||
-        normalized.includes("united states of america")
-      );
-    }
-
-    function isUsSource(source) {
-      if (
-        source?.us === true ||
-        source?.isUS === true ||
-        source?.isUs === true ||
-        source?.isUSAvailable === true ||
-        source?.availableInUS === true
-      ) {
-        return true;
-      }
-
-      const regionValues = [
-        source?.region,
-        source?.country,
-        source?.market,
-        source?.territory,
-        source?.regions,
-        source?.countries
-      ];
-
-      const supplied =
-        regionValues.filter(
-          value =>
-            value !== null &&
-            value !== undefined &&
-            String(value).trim() !== ""
-        );
-
-      /*
-        If the source doesn't provide region data, don't
-        fabricate a region-specific claim. The Worker is
-        already expected to provide the U.S. result set.
-      */
-      if (!supplied.length) {
-        return true;
-      }
-
-      return supplied.some(
-        value => valueContainsUs(value)
-      );
-    }
-
-    /* ============================================================
-       DEDUPLICATION
-    ============================================================ */
-
-    function getSourceKey(source) {
-      const service =
-        normalizeServiceName(
-          getRawServiceName(source)
-        );
-
-      const type =
-        normalizeServiceName(
-          getTypeText(source)
-        );
-
-      const price =
-        normalizeServiceName(
-          formatPrice(source?.price)
-        );
-
-      const format =
-        normalizeServiceName(
-          getFormatText(source)
-        );
-
-      const episodes =
-        normalizeServiceName(
-          getEpisodeText(source)
-        );
-
-      const note =
-        normalizeServiceName(
-          getServiceNote(source)
-        );
-
-      const url =
-        getSafeUrl(
-          firstNonEmpty(
-            source?.url,
-            source?.link,
-            source?.watchUrl
-          )
-        );
-
-      return [
-        service,
-        type,
-        price,
-        format,
-        episodes,
-        note,
-        url
-      ].join("|");
-    }
-
-    function dedupeSources(sources) {
-      const seen = new Set();
-      const output = [];
-
-      for (const source of sources) {
-        const key =
-          getSourceKey(source);
-
-        if (seen.has(key)) {
-          continue;
-        }
-
-        seen.add(key);
-        output.push(source);
-      }
-
-      return output;
-    }
-
-    /* ============================================================
-       RESPONSE NORMALIZATION
-    ============================================================ */
-
-    function extractSources(data) {
-      if (
-        !data ||
-        typeof data !== "object"
-      ) {
-        return [];
-      }
-
-      const possibleArrays = [
-        data.sources,
-        data.offers,
-        data.results,
-        data.availability
-      ];
-
-      /*
-        Prefer a non-empty array so an empty `sources: []`
-        doesn't prevent us from using `offers` or `results`.
-      */
-      const nonEmpty =
-        possibleArrays.find(
-          value =>
-            Array.isArray(value) &&
-            value.length > 0
-        );
-
-      if (nonEmpty) {
-        return nonEmpty;
-      }
-
-      const firstArray =
-        possibleArrays.find(
-          value => Array.isArray(value)
-        );
-
-      return firstArray || [];
-    }
-
-    function normalizeAnimeResponse(data) {
-      const payload =
-        data &&
-        typeof data === "object" &&
-        !Array.isArray(data)
-          ? data
-          : {};
-
-      const title =
-        firstNonEmpty(
-          payload.title,
-          payload.name,
-          searchInput.value.trim()
-        );
-
-      return {
-        ...payload,
-        title: String(title),
-        sources: extractSources(payload)
-      };
-    }
-
-    /* ============================================================
-       ANIME INFO
-    ============================================================ */
-
-    function getAnimeGenres(anime) {
-      const genres =
-        anime?.genres;
-
-      if (!Array.isArray(genres)) {
-        return [];
-      }
-
-      return genres
-        .map(item => {
-          if (
-            typeof item === "string" ||
-            typeof item === "number"
-          ) {
-            return String(item);
-          }
-
-          if (
-            item &&
-            typeof item === "object"
-          ) {
-            return String(
-              firstNonEmpty(
-                item.name,
-                item.title
-              )
-            );
-          }
-
-          return "";
-        })
-        .filter(Boolean);
-    }
-
-    function getAnimePoster(anime) {
-      return getSafeImageUrl(
-        firstNonEmpty(
-          anime?.poster,
-          anime?.posterUrl,
-          anime?.image,
-          anime?.imageUrl,
-          anime?.cover
-        )
-      );
-    }
-
-    function getAnimeYear(anime) {
-      return firstNonEmpty(
-        anime?.year,
-        anime?.releaseYear,
-        anime?.startYear
-      );
-    }
-
-    function getAnimeEpisodes(anime) {
-      return firstNonEmpty(
-        anime?.episodes,
-        anime?.episodeCount,
-        anime?.numberOfEpisodes
-      );
-    }
-
-    function getAnimeDescription(anime) {
-      return String(
-        firstNonEmpty(
-          anime?.description,
-          anime?.synopsis,
+          value.currency,
           ""
         )
-      );
+      ).toUpperCase();
+
+    if(
+      amount !== "" &&
+      currency === "USD"
+    ){
+      return formatPrice(amount);
     }
 
-    function renderAnimeOverview(anime) {
-      currentAnime = anime;
-
-      animeTitle.textContent =
-        anime.title || "Anime";
-
-      animeMeta.innerHTML = "";
-
-      const year =
-        getAnimeYear(anime);
-
-      const episodes =
-        getAnimeEpisodes(anime);
-
-      const genres =
-        getAnimeGenres(anime);
-
-      if (year) {
-        animeMeta.insertAdjacentHTML(
-          "beforeend",
-          `<span class="meta-pill">📅 ${escapeHtml(year)}</span>`
-        );
-      }
-
-      if (episodes) {
-        animeMeta.insertAdjacentHTML(
-          "beforeend",
-          `<span class="meta-pill">🎞️ ${escapeHtml(episodes)} eps</span>`
-        );
-      }
-
-      genres.slice(0, 4).forEach(
-        genre => {
-          animeMeta.insertAdjacentHTML(
-            "beforeend",
-            `<span class="meta-pill">${escapeHtml(genre)}</span>`
-          );
-        }
-      );
-
-      animeDescription.textContent =
-        getAnimeDescription(anime);
-
-      const poster =
-        getAnimePoster(anime);
-
-      if (poster) {
-        animePoster.src = poster;
-        animePoster.alt =
-          `${anime.title || "Anime"} poster`;
-        animePoster.hidden = false;
-        animePoster.classList.remove(
-          "hidden-poster"
-        );
-      } else {
-        animePoster.hidden = true;
-        animePoster.removeAttribute("src");
-      }
-
-      updateFavoriteButton();
-
-      animeOverview.classList.add("show");
+    if(amount !== ""){
+      return formatPrice(amount);
     }
 
-    /* ============================================================
-       OFFER RENDERING
-    ============================================================ */
+    return "";
+  }
 
-    function buildOfferCard(source) {
-      const rawService =
-        getRawServiceName(source);
+  const raw =
+    String(value).trim();
 
-      const parentService =
-        getProviderParentName(rawService);
+  if(
+    raw.toLowerCase() === "free"
+  ){
+    return "Free";
+  }
 
-      const title =
-        getOfferTitle(source);
+  if(
+    raw.startsWith("$")
+  ){
+    return raw;
+  }
 
-      const subline =
-        getOfferSubline(source);
+  const m =
+    raw.match(
+      /\$?\s*(\d+(?:\.\d{1,2})?)/
+    );
 
-      const type =
-        getTypeText(source);
+  if(!m){
+    return raw;
+  }
 
-      const price =
-        formatPrice(source?.price);
+  const n =
+    Number(m[1]);
 
-      const format =
-        getFormatText(source);
+  if(!Number.isFinite(n)){
+    return raw;
+  }
 
-      const episodes =
-        getEpisodeText(source);
+  return `${
+    /^from\b/i.test(raw)
+      ? "From "
+      : ""
+  }$${n.toFixed(2)}`;
 
-      const note =
-        getServiceNote(source);
+}
 
-      const url =
-        getSafeUrl(
-          firstNonEmpty(
-            source?.url,
-            source?.link,
-            source?.watchUrl
-          )
-        );
 
-      const details = [];
+function getFormatText(source){
 
-      if (format) {
-        details.push(
-          `<span class="offer-detail">${escapeHtml(format)}</span>`
-        );
-      }
+  return safeString(
+    firstNonEmpty(
+      source?.format,
+      source?.quality,
+      source?.resolution
+    )
+  );
 
-      if (episodes) {
-        details.push(
-          `<span class="offer-detail">${escapeHtml(episodes)}</span>`
-        );
-      }
+}
 
-      if (note) {
-        details.push(
-          `<span class="offer-detail">${escapeHtml(note)}</span>`
-        );
-      }
 
-      const priceHtml =
-        price
-          ? `<span class="offer-price">${escapeHtml(price)}</span>`
-          : "";
+function getEpisodeText(source){
 
-      /*
-        Important:
-        Use the raw service for the logo first.
-        This means Amazon Prime Video can use its own logo,
-        while Crunchyroll channel variants fall back to
-        the Crunchyroll parent logo.
-      */
-      const logo =
-        buildLogoHtml(rawService);
+  const v =
+    firstNonEmpty(
+      source?.episodes,
+      source?.episodeCount,
+      source?.numberOfEpisodes
+    );
 
-      return `
-        <article class="offer-card">
-          ${logo}
+  if(v === ""){
+    return "";
+  }
 
-          <div>
-            <div class="offer-title">
-              ${escapeHtml(title)}
-            </div>
+  const s =
+    safeString(v);
 
-            ${
-              subline
-                ? `<div class="offer-subline">
-                    ${escapeHtml(subline)}
-                   </div>`
-                : ""
-            }
-          </div>
+  return /^\d+$/.test(s)
+    ? `${s} eps`
+    : s;
 
-          <div class="offer-details">
-            ${
-              details.length
-                ? details.join("")
-                : `<span class="offer-detail">U.S. offer</span>`
-            }
-          </div>
+}
 
-          <div class="offer-actions">
-            <div>
-              <div class="offer-type">
-                ${escapeHtml(type)}
-                ${priceHtml ? ` • ${priceHtml}` : ""}
-              </div>
 
-              <div class="offer-location">
-                🇺🇸 U.S. availability
-              </div>
-            </div>
+function getServiceNote(source){
 
-            <button
-              class="open-offer-btn"
-              type="button"
-              data-url="${escapeHtml(url)}"
-              ${url ? "" : "disabled"}
-            >
-              Open Offer
-            </button>
-          </div>
-        </article>
-      `;
-    }
+  return safeString(
+    firstNonEmpty(
+      source?.note,
+      source?.notes,
+      source?.channel
+    )
+  );
 
-    function getAvailableParentServices(sources) {
-      const services =
-        new Map();
+}
 
-      for (const source of sources) {
-        const raw =
-          getRawServiceName(source);
 
-        const parent =
-          getProviderParentName(raw);
+function getSafeUrl(v){
 
-        if (!parent) {
-          continue;
-        }
+  const s =
+    safeString(v).trim();
 
-        services.set(
-          normalizeServiceName(parent),
-          parent
-        );
-      }
+  if(!s){
+    return "";
+  }
 
-      return Array.from(
-        services.values()
-      ).sort(
-        (a, b) =>
-          a.localeCompare(b)
-      );
-    }
+  try{
 
-    function renderServiceFilters() {
-      const services =
-        getAvailableParentServices(
-          currentSources
-        );
-
-      serviceFilters.innerHTML = `
-        <button
-          class="filter-btn ${activeServiceFilter === "All" ? "active" : ""}"
-          type="button"
-          data-service-filter="All"
-        >
-          All
-        </button>
-      `;
-
-      services.forEach(
-        service => {
-          serviceFilters.insertAdjacentHTML(
-            "beforeend",
-            `
-              <button
-                class="filter-btn ${
-                  activeServiceFilter === service
-                    ? "active"
-                    : ""
-                }"
-                type="button"
-                data-service-filter="${escapeHtml(service)}"
-              >
-                ${escapeHtml(service)}
-              </button>
-            `
-          );
-        }
-      );
-    }
-
-    function renderResults() {
-      const filtered =
-        activeServiceFilter === "All"
-          ? currentSources
-          : currentSources.filter(
-              source =>
-                getProviderParentName(
-                  getRawServiceName(source)
-                ) === activeServiceFilter
-            );
-
-      resultsCount.textContent =
-        `${filtered.length} result${filtered.length === 1 ? "" : "s"}`;
-
-      resultsGrid.innerHTML =
-        filtered
-          .map(buildOfferCard)
-          .join("");
-
-      resultsEmpty.classList.toggle(
-        "show",
-        filtered.length === 0
+    const u =
+      new URL(
+        s,
+        location.href
       );
 
-      setupLogoFallbacks();
-    }
+    return [
+      "http:",
+      "https:"
+    ].includes(u.protocol)
+      ? u.href
+      : "";
 
-    /* ============================================================
-       SEARCH
-    ============================================================ */
+  }catch{
 
-    async function performSearch() {
-      const query =
-        searchInput.value.trim();
+    return "";
 
-      if (!query) {
-        showStatus(
-          "Enter an anime title first.",
-          "error"
-        );
-        return;
-      }
+  }
 
-      setLoading(true);
+}
 
-      try {
-        const url =
-          new URL(WORKER_URL);
 
-        url.searchParams.set(
-          "q",
-          query
-        );
+function valueContainsUs(value){
 
-        const response =
-          await fetch(
-            url.href,
-            {
-              method: "GET",
-              headers: {
-                Accept:
-                  "application/json"
-              }
-            }
-          );
+  if(Array.isArray(value)){
+    return value.some(
+      valueContainsUs
+    );
+  }
 
-        if (!response.ok) {
-          throw new Error(
-            `Worker returned HTTP ${response.status}.`
-          );
-        }
+  const n =
+    normalizeServiceName(value);
 
-        const data =
-          await response.json();
+  if(!n){
+    return false;
+  }
 
-        const anime =
-          normalizeAnimeResponse(data);
+  const t =
+    n.split(" ");
 
-        let sources =
-          anime.sources
-            .filter(source => {
-              const service =
-                getRawServiceName(source);
+  return (
+    t.includes("us") ||
+    t.includes("usa") ||
+    n.includes("united states") ||
+    n.includes(
+      "united states of america"
+    )
+  );
 
-              return (
-                !isRetiredProvider(service) &&
-                isUsSource(source)
+}
+
+
+function isUsSource(source){
+
+  if(
+    source?.us === true ||
+    source?.isUS === true ||
+    source?.isUs === true ||
+    source?.isUSAvailable === true ||
+    source?.availableInUS === true
+  ){
+    return true;
+  }
+
+  const vals = [
+    source?.region,
+    source?.country,
+    source?.market,
+    source?.territory,
+    source?.regions,
+    source?.countries
+  ].filter(
+    v =>
+      v !== null &&
+      v !== undefined &&
+      safeString(v).trim() !== ""
+  );
+
+  if(!vals.length){
+    return true;
+  }
+
+  return vals.some(
+    valueContainsUs
+  );
+
+}
+
+
+function getSourceKey(source){
+
+  return [
+
+    normalizeServiceName(
+      getRawServiceName(source)
+    ),
+
+    normalizeServiceName(
+      getTypeText(source)
+    ),
+
+    normalizeServiceName(
+      formatPrice(source?.price)
+    ),
+
+    normalizeServiceName(
+      getFormatText(source)
+    ),
+
+    normalizeServiceName(
+      getEpisodeText(source)
+    ),
+
+    normalizeServiceName(
+      getServiceNote(source)
+    ),
+
+    getSafeUrl(
+      firstNonEmpty(
+        source?.url,
+        source?.link,
+        source?.watchUrl
+      )
+    )
+
+  ].join("|");
+
+}
+
+
+function extractSources(data){
+
+  if(
+    !data ||
+    typeof data !== "object"
+  ){
+    return [];
+  }
+
+  const arrays = [
+    data.sources,
+    data.offers,
+    data.results,
+    data.availability
+  ];
+
+  return (
+    arrays.find(
+      a =>
+        Array.isArray(a) &&
+        a.length > 0
+    ) ||
+    arrays.find(
+      Array.isArray
+    ) ||
+    []
+  );
+
+}
+
+
+function getServiceLogoCandidates(name){
+
+  const c =
+    findServiceConfig(name);
+
+  if(!c){
+    return [];
+  }
+
+  return [
+    c.logo,
+    c.fallbackLogo
+  ].filter(Boolean);
+
+}
+
+
+function getProviderInitials(name){
+
+  const s =
+    getCleanServiceName(name)
+      .replace(
+        /[^A-Za-z0-9 ]/g,
+        " "
+      )
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+
+  return (
+    s.length > 1
+      ? s
+          .slice(0,2)
+          .map(x => x[0])
+          .join("")
+      : s[0]?.slice(0,2) || "TV"
+  ).toUpperCase();
+
+}
+
+
+function buildLogoHtml(
+  serviceName,
+  small=false
+){
+
+  const candidates =
+    getServiceLogoCandidates(
+      serviceName
+    );
+
+  const initials =
+    getProviderInitials(
+      serviceName
+    );
+
+  const cls =
+    small
+      ? "service-card-logo"
+      : "logo";
+
+  if(!candidates.length){
+
+    return `
+      <div
+        class="${cls}"
+        aria-label="${escapeHtml(serviceName)}"
+      >
+        <span class="logo-initials">
+          ${escapeHtml(initials)}
+        </span>
+      </div>
+    `;
+
+  }
+
+  return `
+    <div
+      class="${cls}"
+      aria-label="${escapeHtml(serviceName)}"
+    >
+
+      <img
+        src="${escapeHtml(candidates[0])}"
+        alt=""
+        data-fallback="${escapeHtml(
+          candidates[1] || ""
+        )}"
+      >
+
+      <span
+        class="logo-initials"
+        hidden
+      >
+        ${escapeHtml(initials)}
+      </span>
+
+    </div>
+  `;
+
+}
+
+
+function attachLogoFallbacks(
+  root=document
+){
+
+  root
+    .querySelectorAll(
+      "img[data-fallback]"
+    )
+    .forEach(img => {
+
+      img.addEventListener(
+        "error",
+        () => {
+
+          const fb =
+            img.dataset.fallback;
+
+          if(
+            fb &&
+            img.src !== fb
+          ){
+
+            img.src = fb;
+            return;
+
+          }
+
+          img.hidden = true;
+
+          const span =
+            img.parentElement
+              ?.querySelector(
+                ".logo-initials"
               );
-            });
 
-        sources =
-          dedupeSources(sources);
+          if(span){
+            span.hidden = false;
+          }
 
-        const normalizedAnime = {
-          ...anime,
-          sources
-        };
-
-        currentSources =
-          sources;
-
-        activeServiceFilter =
-          "All";
-
-        renderAnimeOverview(
-          normalizedAnime
-        );
-
-        renderServiceFilters();
-        renderResults();
-
-        resultsPanel.hidden = false;
-
-        addRecentSearch(
-          query
-        );
-
-        showStatus(
-          sources.length
-            ? `Found ${sources.length} U.S. option${
-                sources.length === 1 ? "" : "s"
-              }.`
-            : "No U.S. availability was found for this title.",
-          sources.length
-            ? "success"
-            : ""
-        );
-
-        resultsPanel.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      } catch (error) {
-        console.error(error);
-
-        currentSources = [];
-        resultsPanel.hidden = true;
-
-        showStatus(
-          error?.message ||
-            "Something went wrong while searching.",
-          "error"
-        );
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    function setLoading(isLoading) {
-      searchButton.disabled =
-        isLoading;
-
-      searchButton.textContent =
-        isLoading
-          ? "Searching..."
-          : "Search";
-    }
-
-    function showStatus(
-      message,
-      type = ""
-    ) {
-      statusEl.hidden = false;
-      statusEl.textContent = message;
-      statusEl.className =
-        `status ${type}`.trim();
-    }
-
-    /* ============================================================
-       RECENT SEARCHES
-    ============================================================ */
-
-    function getRecentSearches() {
-      const searches =
-        readStorage(
-          RECENT_KEY,
-          []
-        );
-
-      return Array.isArray(searches)
-        ? searches
-        : [];
-    }
-
-    function addRecentSearch(query) {
-      const normalized =
-        query.trim();
-
-      if (!normalized) {
-        return;
-      }
-
-      let searches =
-        getRecentSearches();
-
-      searches =
-        searches.filter(
-          item =>
-            String(item).toLowerCase() !==
-            normalized.toLowerCase()
-        );
-
-      searches.unshift(
-        normalized
-      );
-
-      searches =
-        searches.slice(0, 8);
-
-      writeStorage(
-        RECENT_KEY,
-        searches
-      );
-
-      renderRecentSearches();
-    }
-
-    function renderRecentSearches() {
-      const searches =
-        getRecentSearches();
-
-      recentList.innerHTML = "";
-
-      if (!searches.length) {
-        recentList.innerHTML =
-          `<span style="color:var(--dim);font-size:.8rem;">
-            Your recent searches will appear here.
-          </span>`;
-        return;
-      }
-
-      searches.forEach(
-        query => {
-          const button =
-            document.createElement(
-              "button"
-            );
-
-          button.type = "button";
-          button.className =
-            "recent-chip";
-          button.textContent =
-            query;
-
-          button.addEventListener(
-            "click",
-            () => {
-              searchInput.value =
-                query;
-
-              performSearch();
-            }
-          );
-
-          recentList.appendChild(
-            button
-          );
+        },
+        {
+          once:false
         }
       );
-    }
 
-    function clearRecentSearches() {
-      writeStorage(
-        RECENT_KEY,
-        []
+    });
+
+}
+
+
+function readStorage(
+  key,
+  fallback
+){
+
+  try{
+
+    const v =
+      JSON.parse(
+        localStorage.getItem(key) ||
+        "null"
       );
 
-      renderRecentSearches();
-    }
+    return v ?? fallback;
 
-    /* ============================================================
-       FAVORITES
-    ============================================================ */
+  }catch{
 
-    function getFavorites() {
-      const favorites =
-        readStorage(
-          FAVORITES_KEY,
-          []
-        );
+    return fallback;
 
-      return Array.isArray(favorites)
-        ? favorites
-        : [];
-    }
+  }
 
-    function isFavorite(title) {
-      return getFavorites().some(
-        item =>
-          String(item.title)
-            .toLowerCase() ===
-          String(title)
-            .toLowerCase()
+}
+
+
+function writeStorage(
+  key,
+  value
+){
+
+  try{
+    localStorage.setItem(
+      key,
+      JSON.stringify(value)
+    );
+  }catch{}
+
+}
+
+
+function getRecent(){
+
+  const v =
+    readStorage(
+      RECENT_KEY,
+      []
+    );
+
+  return Array.isArray(v)
+    ? v
+    : [];
+
+}
+
+
+function addRecent(query){
+
+  const q =
+    safeString(query).trim();
+
+  if(!q){
+    return;
+  }
+
+  const list =
+    getRecent().filter(
+      x =>
+        safeString(x)
+          .toLowerCase() !==
+        q.toLowerCase()
+    );
+
+  list.unshift(q);
+
+  writeStorage(
+    RECENT_KEY,
+    list.slice(0,8)
+  );
+
+  renderRecent();
+
+}
+
+
+function renderRecent(){
+
+  const list =
+    $("recentList");
+
+  const recent =
+    getRecent();
+
+  list.innerHTML =
+    recent.length
+      ? recent
+          .map(
+            q =>
+              `
+                <button
+                  class="recent-item"
+                  data-query="${escapeHtml(q)}"
+                  type="button"
+                >
+                  ${escapeHtml(q)}
+                </button>
+              `
+          )
+          .join("")
+      : `
+          <span class="meta">
+            No recent searches yet.
+          </span>
+        `;
+
+  list
+    .querySelectorAll(
+      "[data-query]"
+    )
+    .forEach(
+      b =>
+        b.onclick = () =>
+          searchAnime(
+            b.dataset.query
+          )
+    );
+
+}
+
+
+function getFavorites(){
+
+  const v =
+    readStorage(
+      FAVORITES_KEY,
+      []
+    );
+
+  return Array.isArray(v)
+    ? v
+    : [];
+
+}
+
+
+function isFavorite(){
+
+  const id =
+    safeString(
+      currentAnime?.id ||
+      currentAnime?.mal_id ||
+      currentAnime?.title
+    );
+
+  return getFavorites().some(
+    x =>
+      safeString(
+        x.id ||
+        x.title
+      ) === id
+  );
+
+}
+
+
+function toggleFavorite(){
+
+  if(!currentAnime){
+    return;
+  }
+
+  const id =
+    safeString(
+      currentAnime.id ||
+      currentAnime.mal_id ||
+      currentAnime.title
+    );
+
+  let list =
+    getFavorites();
+
+  if(
+    list.some(
+      x =>
+        safeString(
+          x.id ||
+          x.title
+        ) === id
+    )
+  ){
+
+    list =
+      list.filter(
+        x =>
+          safeString(
+            x.id ||
+            x.title
+          ) !== id
       );
+
+  }else{
+
+    list.unshift({
+
+      id,
+
+      title:
+        safeString(
+          currentAnime.title
+        ),
+
+      poster:
+        safeString(
+          firstNonEmpty(
+            currentAnime.poster,
+            currentAnime.image,
+            currentAnime.posterUrl
+          )
+        )
+
+    });
+
+  }
+
+  writeStorage(
+    FAVORITES_KEY,
+    list
+  );
+
+  renderFavorites();
+  renderResults();
+
+}
+
+
+function renderFavorites(){
+
+  const box =
+    $("favoriteList");
+
+  const list =
+    getFavorites();
+
+  box.innerHTML =
+    list.length
+      ? list
+          .map(
+            x =>
+              `
+                <div class="service-card glass">
+
+                  <div class="service-card-logo">
+
+                    ${
+                      x.poster
+                        ? `
+                          <img
+                            src="${escapeHtml(
+                              getSafeUrl(
+                                x.poster
+                              )
+                            )}"
+                            alt=""
+                            onerror="this.style.display='none'"
+                          >
+                        `
+                        : `
+                          <span class="logo-initials">
+                            TV
+                          </span>
+                        `
+                    }
+
+                  </div>
+
+                  <div>
+
+                    <h3>
+                      ${escapeHtml(
+                        x.title ||
+                        "Untitled"
+                      )}
+                    </h3>
+
+                    <p>
+                      Saved anime
+                    </p>
+
+                  </div>
+
+                </div>
+              `
+          )
+          .join("")
+      : `
+          <div
+            class="empty"
+            style="grid-column:1/-1"
+          >
+            No favorites yet.
+          </div>
+        `;
+
+}
+
+
+function getAnimeTitle(data){
+
+  return safeString(
+    firstNonEmpty(
+      data?.title,
+      data?.name,
+      data?.anime?.title,
+      data?.anime?.name,
+      "Unknown Anime"
+    )
+  );
+
+}
+
+
+function getPoster(data){
+
+  return getSafeUrl(
+    firstNonEmpty(
+      data?.poster,
+      data?.image,
+      data?.posterUrl,
+      data?.cover,
+      data?.anime?.poster
+    )
+  );
+
+}
+
+
+function getAnimeObject(data){
+
+  return (
+    data?.anime &&
+    typeof data.anime === "object"
+  )
+    ? data.anime
+    : data;
+
+}
+
+
+function normalizeResponse(json){
+
+  const root =
+    json?.data &&
+    typeof json.data === "object"
+      ? json.data
+      : json;
+
+  const anime =
+    getAnimeObject(root) || {};
+
+  const sources =
+    extractSources(root)
+      .filter(
+        s =>
+          s &&
+          typeof s === "object" &&
+          !RETIRED_PROVIDERS.some(
+            r =>
+              normalizeServiceName(
+                getRawServiceName(s)
+              ).includes(r)
+          )
+      );
+
+  const unique = [];
+  const seen = new Set();
+
+  for(const s of sources){
+
+    if(!isUsSource(s)){
+      continue;
     }
 
-    function toggleFavorite() {
-      if (!currentAnime?.title) {
-        return;
+    const k =
+      getSourceKey(s);
+
+    if(seen.has(k)){
+      continue;
+    }
+
+    seen.add(k);
+    unique.push(s);
+
+  }
+
+  return {
+
+    anime:{
+      ...anime,
+      title:getAnimeTitle(root)
+    },
+
+    sources:unique
+
+  };
+
+}
+
+
+function renderResults(){
+
+  const box =
+    $("results");
+
+  if(!currentAnime){
+
+    box.innerHTML = "";
+
+    return;
+
+  }
+
+  const poster =
+    getPoster(currentAnime);
+
+  const filtered =
+    currentSources.filter(
+      s =>
+        activeService === "All" ||
+        getProviderParentName(
+          getRawServiceName(s)
+        ) === activeService
+    );
+
+  const services =
+    [
+      ...new Set(
+        currentSources
+          .map(
+            s =>
+              getProviderParentName(
+                getRawServiceName(s)
+              )
+          )
+          .filter(Boolean)
+      )
+    ];
+
+  const filters = `
+    <div class="filters">
+
+      <button
+        class="filter ${
+          activeService === "All"
+            ? "active"
+            : ""
+        }"
+        data-service="All"
+        type="button"
+      >
+        All
+      </button>
+
+      ${
+        services
+          .map(
+            s =>
+              `
+                <button
+                  class="filter ${
+                    activeService === s
+                      ? "active"
+                      : ""
+                  }"
+                  data-service="${escapeHtml(s)}"
+                  type="button"
+                >
+                  ${escapeHtml(s)}
+                </button>
+              `
+          )
+          .join("")
       }
 
-      let favorites =
-        getFavorites();
+    </div>
+  `;
 
-      const index =
-        favorites.findIndex(
-          item =>
-            String(item.title)
-              .toLowerCase() ===
-            String(currentAnime.title)
-              .toLowerCase()
-        );
 
-      if (index >= 0) {
-        favorites.splice(
-          index,
-          1
-        );
-      } else {
-        favorites.unshift({
-          title:
-            currentAnime.title,
+  const offers =
+    filtered.length
+      ? filtered
+          .map(
+            s => {
 
-          year:
-            getAnimeYear(
-              currentAnime
-            ),
+              const name =
+                getRawServiceName(s);
 
-          poster:
-            getAnimePoster(
+              const title =
+                getOfferTitle(s);
+
+              const sub =
+                getOfferSubline(s);
+
+              const type =
+                getTypeText(s);
+
+              const price =
+                formatPrice(
+                  s.price
+                );
+
+              const fmt =
+                getFormatText(s);
+
+              const eps =
+                getEpisodeText(s);
+
+              const note =
+                getServiceNote(s);
+
+              const url =
+                getSafeUrl(
+                  firstNonEmpty(
+                    s.url,
+                    s.link,
+                    s.watchUrl
+                  )
+                );
+
+              const badges = [
+                type,
+                price,
+                fmt,
+                eps,
+                note,
+                "🇺🇸 U.S."
+              ].filter(Boolean);
+
+
+              return `
+                <article class="offer">
+
+                  ${buildLogoHtml(name)}
+
+                  <div>
+
+                    <div class="offer-title">
+                      ${escapeHtml(title)}
+                    </div>
+
+                    ${
+                      sub
+                        ? `
+                          <div class="offer-sub">
+                            ${escapeHtml(sub)}
+                          </div>
+                        `
+                        : ""
+                    }
+
+                    <div class="offer-details">
+
+                      ${
+                        badges
+                          .map(
+                            (b,i) =>
+                              `
+                                <span
+                                  class="badge ${
+                                    i === badges.length - 1
+                                      ? "us"
+                                      : ""
+                                  }"
+                                >
+                                  ${escapeHtml(b)}
+                                </span>
+                              `
+                          )
+                          .join("")
+                      }
+
+                    </div>
+
+                  </div>
+
+
+                  ${
+                    url
+                      ? `
+                        <a
+                          class="open-offer"
+                          href="${escapeHtml(url)}"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Open Offer
+                        </a>
+                      `
+                      : `
+                        <span class="badge">
+                          No link
+                        </span>
+                      `
+                  }
+
+                </article>
+              `;
+
+            }
+          )
+          .join("")
+      : `
+          <div class="empty">
+            No matching U.S. offers found for this filter.
+          </div>
+        `;
+
+
+  box.innerHTML = `
+
+    <div class="anime-head">
+
+      ${
+        poster
+          ? `
+            <img
+              class="poster"
+              src="${escapeHtml(poster)}"
+              alt=""
+              onerror="this.style.display='none'"
+            >
+          `
+          : ""
+      }
+
+
+      <div>
+
+        <h2>
+          ${escapeHtml(
+            getAnimeTitle(
               currentAnime
             )
-        });
-      }
+          )}
+        </h2>
 
-      writeStorage(
-        FAVORITES_KEY,
-        favorites
+        <div class="meta">
+          🇺🇸 ${currentSources.length}
+          U.S. option${
+            currentSources.length === 1
+              ? ""
+              : "s"
+          }
+          found.
+        </div>
+
+      </div>
+
+
+      <button
+        class="fav"
+        id="favBtn"
+        title="Favorite"
+        type="button"
+      >
+        ${
+          isFavorite()
+            ? "♥"
+            : "♡"
+        }
+      </button>
+
+    </div>
+
+
+    <div class="section-title">
+
+      <h2>
+        Where to Watch
+      </h2>
+
+      <span class="meta">
+        ${filtered.length}
+        result${
+          filtered.length === 1
+            ? ""
+            : "s"
+        }
+      </span>
+
+    </div>
+
+
+    ${filters}
+
+
+    <div class="offer-grid">
+      ${offers}
+    </div>
+
+
+    <button
+      class="report-btn"
+      id="reportBtn"
+      type="button"
+    >
+      Report incorrect information
+    </button>
+
+  `;
+
+
+  box
+    .querySelectorAll(
+      ".filter"
+    )
+    .forEach(
+      b =>
+        b.onclick = () => {
+
+          activeService =
+            b.dataset.service;
+
+          renderResults();
+
+        }
+    );
+
+
+  $("favBtn").onclick =
+    toggleFavorite;
+
+  $("reportBtn").onclick =
+    () =>
+      $("reportModal")
+        .classList
+        .remove("hidden");
+
+  attachLogoFallbacks(box);
+
+}
+
+
+function showStatus(
+  msg,
+  type=""
+){
+
+  const el =
+    $("status");
+
+  el.textContent =
+    msg;
+
+  el.className =
+    "status" +
+    (type
+      ? " " + type
+      : "");
+
+}
+
+
+async function searchAnime(query){
+
+  const q =
+    safeString(query).trim();
+
+  if(!q){
+    return;
+  }
+
+  $("searchInput").value =
+    q;
+
+  showStatus(
+    "Searching..."
+  );
+
+
+  try{
+
+    const url =
+      new URL(
+        WORKER_URL
       );
 
-      updateFavoriteButton();
-      renderFavorites();
-    }
+    url.searchParams.set(
+      "q",
+      q
+    );
 
-    function updateFavoriteButton() {
-      const favorite =
-        isFavorite(
-          currentAnime?.title || ""
-        );
 
-      favoriteButton.textContent =
-        favorite ? "♥" : "♡";
-
-      favoriteButton.classList.toggle(
-        "is-favorite",
-        favorite
-      );
-
-      favoriteButton.setAttribute(
-        "aria-label",
-        favorite
-          ? "Remove anime from favorites"
-          : "Add anime to favorites"
-      );
-
-      favoriteButton.title =
-        favorite
-          ? "Remove from favorites"
-          : "Add to favorites";
-    }
-
-    function renderFavorites() {
-      const favorites =
-        getFavorites();
-
-      favoritesList.innerHTML = "";
-
-      favoriteEmpty.classList.toggle(
-        "show",
-        favorites.length === 0
-      );
-
-      favorites.forEach(
-        favorite => {
-          const item =
-            document.createElement(
-              "div"
-            );
-
-          item.className =
-            "favorite-item";
-
-          const meta =
-            favorite.year
-              ? `📅 ${escapeHtml(favorite.year)}`
-              : "Saved anime";
-
-          item.innerHTML = `
-            <div>
-              <div class="favorite-item-title">
-                ${escapeHtml(favorite.title)}
-              </div>
-
-              <div class="favorite-item-meta">
-                ${meta}
-              </div>
-            </div>
-
-            <button
-              class="secondary-btn"
-              type="button"
-              data-favorite-search="${escapeHtml(favorite.title)}"
-            >
-              Search
-            </button>
-          `;
-
-          favoritesList.appendChild(
-            item
-          );
+    const res =
+      await fetch(
+        url.toString(),
+        {
+          headers:{
+            Accept:
+              "application/json"
+          }
         }
       );
+
+
+    if(!res.ok){
+
+      throw new Error(
+        `Worker returned ${res.status}`
+      );
+
     }
 
-    /* ============================================================
-       SERVICES DIRECTORY
-    ============================================================ */
 
-    function renderServicesDirectory() {
-      servicesGrid.innerHTML =
-        SERVICE_CONFIG
-          .map(
-            config => `
-              <div class="service-card">
-                ${buildLogoHtml(
-                  config.displayName,
-                  true
-                )}
+    const json =
+      await res.json();
 
-                <div class="service-card-name">
-                  ${escapeHtml(
-                    config.displayName
-                  )}
-                </div>
-              </div>
-            `
-          )
-          .join("");
 
-      setupLogoFallbacks();
-    }
+    const normalized =
+      normalizeResponse(
+        json
+      );
 
-    /* ============================================================
-       REPORTS
-    ============================================================ */
 
-    function getReports() {
-      const reports =
-        readStorage(
-          REPORTS_KEY,
-          []
+    currentAnime =
+      normalized.anime;
+
+    currentSources =
+      normalized.sources;
+
+    activeService =
+      "All";
+
+
+    addRecent(q);
+
+    renderResults();
+
+
+    showStatus(
+      `Found ${currentSources.length} U.S. option${
+        currentSources.length === 1
+          ? ""
+          : "s"
+      }.`,
+      "success"
+    );
+
+
+  }catch(err){
+
+    currentAnime = null;
+    currentSources = [];
+
+    renderResults();
+
+
+    showStatus(
+      `Search failed: ${
+        safeString(
+          err.message ||
+          err
+        )
+      }`,
+      "error"
+    );
+
+  }
+
+}
+
+
+function showTab(tab){
+
+  const sectionMap = {
+
+    search:
+      "searchSection",
+
+    services:
+      "servicesSection",
+
+    favorites:
+      "favoritesSection",
+
+    help:
+      "helpSection"
+
+  };
+
+
+  Object.entries(
+    sectionMap
+  ).forEach(
+    ([name,id]) => {
+
+      const section =
+        $(id);
+
+      if(section){
+
+        section.classList.toggle(
+          "hidden",
+          name !== tab
         );
 
-      return Array.isArray(reports)
-        ? reports
-        : [];
+      }
+
     }
+  );
 
-    function openReportModal() {
-      reportForm.reset();
 
-      reportModal.classList.add(
-        "show"
-      );
+  document
+    .querySelectorAll(
+      ".tab"
+    )
+    .forEach(
+      button => {
 
-      setTimeout(
+        button.classList.toggle(
+          "active",
+          button.dataset.tab === tab
+        );
+
+      }
+    );
+
+
+  if(tab === "services"){
+    renderServices();
+  }
+
+  if(tab === "favorites"){
+    renderFavorites();
+  }
+
+}
+
+
+function renderServices(){
+
+  const box =
+    $("serviceGrid");
+
+  box.innerHTML =
+    SERVICE_CONFIG
+      .filter(
+        c =>
+          c.displayName &&
+          !RETIRED_PROVIDERS.includes(
+            normalizeServiceName(
+              c.displayName
+            )
+          )
+      )
+      .map(
+        c =>
+          `
+            <div class="service-card glass">
+
+              ${buildLogoHtml(
+                c.displayName,
+                true
+              )}
+
+              <div>
+
+                <h3>
+                  ${escapeHtml(
+                    c.displayName
+                  )}
+                </h3>
+
+                <p>
+                  Anime availability service
+                </p>
+
+              </div>
+
+            </div>
+          `
+      )
+      .join("");
+
+
+  attachLogoFallbacks(box);
+
+}
+
+
+function getReports(){
+
+  const v =
+    readStorage(
+      REPORTS_KEY,
+      []
+    );
+
+  return Array.isArray(v)
+    ? v
+    : [];
+
+}
+
+
+$("searchForm").addEventListener(
+  "submit",
+  e => {
+
+    e.preventDefault();
+
+    searchAnime(
+      $("searchInput").value
+    );
+
+  }
+);
+
+
+$("clearRecent").onclick =
+  () => {
+
+    writeStorage(
+      RECENT_KEY,
+      []
+    );
+
+    renderRecent();
+
+  };
+
+
+document
+  .querySelectorAll(
+    ".tab"
+  )
+  .forEach(
+    b =>
+      b.onclick =
         () =>
-          reportReason.focus(),
-        0
-      );
-    }
+          showTab(
+            b.dataset.tab
+          )
+  );
 
-    function closeReportModal() {
-      reportModal.classList.remove(
-        "show"
-      );
-    }
 
-    function saveReport(event) {
-      event.preventDefault();
+$("closeReport").onclick =
+  () =>
+    $("reportModal")
+      .classList
+      .add("hidden");
+
+
+$("reportModal")
+  .addEventListener(
+    "click",
+    e => {
+
+      if(
+        e.target ===
+        $("reportModal")
+      ){
+
+        $("reportModal")
+          .classList
+          .add("hidden");
+
+      }
+
+    }
+  );
+
+
+$("reportForm")
+  .addEventListener(
+    "submit",
+    e => {
+
+      e.preventDefault();
+
 
       const report = {
+
         id:
           Date.now(),
+
         createdAt:
-          new Date().toISOString(),
+          new Date()
+            .toISOString(),
 
         anime:
-          currentAnime?.title || "",
+          getAnimeTitle(
+            currentAnime
+          ),
 
         service:
-          currentSources.length
-            ? currentSources
-                .map(
-                  source =>
-                    getRawServiceName(
-                      source
-                    )
-                )
-                .filter(Boolean)
-            : [],
+          currentSources
+            .map(
+              getRawServiceName
+            )
+            .filter(Boolean),
 
         reason:
-          reportReason.value,
+          $("reportReason")
+            .value,
 
         details:
-          reportDetails.value.trim()
+          $("reportDetails")
+            .value
+            .trim()
+
       };
+
 
       const reports =
         getReports();
 
-      reports.unshift(report);
+      reports.unshift(
+        report
+      );
+
 
       writeStorage(
         REPORTS_KEY,
         reports
       );
 
-      closeReportModal();
+
+      $("reportDetails")
+        .value = "";
+
+
+      $("reportModal")
+        .classList
+        .add("hidden");
+
 
       showStatus(
         "Your report was saved locally. Thank you for helping improve Anime Finder.",
         "success"
       );
+
     }
+  );
 
-    /* ============================================================
-       TABS
-    ============================================================ */
 
-    function showTab(tabName) {
-      const tabs = [
-        "search",
-        "services",
-        "favorites",
-        "help"
-      ];
+renderRecent();
+renderServices();
+renderFavorites();
+attachLogoFallbacks();
 
-      tabs.forEach(
-        name => {
-          const section =
-            document.getElementById(
-              `tab-${name}`
-            );
+</script>
 
-          const button =
-            document.querySelector(
-              `[data-tab="${name}"]`
-            );
-
-          const active =
-            name === tabName;
-
-          section.hidden =
-            !active;
-
-          button.classList.toggle(
-            "active",
-            active
-          );
-
-          button.setAttribute(
-            "aria-selected",
-            String(active)
-          );
-        }
-      );
-
-      if (tabName === "services") {
-        renderServicesDirectory();
-      }
-
-      if (tabName === "favorites") {
-        renderFavorites();
-      }
-    }
-
-    /* ============================================================
-       EVENT LISTENERS
-    ============================================================ */
-
-    searchForm.addEventListener(
-      "submit",
-      event => {
-        event.preventDefault();
-        performSearch();
-      }
-    );
-
-    clearRecentButton.addEventListener(
-      "click",
-      clearRecentSearches
-    );
-
-    favoriteButton.addEventListener(
-      "click",
-      toggleFavorite
-    );
-
-    serviceFilters.addEventListener(
-      "click",
-      event => {
-        const button =
-          event.target.closest(
-            "[data-service-filter]"
-          );
-
-        if (!button) {
-          return;
-        }
-
-        activeServiceFilter =
-          button.dataset.serviceFilter;
-
-        renderServiceFilters();
-        renderResults();
-      }
-    );
-
-    resultsGrid.addEventListener(
-      "click",
-      event => {
-        const button =
-          event.target.closest(
-            "[data-url]"
-          );
-
-        if (!button) {
-          return;
-        }
-
-        const url =
-          getSafeUrl(
-            button.dataset.url
-          );
-
-        if (!url) {
-          return;
-        }
-
-        window.open(
-          url,
-          "_blank",
-          "noopener,noreferrer"
-        );
-      }
-    );
-
-    document.querySelectorAll(
-      "[data-tab]"
-    ).forEach(
-      button => {
-        button.addEventListener(
-          "click",
-          () =>
-            showTab(
-              button.dataset.tab
-            )
-        );
-      }
-    );
-
-    favoritesList.addEventListener(
-      "click",
-      event => {
-        const button =
-          event.target.closest(
-            "[data-favorite-search]"
-          );
-
-        if (!button) {
-          return;
-        }
-
-        const title =
-          button.dataset.favoriteSearch;
-
-        searchInput.value =
-          title;
-
-        showTab("search");
-        performSearch();
-      }
-    );
-
-    document
-      .getElementById("reportButton")
-      .addEventListener(
-        "click",
-        openReportModal
-      );
-
-    closeReportButton.addEventListener(
-      "click",
-      closeReportModal
-    );
-
-    cancelReportButton.addEventListener(
-      "click",
-      closeReportModal
-    );
-
-    reportForm.addEventListener(
-      "submit",
-      saveReport
-    );
-
-    reportModal.addEventListener(
-      "click",
-      event => {
-        if (
-          event.target ===
-          reportModal
-        ) {
-          closeReportModal();
-        }
-      }
-    );
-
-    document.addEventListener(
-      "keydown",
-      event => {
-        if (
-          event.key === "Escape" &&
-          reportModal.classList.contains(
-            "show"
-          )
-        ) {
-          closeReportModal();
-        }
-      }
-    );
-
-    document
-      .getElementById(
-        "helpComingSoonButton"
-      )
-      .addEventListener(
-        "click",
-        () => {
-          showTab("help");
-
-          alert(
-            "The fundraiser section is still being built."
-          );
-        }
-      );
-
-    /* ============================================================
-       INITIAL LOAD
-    ============================================================ */
-
-    renderRecentSearches();
-    renderFavorites();
-    renderServicesDirectory();
-  </script>
 </body>
 </html>
