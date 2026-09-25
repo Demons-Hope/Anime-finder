@@ -649,12 +649,10 @@ footer{
 <header class="hero glass">
 
   <div class="brand">
-
     <h1>
       <span class="anime">Anime</span>
       <span class="finder">Finder</span>
     </h1>
-
   </div>
 
   <p class="subtitle">
@@ -784,11 +782,7 @@ footer{
 >
 
   <div class="section-title">
-
-    <h2>
-      All Services
-    </h2>
-
+    <h2>All Services</h2>
   </div>
 
   <div
@@ -804,11 +798,7 @@ footer{
 >
 
   <div class="section-title">
-
-    <h2>
-      My Anime
-    </h2>
-
+    <h2>My Anime</h2>
   </div>
 
   <div
@@ -1309,6 +1299,10 @@ function getCleanServiceName(name){
 }
 
 
+/* FIXED:
+   Crunchyroll Amazon Channels stay under Crunchyroll.
+   Prime Video stays separate from generic Amazon.
+*/
 function getProviderParentName(name){
 
   const n =
@@ -1326,7 +1320,17 @@ function getProviderParentName(name){
 
   if(
     n === "prime video" ||
-    n.includes("amazon")
+    n === "amazon prime video" ||
+    n.includes("amazon prime video")
+  ){
+    return "Amazon Prime Video";
+  }
+
+  if(
+    n === "amazon" ||
+    n === "amazon com" ||
+    n === "amazon video" ||
+    n === "amazon instant video"
   ){
     return "Amazon";
   }
@@ -1568,37 +1572,200 @@ function getServiceNote(source){
 }
 
 
+/* =========================================================
+   FIXED URL EXTRACTION
+   =========================================================
+
+   The old version did this:
+
+     getSafeUrl(s.url)
+
+   That only worked when the worker put the URL directly
+   in "url".
+
+   This version checks common URL fields AND nested objects
+   such as offer, offers, availability, links, actions,
+   streaming, etc.
+*/
 function getSafeUrl(v){
 
-  const s =
-    safeString(v).trim();
-
-  if(!s){
+  if(
+    v === null ||
+    v === undefined
+  ){
     return "";
   }
 
-  try{
 
-    const u =
-      new URL(
-        s,
-        location.href
-      );
+  /* Direct string URL */
+  if(
+    typeof v === "string"
+  ){
 
-    return [
-      "http:",
-      "https:"
-    ].includes(
-      u.protocol
-    )
-      ? u.href
-      : "";
+    const s =
+      v.trim();
 
-  }catch{
+    if(!s){
+      return "";
+    }
+
+    try{
+
+      const u =
+        new URL(
+          s,
+          location.href
+        );
+
+      if(
+        [
+          "http:",
+          "https:"
+        ].includes(
+          u.protocol
+        )
+      ){
+        return u.href;
+      }
+
+    }catch{}
 
     return "";
 
   }
+
+
+  /* Arrays can contain URL objects */
+  if(
+    Array.isArray(v)
+  ){
+
+    for(
+      const item
+      of v
+    ){
+
+      const found =
+        getSafeUrl(
+          item
+        );
+
+      if(found){
+        return found;
+      }
+
+    }
+
+    return "";
+
+  }
+
+
+  /* Objects may hide the URL inside another property */
+  if(
+    typeof v === "object"
+  ){
+
+    const possibleUrls = [
+
+      v.url,
+      v.link,
+
+      v.watchUrl,
+      v.watchURL,
+      v.watch_url,
+
+      v.href,
+      v.uri,
+
+      v.webUrl,
+      v.web_url,
+      v.website,
+
+      v.deepLink,
+      v.deeplink,
+
+      v.targetUrl,
+      v.target_url,
+
+      v.destinationUrl,
+      v.destination_url,
+
+      v.externalUrl,
+      v.external_url,
+
+      v.streamingLink,
+      v.streaming_url,
+
+      v.playUrl,
+      v.play_url,
+
+      v.offerUrl,
+      v.offer_url,
+
+      v.sourceUrl,
+      v.source_url
+
+    ];
+
+
+    for(
+      const candidate
+      of possibleUrls
+    ){
+
+      const found =
+        getSafeUrl(
+          candidate
+        );
+
+      if(found){
+        return found;
+      }
+
+    }
+
+
+    /* Common nested locations */
+    const nested = [
+
+      v.offer,
+      v.offers,
+
+      v.availability,
+
+      v.source,
+      v.provider,
+
+      v.links,
+      v.actions,
+
+      v.watch,
+      v.streaming
+
+    ];
+
+
+    for(
+      const candidate
+      of nested
+    ){
+
+      const found =
+        getSafeUrl(
+          candidate
+        );
+
+      if(found){
+        return found;
+      }
+
+    }
+
+  }
+
+
+  return "";
 
 }
 
@@ -1672,6 +1839,9 @@ function isUsSource(source){
 }
 
 
+/* FIXED:
+   Source keys now include the actual extracted URL.
+*/
 function getSourceKey(source){
 
   return [
@@ -1703,11 +1873,7 @@ function getSourceKey(source){
     ),
 
     getSafeUrl(
-      firstNonEmpty(
-        source?.url,
-        source?.link,
-        source?.watchUrl
-      )
+      source
     )
 
   ].join("|");
@@ -2487,14 +2653,29 @@ function renderResults(){
               const note =
                 getServiceNote(s);
 
+
+              /* =================================================
+                 FIXED OPEN OFFER URL
+                 =================================================
+
+                 Before:
+                   getSafeUrl(
+                     firstNonEmpty(
+                       s.url,
+                       s.link,
+                       s.watchUrl
+                     )
+                   )
+
+                 Now:
+                   getSafeUrl(s)
+
+                 This lets getSafeUrl search the complete
+                 offer object, including nested URL fields.
+              */
               const url =
-                getSafeUrl(
-                  firstNonEmpty(
-                    s.url,
-                    s.link,
-                    s.watchUrl
-                  )
-                );
+                getSafeUrl(s);
+
 
               const badges = [
                 type,
@@ -3180,10 +3361,6 @@ $("reportForm")
 
 /*
   EVENT DELEGATION
-
-  This is the big button fix.
-  Anything rendered later inside the page
-  still gets its click event.
 */
 
 document.addEventListener(
