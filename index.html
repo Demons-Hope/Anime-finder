@@ -273,7 +273,9 @@ input:focus{
 .secondary:focus-visible,
 .danger:focus-visible,
 .filter:focus-visible,
-.recent-item:focus-visible{
+.recent-item:focus-visible,
+.favorite-item:focus-visible,
+.favorite-remove:focus-visible{
   outline:2px solid var(--red3);
   outline-offset:2px;
 }
@@ -674,17 +676,6 @@ input:focus{
     );
 }
 
-.service-card h3{
-  margin:0 0 3px;
-  font-size:15px;
-}
-
-.service-card p{
-  margin:0;
-  color:#777;
-  font-size:12px;
-}
-
 /* =========================
    HELP
 ========================= */
@@ -704,9 +695,116 @@ input:focus{
 
 .favorite-item{
   width:100%;
-  border:0;
+  position:relative;
+  border:1px solid var(--line);
   color:inherit;
   text-align:left;
+  cursor:pointer;
+  padding:14px;
+  padding-right:52px;
+  min-height:88px;
+}
+
+.favorite-item:hover{
+  border-color:rgba(224,0,47,.55);
+  transform:translateY(-2px);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(176,0,32,.10),
+      rgba(0,0,0,.42)
+    );
+}
+
+.favorite-item:focus-visible{
+  outline:2px solid var(--red3);
+  outline-offset:2px;
+}
+
+.favorite-poster{
+  width:58px;
+  height:72px;
+  flex:none;
+  border-radius:9px;
+  object-fit:cover;
+  background:#111;
+  border:1px solid #333;
+}
+
+.favorite-poster-fallback{
+  width:58px;
+  height:72px;
+  flex:none;
+  border-radius:9px;
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.07),
+      rgba(0,0,0,.55)
+    );
+  border:1px solid #333;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aaa;
+  font-size:20px;
+  font-weight:900;
+}
+
+.favorite-info{
+  min-width:0;
+  flex:1;
+}
+
+.favorite-info h3{
+  margin:0 0 5px;
+  font-size:15px;
+  color:#fff;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.favorite-info p{
+  margin:0;
+  color:#777;
+  font-size:12px;
+}
+
+.favorite-remove{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:32px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #3b3b3d;
+  border-radius:9px;
+  background:rgba(0,0,0,.45);
+  color:#999;
+  font-size:16px;
+  font-weight:800;
+  line-height:1;
+  cursor:pointer;
+  transition:
+    color .18s ease,
+    border-color .18s ease,
+    background .18s ease,
+    transform .18s ease;
+}
+
+.favorite-remove:hover{
+  color:#fff;
+  border-color:var(--red2);
+  background:rgba(176,0,32,.22);
+  transform:scale(1.05);
+}
+
+.favorite-remove:focus-visible{
+  outline:2px solid var(--red3);
+  outline-offset:2px;
 }
 
 /* =========================
@@ -853,6 +951,10 @@ footer{
 
   .section-title h2{
     font-size:17px;
+  }
+
+  .favorite-item{
+    padding-right:52px;
   }
 
 }
@@ -2530,6 +2632,59 @@ function toggleFavorite(){
 }
 
 
+/* =========================
+   REMOVE FAVORITE
+========================= */
+
+function removeFavorite(id){
+
+  const targetId =
+    safeString(id);
+
+  if(!targetId){
+    return;
+  }
+
+  const list =
+    getFavorites();
+
+  const updated =
+    list.filter(
+      x =>
+        safeString(
+          x?.id ||
+          x?.title
+        ) !== targetId
+    );
+
+  writeStorage(
+    FAVORITES_KEY,
+    updated
+  );
+
+  renderFavorites();
+
+  /*
+    If the anime currently being viewed was removed
+    from favorites, refresh the heart button too.
+  */
+
+  if(currentAnime){
+    renderResults();
+  }
+
+  showStatus(
+    "Removed from My Anime.",
+    "success"
+  );
+
+}
+
+
+/* =========================
+   RENDER FAVORITES
+========================= */
+
 function renderFavorites(){
 
   const box =
@@ -2547,55 +2702,73 @@ function renderFavorites(){
 
       ? list
           .map(
-            x =>
-              `
-                <button
+            x => {
+
+              const id =
+                safeString(
+                  x.id ||
+                  x.title ||
+                  ""
+                );
+
+              const title =
+                safeString(
+                  x.title ||
+                  "Untitled"
+                );
+
+              const poster =
+                getSafeUrl(
+                  x.poster
+                );
+
+              return `
+
+                <article
                   class="service-card glass favorite-item"
-                  data-favorite-id="${escapeHtml(
-                    x.id ||
-                    x.title ||
-                    ""
-                  )}"
-                  type="button"
+                  data-favorite-id="${escapeHtml(id)}"
+                  tabindex="0"
+                  role="button"
+                  aria-label="Open ${escapeHtml(title)}"
                 >
 
-                  <div
-                    class="service-card-logo"
-                  >
+                  ${
+                    poster
 
-                    ${
-                      x.poster
+                      ? `
+                        <img
+                          class="favorite-poster"
+                          src="${escapeHtml(poster)}"
+                          alt=""
+                          onerror="
+                            this.style.display='none';
+                            this.nextElementSibling.hidden=false;
+                          "
+                        >
 
-                        ? `
-                          <img
-                            src="${escapeHtml(
-                              getSafeUrl(
-                                x.poster
-                              )
-                            )}"
-                            alt=""
-                            onerror="this.style.display='none'"
-                          >
-                        `
+                        <div
+                          class="favorite-poster-fallback"
+                          hidden
+                          aria-hidden="true"
+                        >
+                          TV
+                        </div>
+                      `
 
-                        : `
-                          <span
-                            class="logo-initials"
-                          >
-                            TV
-                          </span>
-                        `
-                    }
+                      : `
+                        <div
+                          class="favorite-poster-fallback"
+                          aria-hidden="true"
+                        >
+                          TV
+                        </div>
+                      `
+                  }
 
-                  </div>
-
-                  <div>
+                  <div class="favorite-info">
 
                     <h3>
-                      ${escapeHtml(
-                        x.title ||
-                        "Untitled"
-                      )}
+                      ${escapeHtml(title)}
                     </h3>
 
                     <p>
@@ -2604,8 +2777,21 @@ function renderFavorites(){
 
                   </div>
 
-                </button>
-              `
+                  <button
+                    class="favorite-remove"
+                    type="button"
+                    data-remove-favorite="${escapeHtml(id)}"
+                    aria-label="Remove ${escapeHtml(title)} from My Anime"
+                    title="Remove from My Anime"
+                  >
+                    ×
+                  </button>
+
+                </article>
+
+              `;
+
+            }
           )
           .join("")
 
@@ -2729,8 +2915,7 @@ function normalizeResponse(json){
 
 
 /* =========================================================
-   NEW:
-   Count services for the filter buttons.
+   SERVICE COUNTS
 ========================================================= */
 
 function getServiceCounts(){
@@ -3679,6 +3864,33 @@ document.addEventListener(
     }
 
 
+    /*
+      REMOVE FAVORITE
+    */
+
+    const removeFavoriteButton =
+      e.target.closest(
+        ".favorite-remove"
+      );
+
+    if(removeFavoriteButton){
+
+      e.stopPropagation();
+
+      removeFavorite(
+        removeFavoriteButton.dataset
+          .removeFavorite
+      );
+
+      return;
+
+    }
+
+
+    /*
+      OPEN FAVORITE
+    */
+
     const favoriteItem =
       e.target.closest(
         ".favorite-item"
@@ -3716,6 +3928,78 @@ document.addEventListener(
       }
 
       return;
+
+    }
+
+  }
+);
+
+
+/*
+  KEYBOARD SUPPORT FOR FAVORITES
+*/
+
+document.addEventListener(
+  "keydown",
+  e => {
+
+    if(
+      e.key !== "Enter" &&
+      e.key !== " "
+    ){
+      return;
+    }
+
+    const favoriteItem =
+      e.target.closest(
+        ".favorite-item"
+      );
+
+    if(!favoriteItem){
+      return;
+    }
+
+    /*
+      Don't trigger the card when the user
+      is focused on the remove button.
+    */
+
+    if(
+      e.target.closest(
+        ".favorite-remove"
+      )
+    ){
+      return;
+    }
+
+    e.preventDefault();
+
+    const id =
+      safeString(
+        favoriteItem.dataset
+          .favoriteId
+      );
+
+    const favorite =
+      getFavorites().find(
+        x =>
+          safeString(
+            x?.id ||
+            x?.title
+          ) === id
+      );
+
+    if(
+      favorite?.title
+    ){
+
+      showTab(
+        "search"
+      );
+
+      searchAnime(
+        favorite.title
+      );
 
     }
 
