@@ -28,23 +28,22 @@ html{
 }
 
 body{
- margin:0;
- min-height:100vh;
- color:var(--text);
- font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
- background:
-  linear-gradient(
-    180deg,
-    rgba(0,0,0,.44) 0%,
-    rgba(0,0,0,.72) 100%
-  ),
-  url("./hooded-skull.png")
-  center center /
-  cover fixed
-  no-repeat;
-
-    background-color:#050505;
-    position:relative;
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.44) 0%,
+      rgba(0,0,0,.72) 100%
+    ),
+    url("./hooded-skull.png")
+    center center /
+    cover fixed
+    no-repeat;
+  background-color:#050505;
+  position:relative;
 }
 
 body::before{
@@ -97,16 +96,16 @@ button:disabled{
 
 .glass{
   background:
-   linear-gradient(
-     145deg,
-     rgba(9,9,11,.88),
-     rgba(10,6,8,.76)
-   );
+    linear-gradient(
+      145deg,
+      rgba(9,9,11,.88),
+      rgba(10,6,8,.76)
+    );
   border:1px solid var(--line);
   border-radius:22px;
   box-shadow:
-   var(--shadow),
-   0 0 35px rgba(176,0,32,.08);
+    var(--shadow),
+    0 0 35px rgba(176,0,32,.08);
   backdrop-filter:blur(13px);
   -webkit-backdrop-filter:blur(13px);
 }
@@ -123,21 +122,20 @@ button:disabled{
 }
 
 .hero:after{
- content:"";
- position:absolute;
- left:6%;
- right:6%;
- top:0;
- height:1px;
- background:
-   linear-gradient(
-
-       90deg,
-       transparent,
-       var(--red3),
-       transparent
-     );
-    opacity:.7;
+  content:"";
+  position:absolute;
+  left:6%;
+  right:6%;
+  top:0;
+  height:1px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--red3),
+      transparent
+    );
+  opacity:.7;
 }
 
 .brand{
@@ -176,7 +174,6 @@ h1 .finder{
 .search-box{
   position:relative;
   flex:1;
-
 }
 
 .search-icon{
@@ -212,40 +209,63 @@ input:focus{
   color:white;
   font-weight:800;
   background:
-   linear-gradient(
-     135deg,
-     #9d001d,
-     #e00035
-   );
+    linear-gradient(
+      135deg,
+      #9d001d,
+      #e00035
+    );
   box-shadow:0 7px 24px rgba(176,0,32,.28);
 }
 
 .primary:hover,
-
 .danger:hover{
   filter:brightness(1.12);
 }
 
 /* =========================
-   HAMBURGER NAVIGATION
+   TABS
 ========================= */
-.tabs{position:absolute;top:12px;right:12px;display:flex;justify-content:flex-end;padding:0;margin:0;min-height:0;z-index:40}
-.menu-toggle{width:44px;height:42px;border:1px solid #333;border-radius:11px;background:rgba(0,0,0,.42);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:background .18s ease,border-color .18s ease,transform .18s ease}
-.menu-toggle:hover,.menu-toggle[aria-expanded="true"]{border-color:var(--red2);background:rgba(176,0,32,.16);transform:translateY(-1px)}
-.menu-line{width:21px;height:2px;border-radius:999px;background:#ddd}
-.tab-menu{position:absolute;top:50px;right:0;z-index:50;width:min(230px,calc(100vw - 32px));padding:7px;border:1px solid var(--line);border-radius:14px;background:rgba(8,8,10,.97);box-shadow:0 18px 45px rgba(0,0,0,.65);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
-.tab-menu.hidden{display:none!important}
-.tab{width:100%;display:block;border:1px solid transparent;background:transparent;color:#aaa;padding:12px 13px;border-radius:10px;font-weight:700;text-align:left;transition:background .18s ease,color .18s ease,border-color .18s ease}
-.tab:hover{color:#fff;background:rgba(176,0,32,.10)}
-.tab.active{color:#fff;background:rgba(176,0,32,.20);border-color:var(--line);box-shadow:inset 0 0 20px rgba(176,0,32,.08)}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  padding:8px;
+  margin-bottom:18px;
+}
+
+.tab{
+  flex:1;
+  border:1px solid transparent;
+  background:transparent;
+  color:#aaa;
+  padding:12px 10px;
+  border-radius:12px;
+  font-weight:700;
+  transition:
+    background .18s ease,
+    color .18s ease,
+    border-color .18s ease,
+    transform .18s ease;
+}
+
+.tab:hover{
+  color:#fff;
+  background:rgba(176,0,32,.08);
+  transform:translateY(-1px);
+}
+
+.tab.active{
+  color:#fff;
+  background:rgba(176,0,32,.2);
+  border-color:var(--line);
+  box-shadow:inset 0 0 20px rgba(176,0,32,.08);
+}
 
 /* =========================
-
- ACCESSIBILITY
+   ACCESSIBILITY
 ========================= */
 
 .tab:focus-visible,
-.menu-toggle:focus-visible,
 .primary:focus-visible,
 .small-btn:focus-visible,
 .fav:focus-visible,
@@ -286,7 +306,6 @@ input:focus{
 
 .status.error{
   color:#ff7890;
-
 }
 
 .recent-wrap{
@@ -375,15 +394,14 @@ input:focus{
   margin-left:auto;
   border:1px solid #444;
   background:rgba(0,0,0,.4);
-
-    color:#fff;
-    border-radius:12px;
-    padding:10px 13px;
-    font-size:18px;
-    transition:
-      border-color .18s ease,
-      background .18s ease,
-      transform .18s ease;
+  color:#fff;
+  border-radius:12px;
+  padding:10px 13px;
+  font-size:18px;
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    transform .18s ease;
 }
 
 .fav:hover{
@@ -420,27 +438,26 @@ input:focus{
 }
 
 .filter{
-
-    white-space:nowrap;
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-    border:1px solid #333;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255,255,255,.045),
-        rgba(0,0,0,.42)
-      );
-    color:#aaa;
-    border-radius:999px;
-    padding:8px 11px 8px 13px;
-    font-weight:700;
-    transition:
-      border-color .18s ease,
-      background .18s ease,
-      color .18s ease,
-      transform .18s ease;
+  white-space:nowrap;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid #333;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.045),
+      rgba(0,0,0,.42)
+    );
+  color:#aaa;
+  border-radius:999px;
+  padding:8px 11px 8px 13px;
+  font-weight:700;
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    color .18s ease,
+    transform .18s ease;
 }
 
 .filter:hover{
@@ -465,17 +482,16 @@ input:focus{
 
 .filter-count{
   min-width:22px;
-
-    height:20px;
-    padding:0 6px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:999px;
-    background:rgba(255,255,255,.08);
-    color:#aaa;
-    font-size:11px;
-    line-height:1;
+  height:20px;
+  padding:0 6px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  color:#aaa;
+  font-size:11px;
+  line-height:1;
 }
 
 .filter.active .filter-count{
@@ -493,24 +509,23 @@ input:focus{
 }
 
 .offer{
- display:grid;
- grid-template-columns:56px minmax(0,1fr) auto;
- gap:14px;
- align-items:center;
- padding:16px;
- border:1px solid #29292c;
- border-radius:16px;
- background:
-   linear-gradient(
-     145deg,
-     rgba(255,255,255,.025),
-     rgba(0,0,0,.44)
-   );
- transition:
-   border-color .2s ease,
-   background .2s ease,
-   transform .2s ease,
-
+  display:grid;
+  grid-template-columns:56px minmax(0,1fr) auto;
+  gap:14px;
+  align-items:center;
+  padding:16px;
+  border:1px solid #29292c;
+  border-radius:16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.025),
+      rgba(0,0,0,.44)
+    );
+  transition:
+    border-color .2s ease,
+    background .2s ease,
+    transform .2s ease,
     box-shadow .2s ease;
 }
 
@@ -555,8 +570,7 @@ input:focus{
 .logo-initials{
   font-weight:900;
   color:#eee;
-
-    font-size:13px;
+  font-size:13px;
 }
 
 .offer-title{
@@ -594,28 +608,27 @@ input:focus{
 }
 
 .open-offer{
- min-width:116px;
- display:inline-flex;
- align-items:center;
- justify-content:center;
- border:1px solid rgba(255,49,85,.65);
- background:
-
-      linear-gradient(
-        135deg,
-        #a50021,
-        #e00035
-      );
-    color:#fff;
-    border-radius:10px;
-    padding:10px 14px;
-    font-weight:800;
-    text-decoration:none;
-    box-shadow:0 7px 20px rgba(176,0,32,.22);
-    transition:
-      filter .18s ease,
-      transform .18s ease,
-      box-shadow .18s ease;
+  min-width:116px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(255,49,85,.65);
+  background:
+    linear-gradient(
+      135deg,
+      #a50021,
+      #e00035
+    );
+  color:#fff;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:800;
+  text-decoration:none;
+  box-shadow:0 7px 20px rgba(176,0,32,.22);
+  transition:
+    filter .18s ease,
+    transform .18s ease,
+    box-shadow .18s ease;
 }
 
 .open-offer:hover{
@@ -645,7 +658,6 @@ input:focus{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
   gap:12px;
-
 }
 
 .service-card{
@@ -687,15 +699,14 @@ input:focus{
 .service-browser-card.active{
   border-color:var(--red2);
   background:
-   linear-gradient(
-     145deg,
-     rgba(176,0,32,.16),
-
-       rgba(0,0,0,.45)
-     );
-    box-shadow:
-     0 8px 24px rgba(176,0,32,.12),
-     inset 0 0 20px rgba(176,0,32,.06);
+    linear-gradient(
+      145deg,
+      rgba(176,0,32,.16),
+      rgba(0,0,0,.45)
+    );
+  box-shadow:
+    0 8px 24px rgba(176,0,32,.12),
+    inset 0 0 20px rgba(176,0,32,.06);
 }
 
 .service-browser-card:hover{
@@ -735,7 +746,6 @@ input:focus{
   color:#888;
   font-size:11px;
   font-weight:800;
-
 }
 
 .service-browser-card.has-offer .service-browser-count{
@@ -773,22 +783,21 @@ input:focus{
 }
 
 .help-hero{
- padding:22px;
- border:1px solid rgba(224,0,47,.25);
- border-radius:18px;
- background:
-  radial-gradient(
-    circle at 100% 0%,
-    rgba(176,0,32,.18),
-
-       transparent 42%
-     ),
-     linear-gradient(
-       145deg,
-       rgba(176,0,32,.08),
-       rgba(0,0,0,.32)
-     );
-    margin-bottom:20px;
+  padding:22px;
+  border:1px solid rgba(224,0,47,.25);
+  border-radius:18px;
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(176,0,32,.18),
+      transparent 42%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(176,0,32,.08),
+      rgba(0,0,0,.32)
+    );
+  margin-bottom:20px;
 }
 
 .help-hero h2{
@@ -809,27 +818,26 @@ input:focus{
 }
 
 .help-primary{
- display:inline-flex;
- align-items:center;
- justify-content:center;
- min-height:44px;
- padding:10px 18px;
- border:1px solid rgba(255,49,85,.65);
- border-radius:11px;
- color:#fff;
- text-decoration:none;
- font-weight:850;
- background:
-   linear-gradient(
-     135deg,
-     #9d001d,
-     #e00035
-   );
-
-    box-shadow:0 7px 22px rgba(176,0,32,.24);
-    transition:
-      filter .18s ease,
-      transform .18s ease;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:10px 18px;
+  border:1px solid rgba(255,49,85,.65);
+  border-radius:11px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:850;
+  background:
+    linear-gradient(
+      135deg,
+      #9d001d,
+      #e00035
+    );
+  box-shadow:0 7px 22px rgba(176,0,32,.24);
+  transition:
+    filter .18s ease,
+    transform .18s ease;
 }
 
 .help-primary:hover{
@@ -843,11 +851,11 @@ input:focus{
   border:1px solid rgba(255,196,87,.20);
   border-radius:14px;
   background:
-   linear-gradient(
-     145deg,
-     rgba(255,196,87,.07),
-     rgba(0,0,0,.30)
-   );
+    linear-gradient(
+      145deg,
+      rgba(255,196,87,.07),
+      rgba(0,0,0,.30)
+    );
 }
 
 .help-safety strong{
@@ -868,12 +876,11 @@ input:focus{
 }
 
 .help-section-title{
- display:flex;
- align-items:flex-end;
-
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:12px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
 }
 
 .help-section-title h3{
@@ -907,15 +914,14 @@ input:focus{
 }
 
 .help-category{
- white-space:nowrap;
- border:1px solid #333;
- background:rgba(0,0,0,.40);
- color:#aaa;
- border-radius:999px;
- padding:8px 13px;
- font-weight:750;
- transition:
-
+  white-space:nowrap;
+  border:1px solid #333;
+  background:rgba(0,0,0,.40);
+  color:#aaa;
+  border-radius:999px;
+  padding:8px 13px;
+  font-weight:750;
+  transition:
     border-color .18s ease,
     background .18s ease,
     color .18s ease,
@@ -932,11 +938,11 @@ input:focus{
   color:#fff;
   border-color:var(--red2);
   background:
-   linear-gradient(
-     135deg,
-     rgba(176,0,32,.35),
-     rgba(224,0,47,.14)
-   );
+    linear-gradient(
+      135deg,
+      rgba(176,0,32,.35),
+      rgba(224,0,47,.14)
+    );
 }
 
 .help-grid{
@@ -960,7 +966,6 @@ input:focus{
     border-color .18s ease,
     transform .18s ease,
     background .18s ease;
-
 }
 
 .fundraiser-card:hover{
@@ -1044,14 +1049,13 @@ input:focus{
 }
 
 .help-remove{
- width:38px;
- min-width:38px;
- border:1px solid #39393b;
- border-radius:9px;
- background:rgba(0,0,0,.45);
-
-    color:#999;
-    font-weight:900;
+  width:38px;
+  min-width:38px;
+  border:1px solid #39393b;
+  border-radius:9px;
+  background:rgba(0,0,0,.45);
+  color:#999;
+  font-weight:900;
 }
 
 .help-remove:hover{
@@ -1066,11 +1070,11 @@ input:focus{
   border:1px solid #29292c;
   border-radius:18px;
   background:
-   linear-gradient(
-     145deg,
-     rgba(255,255,255,.022),
-     rgba(0,0,0,.34)
-   );
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.022),
+      rgba(0,0,0,.34)
+    );
 }
 
 .help-form h3{
@@ -1091,10 +1095,9 @@ input:focus{
 }
 
 .help-field{
- display:flex;
- flex-direction:column;
- gap:7px;
-
+  display:flex;
+  flex-direction:column;
+  gap:7px;
 }
 
 .help-field.full{
@@ -1133,14 +1136,13 @@ input:focus{
 }
 
 .help-checkbox{
- display:flex;
- align-items:flex-start;
- gap:9px;
- margin-top:15px;
- color:#999;
- font-size:12px;
-
-    line-height:1.5;
+  display:flex;
+  align-items:flex-start;
+  gap:9px;
+  margin-top:15px;
+  color:#999;
+  font-size:12px;
+  line-height:1.5;
 }
 
 .help-checkbox input{
@@ -1164,11 +1166,11 @@ input:focus{
   color:#fff;
   font-weight:850;
   background:
-   linear-gradient(
-     135deg,
-     #9d001d,
-     #e00035
-   );
+    linear-gradient(
+      135deg,
+      #9d001d,
+      #e00035
+    );
   box-shadow:0 7px 20px rgba(176,0,32,.22);
 }
 
@@ -1179,14 +1181,13 @@ input:focus{
 }
 
 .help-empty{
- grid-column:1/-1;
- padding:24px;
- text-align:center;
- color:#777;
- border:1px dashed #333;
-
-    border-radius:15px;
-    background:rgba(0,0,0,.15);
+  grid-column:1/-1;
+  padding:24px;
+  text-align:center;
+  color:#777;
+  border:1px dashed #333;
+  border-radius:15px;
+  background:rgba(0,0,0,.15);
 }
 
 /* =========================
@@ -1229,7 +1230,6 @@ input:focus{
   object-fit:cover;
   background:#111;
   border:1px solid #333;
-
 }
 
 .favorite-poster-fallback{
@@ -1274,27 +1274,26 @@ input:focus{
 
 .favorite-remove{
   position:absolute;
-
-    top:12px;
-    right:12px;
-    width:32px;
-    height:32px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:1px solid #3b3b3d;
-    border-radius:9px;
-    background:rgba(0,0,0,.45);
-    color:#999;
-    font-size:16px;
-    font-weight:800;
-    line-height:1;
-    cursor:pointer;
-    transition:
-      color .18s ease,
-      border-color .18s ease,
-      background .18s ease,
-      transform .18s ease;
+  top:12px;
+  right:12px;
+  width:32px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #3b3b3d;
+  border-radius:9px;
+  background:rgba(0,0,0,.45);
+  color:#999;
+  font-size:16px;
+  font-weight:800;
+  line-height:1;
+  cursor:pointer;
+  transition:
+    color .18s ease,
+    border-color .18s ease,
+    background .18s ease,
+    transform .18s ease;
 }
 
 .favorite-remove:hover{
@@ -1314,15 +1313,14 @@ input:focus{
 ========================= */
 
 .modal-backdrop{
- position:fixed;
- inset:0;
- background:rgba(0,0,0,.78);
- display:flex;
- align-items:center;
-
-    justify-content:center;
-    padding:18px;
-    z-index:20;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:20;
 }
 
 .modal{
@@ -1364,12 +1362,11 @@ textarea{
 
 .report-btn{
   margin-top:18px;
-
-    color:#999;
-    text-decoration:underline;
-    background:none;
-    border:0;
-    padding:0;
+  color:#999;
+  text-decoration:underline;
+  background:none;
+  border:0;
+  padding:0;
 }
 
 footer{
@@ -1385,141 +1382,140 @@ footer{
 
 @media(max-width:700px){
 
-    .app{
-      width:96vw;
-      padding-top:14px;
-    }
+  .app{
+    width:96vw;
+    padding-top:14px;
+  }
 
-    .hero{
-      padding:21px 18px;
-    }
+  .hero{
+    padding:21px 18px;
+  }
 
-    .panel{
-      padding:16px;
-    }
+  .panel{
+    padding:16px;
+  }
 
-    .search-row{
-      flex-direction:column;
-    }
+  .search-row{
+    flex-direction:column;
+  }
 
-    .primary{
-      height:46px;
-    }
+  .primary{
+    height:46px;
+  }
 
-    .tabs{
-      min-height:54px;
-    }
+  .tabs{
+    overflow-x:auto;
+  }
 
-    .tab-menu{
-      top:54px;
-      right:6px;
-    }
+  .tab{
+    min-width:120px;
+  }
 
-.anime-head{
-  align-items:flex-start;
-}
+  .anime-head{
+    align-items:flex-start;
+  }
 
-.anime-head h2{
-  font-size:21px;
-}
+  .anime-head h2{
+    font-size:21px;
+  }
 
-.offer{
-  grid-template-columns:46px minmax(0,1fr);
-  gap:12px;
-  padding:13px;
-}
+  .offer{
+    grid-template-columns:46px minmax(0,1fr);
+    gap:12px;
+    padding:13px;
+  }
 
-.offer .open-offer,
-.offer .no-link{
-  grid-column:2;
-  justify-self:start;
-}
+  .offer .open-offer,
+  .offer .no-link{
+    grid-column:2;
+    justify-self:start;
+  }
 
-.open-offer{
-  min-width:0;
-  padding:9px 13px;
-}
+  .open-offer{
+    min-width:0;
+    padding:9px 13px;
+  }
 
-.logo{
-  width:46px;
-  height:46px;
-}
+  .logo{
+    width:46px;
+    height:46px;
+  }
 
-.fav{
-  font-size:16px;
-  padding:8px;
-}
+  .fav{
+    font-size:16px;
+    padding:8px;
+  }
 
-.section-title{
-  align-items:flex-end;
-}
+  .section-title{
+    align-items:flex-end;
+  }
 
-    .section-title h2{
-      font-size:17px;
-    }
+  .section-title h2{
+    font-size:17px;
+  }
 
-    .favorite-item{
-      padding-right:52px;
-    }
+  .favorite-item{
+    padding-right:52px;
+  }
 
-    .service-browser-card{
-      min-height:84px;
-    }
+  .service-browser-card{
+    min-height:84px;
+  }
 
-    .help-hero{
-      padding:18px;
-    }
+  .help-hero{
+    padding:18px;
+  }
 
-    .help-hero h2{
-      font-size:21px;
-    }
+  .help-hero h2{
+    font-size:21px;
+  }
 
-    .help-form-grid{
-      grid-template-columns:1fr;
-    }
+  .help-form-grid{
+    grid-template-columns:1fr;
+  }
 
-    .help-field.full{
-      grid-column:auto;
-    }
+  .help-field.full{
+    grid-column:auto;
+  }
 
-    .help-submit-row{
-      flex-direction:column;
-      align-items:stretch;
-    }
+  .help-submit-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
 
-    .help-submit{
-      width:100%;
-    }
+  .help-submit{
+    width:100%;
+  }
 
 }
 
 @media(max-width:430px){
 
-    .anime-head{
-      gap:12px;
-    }
+  .anime-head{
+    gap:12px;
+  }
 
- .poster{
-   width:76px;
-   height:106px;
- }
+  .poster{
+    width:76px;
+    height:106px;
+  }
 
- .anime-head h2{
-   font-size:19px;
- }
+  .anime-head h2{
+    font-size:19px;
+  }
 
- .offer-title{
-   font-size:14px;
- }
+  .offer-title{
+    font-size:14px;
+  }
 
- .offer-sub{
-   font-size:11px;
- }
+  .offer-sub{
+    font-size:11px;
+  }
 
- .badge{
-   font-size:11px;
-   padding:4px 7px;
- }
+  .badge{
+    font-size:11px;
+    padding:4px 7px;
+  }
 
 }
 </style>
@@ -1531,521 +1527,505 @@ footer{
 
 <header class="hero glass">
 
- <div class="brand">
-  <h1>
-   <span class="anime">Anime</span>
-   <span class="finder">Finder</span>
-  </h1>
- </div>
-
- <p class="subtitle">
-  Find where to watch your favorite anime.
- </p>
-
- <form
-  id="searchForm"
-  class="search-row"
-  onsubmit="event.preventDefault(); searchAnime(document.getElementById('searchInput')?.value || ''); return false;"
- >
-
-  <div class="search-box">
-
-   <span class="search-icon">
-    ⌕
-   </span>
-
-   <input
-    id="searchInput"
-    autocomplete="off"
-    placeholder="Search for an anime..."
-    required
-   >
-
+  <div class="brand">
+    <h1>
+      <span class="anime">Anime</span>
+      <span class="finder">Finder</span>
+    </h1>
   </div>
 
-  <button
-   id="searchButton"
-   class="primary"
-   type="submit"
+  <p class="subtitle">
+    Find where to watch your favorite anime.
+  </p>
+
+  <form
+    id="searchForm"
+    class="search-row"
   >
-   Search
-  </button>
 
- </form>
+    <div class="search-box">
 
-<nav
- class="tabs glass"
- aria-label="Main navigation"
->
+      <span class="search-icon">
+        ⌕
+      </span>
 
- <button
-  id="menuToggle"
-  class="menu-toggle"
-  type="button"
-  aria-label="Open navigation menu"
-  aria-expanded="false"
-  aria-controls="tabMenu"
-  onclick="event.preventDefault(); toggleTabMenu();"
- >
-  <span class="menu-line"></span>
-  <span class="menu-line"></span>
-  <span class="menu-line"></span>
- </button>
+      <input
+        id="searchInput"
+        autocomplete="off"
+        placeholder="Search for an anime..."
+        required
+      >
 
- <div
-  id="tabMenu"
-  class="tab-menu hidden"
- >
+    </div>
 
-  <button class="tab active" data-tab="search" type="button">
-   Search Anime
-  </button>
+    <button
+      id="searchButton"
+      class="primary"
+      type="submit"
+    >
+      Search
+    </button>
 
-  <button class="tab" data-tab="services" type="button">
-   All Services
-  </button>
-
-  <button class="tab" data-tab="favorites" type="button">
-   My Anime
-  </button>
-
-  <button class="tab" data-tab="help" type="button">
-   Help Someone
-  </button>
-
- </div>
-
-</nav>
+  </form>
 
 </header>
 
+<nav
+  class="tabs glass"
+  aria-label="Main navigation"
+>
+
+  <button
+    class="tab active"
+    data-tab="search"
+    type="button"
+  >
+    Search Anime
+  </button>
+
+  <button
+    class="tab"
+    data-tab="services"
+    type="button"
+  >
+    All Services
+  </button>
+
+  <button
+    class="tab"
+    data-tab="favorites"
+    type="button"
+  >
+    My Anime
+  </button>
+
+  <button
+    class="tab"
+    data-tab="help"
+    type="button"
+  >
+    Help Someone
+  </button>
+
+</nav>
 
 <main>
 
 <section
- id="searchSection"
- class="panel glass"
+  id="searchSection"
+  class="panel glass"
 >
 
- <p
-  id="status"
-  class="status"
- >
-  Search an anime and see the services, offers, and U.S. availability returned by Anime Finder.
- </p>
+  <p
+    id="status"
+    class="status"
+  >
+    Search an anime and see the services, offers, and U.S. availability returned by Anime Finder.
+  </p>
 
- <div id="results"></div>
+  <div id="results"></div>
 
- <div
+  <div
+    id="recentWrap"
+    class="recent-wrap"
+  >
 
-  id="recentWrap"
-  class="recent-wrap"
- >
+    <div class="section-title">
+
+      <h2>
+        Recent searches
+      </h2>
+
+      <button
+        id="clearRecent"
+        class="small-btn"
+        type="button"
+      >
+        Clear
+      </button>
+
+    </div>
+
+    <div
+      id="recentList"
+      class="recent-list"
+    ></div>
+
+  </div>
+
+</section>
+
+<section
+  id="servicesSection"
+  class="panel glass hidden"
+>
 
   <div class="section-title">
 
-   <h2>
-    Recent searches
-   </h2>
+    <div>
+      <h2>
+        All Services
+      </h2>
 
-   <button
-    id="clearRecent"
-    class="small-btn"
-    type="button"
-   >
-    Clear
-   </button>
+      <div
+        id="serviceStatus"
+        class="meta"
+      >
+        Search an anime to see which services currently have it.
+      </div>
+    </div>
 
   </div>
 
   <div
-   id="recentList"
-   class="recent-list"
+    id="serviceGrid"
+    class="service-grid"
   ></div>
 
- </div>
+</section>
+
+<section
+  id="favoritesSection"
+  class="panel glass hidden"
+>
+
+  <div class="section-title">
+    <h2>My Anime</h2>
+  </div>
+
+  <div
+    id="favoriteList"
+    class="service-grid"
+  ></div>
 
 </section>
 
 <section
- id="servicesSection"
- class="panel glass hidden"
+  id="helpSection"
+  class="panel glass hidden"
 >
 
- <div class="section-title">
+  <div class="help">
 
-  <div>
-   <h2>
-    All Services
-   </h2>
+    <div class="help-hero">
 
-   <div
-    id="serviceStatus"
-    class="meta"
+      <h2>
+        Help Someone ❤️
+      </h2>
 
-   >
-    Search an anime to see which services currently have it.
-   </div>
+      <p>
+        Find and share GoFundMe fundraisers for people, families, animals,
+        emergencies, and communities that need support.
+      </p>
+
+      <div class="help-actions">
+
+        <a
+          id="findGoFundMeBtn"
+          class="help-primary"
+          href="https://www.gofundme.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Find a GoFundMe
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="help-safety">
+
+      <strong>
+        Before donating
+      </strong>
+
+      <p>
+        Anime Finder does not independently verify or guarantee fundraisers.
+        Always open the fundraiser directly and review the organizer,
+        beneficiary, fundraiser details, updates, and intended use of funds
+        before donating.
+      </p>
+
+    </div>
+
+    <div class="help-section">
+
+      <div class="help-section-title">
+
+        <div>
+          <h3>
+            Browse Causes
+          </h3>
+
+          <p>
+            Choose a category to filter submitted fundraisers.
+          </p>
+        </div>
+
+      </div>
+
+      <div
+        id="helpCategories"
+        class="help-categories"
+      ></div>
+
+    </div>
+
+    <div class="help-section">
+
+      <div class="help-section-title">
+
+        <div>
+          <h3>
+            Fundraisers
+          </h3>
+
+          <p>
+            Fundraisers submitted through Anime Finder are kept pending until
+            an approved review system is available.
+          </p>
+        </div>
+
+      </div>
+
+      <div
+        id="fundraiserList"
+        class="help-grid"
+      ></div>
+
+    </div>
+
+    <form
+      id="fundraiserForm"
+      class="help-form"
+    >
+
+      <h3>
+        Submit a Fundraiser
+      </h3>
+
+      <p class="help-form-intro">
+        Know someone who could use support? Submit their GoFundMe here so we
+        can build toward a future reviewed and featured fundraiser system.
+      </p>
+
+      <div class="help-form-grid">
+
+        <div class="help-field">
+
+          <label for="fundraiserTitle">
+            Fundraiser title
+          </label>
+
+          <input
+            id="fundraiserTitle"
+            name="title"
+            maxlength="120"
+            placeholder="Example: Help the Johnson Family Rebuild"
+            required
+          >
+
+        </div>
+
+        <div class="help-field">
+
+          <label for="fundraiserCategory">
+            Cause
+          </label>
+
+          <select
+            id="fundraiserCategory"
+            name="category"
+            required
+          >
+
+            <option value="Medical">
+              Medical
+            </option>
+
+            <option value="Emergency">
+              Emergency
+            </option>
+
+            <option value="Housing">
+              Housing
+            </option>
+
+            <option value="Family">
+              Family
+            </option>
+
+            <option value="Animals">
+              Animals
+            </option>
+
+            <option value="Community">
+              Community
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="help-field full">
+
+          <label for="fundraiserUrl">
+            GoFundMe URL
+          </label>
+
+          <input
+            id="fundraiserUrl"
+            name="url"
+            type="url"
+            placeholder="https://www.gofundme.com/..."
+            required
+          >
+
+        </div>
+
+        <div class="help-field full">
+
+          <label for="fundraiserDescription">
+            Short description
+          </label>
+
+          <textarea
+            id="fundraiserDescription"
+            name="description"
+            maxlength="500"
+            placeholder="Briefly explain who the fundraiser is helping and why support is needed..."
+            required
+          ></textarea>
+
+        </div>
+
+      </div>
+
+      <label class="help-checkbox">
+
+        <input
+          id="fundraiserPermission"
+          type="checkbox"
+          required
+        >
+
+        <span>
+          I have permission to share this fundraiser and any information I
+          provided about another person or organization.
+        </span>
+
+      </label>
+
+      <div class="help-submit-row">
+
+        <span class="help-note">
+          Submissions are stored locally on this device for now.
+        </span>
+
+        <button
+          id="submitFundraiserBtn"
+          class="help-submit"
+          type="submit"
+        >
+          Submit Fundraiser
+        </button>
+
+      </div>
+
+    </form>
+
   </div>
-
- </div>
-
- <div
-  id="serviceGrid"
-  class="service-grid"
- ></div>
-
-</section>
-
-<section
- id="favoritesSection"
- class="panel glass hidden"
->
-
- <div class="section-title">
-  <h2>My Anime</h2>
- </div>
-
- <div
-  id="favoriteList"
-  class="service-grid"
- ></div>
-
-</section>
-
-<section
- id="helpSection"
- class="panel glass hidden"
->
-
- <div class="help">
-
-  <div class="help-hero">
-
-
-                      ❤️
-   <h2>
-    Help Someone
-   </h2>
-
-   <p>
-
-  Find and share GoFundMe fundraisers for people, families, animals,
-  emergencies, and communities that need support.
- </p>
-
- <div class="help-actions">
-
-  <a
-   id="findGoFundMeBtn"
-   class="help-primary"
-   href="https://www.gofundme.com/"
-   target="_blank"
-   rel="noopener noreferrer"
-  >
-   Find a GoFundMe
-  </a>
-
- </div>
-
-</div>
-
-<div class="help-safety">
-
- <strong>
-  Before donating
- </strong>
-
- <p>
-  Anime Finder does not independently verify or guarantee fundraisers.
-  Always open the fundraiser directly and review the organizer,
-  beneficiary, fundraiser details, updates, and intended use of funds
-  before donating.
- </p>
-
-</div>
-
-<div class="help-section">
-
- <div class="help-section-title">
-
-  <div>
-   <h3>
-    Browse Causes
-   </h3>
-
-   <p>
-    Choose a category to filter submitted fundraisers.
-   </p>
-  </div>
-
- </div>
-
- <div
-  id="helpCategories"
-  class="help-categories"
- ></div>
-
-</div>
-
-<div class="help-section">
-
- <div class="help-section-title">
-
-  <div>
-   <h3>
-    Fundraisers
-   </h3>
-
-   <p>
-    Approved fundraisers are listed here after Anime Finder admin review.
-    New submissions remain pending until they are reviewed.
-   </p>
-  </div>
-
- </div>
-
- <div
-  id="fundraiserList"
-  class="help-grid"
- ></div>
-
-</div>
-
-<form
- id="fundraiserForm"
- class="help-form"
->
-
- <h3>
-
- Submit a Fundraiser
-</h3>
-
-<p class="help-form-intro">
- Know someone who could use support? Submit their GoFundMe here for
- admin review. Approved fundraisers can then appear in this section.
-</p>
-
-<div class="help-form-grid">
-
- <div class="help-field">
-
-  <label for="fundraiserTitle">
-   Fundraiser title
-  </label>
-
-  <input
-   id="fundraiserTitle"
-   name="title"
-   maxlength="120"
-   placeholder="Example: Help the Johnson Family Rebuild"
-   required
-  >
-
- </div>
-
- <div class="help-field">
-
-  <label for="fundraiserCategory">
-   Cause
-  </label>
-
-  <select
-   id="fundraiserCategory"
-   name="category"
-   required
-  >
-
-   <option value="Medical">
-    Medical
-   </option>
-
-   <option value="Emergency">
-    Emergency
-
-  </option>
-
-  <option value="Housing">
-   Housing
-  </option>
-
-  <option value="Family">
-   Family
-  </option>
-
-  <option value="Animals">
-   Animals
-  </option>
-
-  <option value="Community">
-   Community
-  </option>
-
-  <option value="Other">
-   Other
-  </option>
-
- </select>
-
-</div>
-
-<div class="help-field full">
-
- <label for="fundraiserUrl">
-  GoFundMe URL
- </label>
-
- <input
-  id="fundraiserUrl"
-  name="url"
-  type="url"
-  placeholder="https://www.gofundme.com/..."
-  required
- >
-
-</div>
-
-<div class="help-field full">
-
-  <label for="fundraiserDescription">
-   Short description
-  </label>
-
-  <textarea
-   id="fundraiserDescription"
-   name="description"
-   maxlength="500"
-   placeholder="Briefly explain who the fundraiser is helping and why support is needed..."
-   required
-  ></textarea>
-
- </div>
-
-</div>
-
-<label class="help-checkbox">
-
- <input
-  id="fundraiserPermission"
-  type="checkbox"
-  required
- >
-
- <span>
-  I have permission to share this fundraiser and any information I
-  provided about another person or organization.
- </span>
-
-</label>
-
-<div class="help-submit-row">
-
- <span class="help-note">
-  Submissions are sent securely to Anime Finder for admin review.
- </span>
-
- <button
-  id="submitFundraiserBtn"
-  class="help-submit"
-  type="submit"
- >
-  Submit Fundraiser
- </button>
-
-   </div>
-
-  </form>
-
- </div>
 
 </section>
 
 </main>
 
 <footer>
- Anime Finder
+  Anime Finder
 </footer>
 
 </div>
 
 <div
- id="reportModal"
- class="modal-backdrop hidden"
- role="dialog"
- aria-modal="true"
- aria-labelledby="reportTitle"
+  id="reportModal"
+  class="modal-backdrop hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="reportTitle"
 >
 
- <div class="modal glass">
+  <div class="modal glass">
 
-  <h2 id="reportTitle">
-   Report incorrect information
-  </h2>
+    <h2 id="reportTitle">
+      Report incorrect information
+    </h2>
 
-  <p class="meta">
-   Tell us what looks wrong with the current offer information.
-  </p>
+    <p class="meta">
+      Tell us what looks wrong with the current offer information.
+    </p>
 
-  <form id="reportForm">
+    <form id="reportForm">
 
-   <select
-    id="reportReason"
+      <select
+        id="reportReason"
+        style="width:100%;padding:11px;border-radius:10px;background:#090909;color:#fff;border:1px solid #333"
+      >
 
-style="width:100%;padding:11px;border-radius:10px;background:#090909;color:#fff;border:1px
-solid #333"
-    >
+        <option value="wrong-service">
+          Wrong service
+        </option>
 
- <option value="wrong-service">
-  Wrong service
- </option>
+        <option value="wrong-region">
+          Wrong U.S. availability
+        </option>
 
- <option value="wrong-region">
-  Wrong U.S. availability
- </option>
+        <option value="wrong-price">
+          Wrong price
+        </option>
 
- <option value="wrong-price">
-  Wrong price
- </option>
+        <option value="broken-link">
+          Broken offer link
+        </option>
 
- <option value="broken-link">
-  Broken offer link
- </option>
+        <option value="other">
+          Other
+        </option>
 
- <option value="other">
-  Other
- </option>
+      </select>
 
-</select>
+      <textarea
+        id="reportDetails"
+        placeholder="Optional details..."
+      ></textarea>
 
-<textarea
- id="reportDetails"
- placeholder="Optional details..."
-></textarea>
+      <div class="modal-actions">
 
-<div class="modal-actions">
+        <button
+          type="button"
+          class="secondary"
+          id="closeReport"
+        >
+          Cancel
+        </button>
 
- <button
-  type="button"
-  class="secondary"
-  id="closeReport"
- >
-  Cancel
- </button>
-
- <button
-  id="saveReport"
-  class="danger"
-  type="submit"
- >
-  Save Report
- </button>
+        <button
+          id="saveReport"
+          class="danger"
+          type="submit"
+        >
+          Save Report
+        </button>
 
       </div>
 
-     </form>
+    </form>
 
- </div>
+  </div>
 
 </div>
 
@@ -2053,187 +2033,183 @@ solid #333"
 "use strict";
 
 const WORKER_URL =
- "https://holy-lake-cba9.daviswillis232.workers.dev/";
+  "https://holy-lake-cba9.daviswillis232.workers.dev/";
 
 const FAVORITES_KEY =
- "animeFinderFavorites";
+  "animeFinderFavorites";
 
 const RECENT_KEY =
- "animeFinderRecentSearches";
+  "animeFinderRecentSearches";
 
 const REPORTS_KEY =
- "animeFinderReports";
+  "animeFinderReports";
 
 const FUNDRAISER_SUBMISSIONS_KEY =
- "animeFinderFundraiserSubmissions";
+  "animeFinderFundraiserSubmissions";
 
 
 const SERVICE_CONFIG = [
 
- {
-   matches:["crunchyroll"],
-   displayName:"Crunchyroll",
-   logo:"https://cdn.simpleicons.org/crunchyroll/FFFFFF",
-   fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/crunchyroll.svg"
- },
+  {
+    matches:["crunchyroll"],
+    displayName:"Crunchyroll",
+    logo:"https://cdn.simpleicons.org/crunchyroll/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/crunchyroll.svg"
+  },
 
- {
-   matches:["hidive"],
-   displayName:"HIDIVE",
-   logo:"https://cdn.simpleicons.org/hidive/FFFFFF",
-   fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/hidive.svg"
- },
+  {
+    matches:["hidive"],
+    displayName:"HIDIVE",
+    logo:"https://cdn.simpleicons.org/hidive/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/hidive.svg"
+  },
 
-{
-  matches:["netflix"],
-  displayName:"Netflix",
-  logo:"https://cdn.simpleicons.org/netflix/FFFFFF",
-  fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/netflix.svg"
-},
+  {
+    matches:["netflix"],
+    displayName:"Netflix",
+    logo:"https://cdn.simpleicons.org/netflix/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/netflix.svg"
+  },
 
-{
-  matches:["hulu"],
-  displayName:"Hulu",
-  logo:"https://cdn.simpleicons.org/hulu/FFFFFF",
-  fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/hulu.svg"
-},
+  {
+    matches:["hulu"],
+    displayName:"Hulu",
+    logo:"https://cdn.simpleicons.org/hulu/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/hulu.svg"
+  },
 
-{
-  matches:[
-    "disney plus",
-    "disney+",
-    "disneyplus"
-  ],
-  displayName:"Disney+",
-  logo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Disney%2B_2024.svg",
-  fallbackLogo:"https://upload.wikimedia.org/wikipedia/commons/7/77/Disney_Plus_logo.svg"
-},
+  {
+    matches:[
+      "disney plus",
+      "disney+",
+      "disneyplus"
+    ],
+    displayName:"Disney+",
+    logo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Disney%2B_2024.svg",
+    fallbackLogo:"https://upload.wikimedia.org/wikipedia/commons/7/77/Disney_Plus_logo.svg"
+  },
 
-{
-  matches:["max"],
-  displayName:"Max",
-  logo:"https://cdn.simpleicons.org/max/FFFFFF",
-  fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/max.svg"
-},
+  {
+    matches:["max"],
+    displayName:"Max",
+    logo:"https://cdn.simpleicons.org/max/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/max.svg"
+  },
 
-{
-  matches:["tubi"],
-  displayName:"Tubi",
-  logo:"https://cdn.simpleicons.org/tubi/FFFFFF",
-  fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/tubi.svg"
-},
+  {
+    matches:["tubi"],
+    displayName:"Tubi",
+    logo:"https://cdn.simpleicons.org/tubi/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/tubi.svg"
+  },
 
-{
+  {
     matches:[
       "the roku channel",
       "roku channel"
     ],
+    displayName:"The Roku Channel",
+    logo:"https://cdn.simpleicons.org/roku/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/roku.svg"
+  },
 
-   displayName:"The Roku Channel",
-   logo:"https://cdn.simpleicons.org/roku/FFFFFF",
-   fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/roku.svg"
- },
-
- {
-   matches:[
-     "pluto tv",
-     "pluto"
-   ],
-   displayName:"Pluto TV",
-   logo:"https://cdn.simpleicons.org/plutotv/FFFFFF",
-   fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/plutotv.svg"
- },
-
- {
-     matches:["peacock"],
-     displayName:"Peacock",
-
-logo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/NBCUniversal_Peacock_Logo_(2026%3B_icon).svg",
-
-fallbackLogo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/NBCUniversal_Peacock_Logo_(2026).svg"
- },
-
- {
-   matches:["youtube"],
-   displayName:"YouTube",
-   logo:"https://cdn.simpleicons.org/youtube/FFFFFF",
-   fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/youtube.svg"
- },
-
- {
-   matches:["google tv"],
-   displayName:"Google TV",
-   logo:"https://cdn.simpleicons.org/googletv/FFFFFF",
-   fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/googletv.svg"
- },
-
- {
-   matches:["retrocrush"],
-   displayName:"RetroCrush"
- },
-
-{
-  matches:[
-    "paramount plus",
-    "paramount+"
-  ],
-  displayName:"Paramount+"
-},
-
-{
-  matches:[
-    "amazon prime video",
-    "prime video"
-  ],
-  displayName:"Amazon Prime Video",
-  logo:"./Prime-video.png"
-},
-
-{
-  matches:[
-    "amazon",
-    "amazon.com",
-    "amazon video",
-    "amazon instant video"
-  ],
-  displayName:"Amazon",
-  logo:"https://cdn.simpleicons.org/amazon/FFFFFF",
-  fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/amazon.svg"
-},
-
-{
-  matches:[
-    "apple tv",
-    "itunes"
-  ],
-  displayName:"Apple TV",
-  logo:"https://cdn.simpleicons.org/appletv/FFFFFF",
-  fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/appletv.svg"
-},
-
-{
+  {
     matches:[
-     "fandango at home",
-     "vudu"
+      "pluto tv",
+      "pluto"
+    ],
+    displayName:"Pluto TV",
+    logo:"https://cdn.simpleicons.org/plutotv/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/plutotv.svg"
+  },
 
-   ],
-   displayName:"Fandango at Home",
-   logo:"https://cdn.simpleicons.org/vudu/FFFFFF",
-   fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/vudu.svg"
- },
+  {
+    matches:["peacock"],
+    displayName:"Peacock",
+    logo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/NBCUniversal_Peacock_Logo_(2026%3B_icon).svg",
+    fallbackLogo:"https://commons.wikimedia.org/wiki/Special:Redirect/file/NBCUniversal_Peacock_Logo_(2026).svg"
+  },
 
- {
-   matches:["hoopla"],
-   displayName:"Hoopla"
- },
+  {
+    matches:["youtube"],
+    displayName:"YouTube",
+    logo:"https://cdn.simpleicons.org/youtube/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/youtube.svg"
+  },
 
- {
-     matches:[
-       "directv on demand",
-       "directv"
-     ],
-     displayName:"DIRECTV On Demand"
- }
+  {
+    matches:["google tv"],
+    displayName:"Google TV",
+    logo:"https://cdn.simpleicons.org/googletv/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/googletv.svg"
+  },
+
+  {
+    matches:["retrocrush"],
+    displayName:"RetroCrush"
+  },
+
+  {
+    matches:[
+      "paramount plus",
+      "paramount+"
+    ],
+    displayName:"Paramount+"
+  },
+
+  {
+    matches:[
+      "amazon prime video",
+      "prime video"
+    ],
+    displayName:"Amazon Prime Video",
+    logo:"./Prime-video.png"
+  },
+
+  {
+    matches:[
+      "amazon",
+      "amazon.com",
+      "amazon video",
+      "amazon instant video"
+    ],
+    displayName:"Amazon",
+    logo:"https://cdn.simpleicons.org/amazon/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/amazon.svg"
+  },
+
+  {
+    matches:[
+      "apple tv",
+      "itunes"
+    ],
+    displayName:"Apple TV",
+    logo:"https://cdn.simpleicons.org/appletv/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/appletv.svg"
+  },
+
+  {
+    matches:[
+      "fandango at home",
+      "vudu"
+    ],
+    displayName:"Fandango at Home",
+    logo:"https://cdn.simpleicons.org/vudu/FFFFFF",
+    fallbackLogo:"https://cdn.jsdelivr.net/npm/simple-icons@16.32.0/icons/vudu.svg"
+  },
+
+  {
+    matches:["hoopla"],
+    displayName:"Hoopla"
+  },
+
+  {
+    matches:[
+      "directv on demand",
+      "directv"
+    ],
+    displayName:"DIRECTV On Demand"
+  }
 
 ];
 
@@ -2258,1755 +2234,878 @@ let currentAnime = null;
 let currentSources = [];
 let activeService = "All";
 let activeHelpCategory = "All";
-let approvedFundraisers = [];
+
 
 const $ = id =>
- document.getElementById(id);
+  document.getElementById(id);
 
 
 function safeString(v){
 
- if(v === null || v === undefined){
-   return "";
- }
+  if(v === null || v === undefined){
+    return "";
+  }
 
- if(
-   typeof v === "string" ||
-   typeof v === "number" ||
-   typeof v === "boolean"
- ){
-   return String(v);
- }
+  if(
+    typeof v === "string" ||
+    typeof v === "number" ||
+    typeof v === "boolean"
+  ){
+    return String(v);
+  }
 
- if(Array.isArray(v)){
+  if(Array.isArray(v)){
 
-     return v
+    return v
       .map(safeString)
       .filter(Boolean)
       .join(", ");
 
- }
+  }
 
- if(typeof v === "object"){
+  if(typeof v === "object"){
 
-     const keys = [
-       "name",
-       "title",
-       "label",
-       "displayName",
-       "service",
-       "provider",
-       "source",
-       "platform",
-       "value",
-       "text"
-     ];
+    const keys = [
+      "name",
+      "title",
+      "label",
+      "displayName",
+      "service",
+      "provider",
+      "source",
+      "platform",
+      "value",
+      "text"
+    ];
 
-     for(const key of keys){
+    for(const key of keys){
 
-            if(
-              Object.prototype.hasOwnProperty.call(
-                v,
-                key
-              )
-            ){
+      if(
+        Object.prototype.hasOwnProperty.call(
+          v,
+          key
+        )
+      ){
 
-                const result =
-                 safeString(
-                   v[key]
-                 ).trim();
+        const result =
+          safeString(
+            v[key]
+          ).trim();
 
-                if(
-                  result &&
-                  result !== "[object Object]"
-                ){
-                  return result;
-                }
-
-            }
-
+        if(
+          result &&
+          result !== "[object Object]"
+        ){
+          return result;
         }
 
-        return "";
+      }
 
     }
 
-    return String(v);
+    return "";
+
+  }
+
+  return String(v);
 
 }
 
 
 function firstNonEmpty(...v){
 
-    for(const value of v){
+  for(const value of v){
 
-        const result =
-         safeString(
-           value
-         ).trim();
+    const result =
+      safeString(
+        value
+      ).trim();
 
-        if(
-          result &&
-          result !== "[object Object]"
-
-        ){
-          return result;
-        }
-
+    if(
+      result &&
+      result !== "[object Object]"
+    ){
+      return result;
     }
 
-    return "";
+  }
+
+  return "";
 
 }
 
 
 function normalizeServiceName(v){
 
-    return safeString(v)
-     .toLowerCase()
-     .replace(
-       /[^a-z0-9]+/g,
-       ""
-     )
-     .replace(
-       /\s+/g,
-       ""
-     )
-     .trim();
+  return safeString(v)
+    .toLowerCase()
+    .replace(
+      /[^a-z0-9]+/g,
+      " "
+    )
+    .replace(
+      /\s+/g,
+      " "
+    )
+    .trim();
 
 }
 
 
 function escapeHtml(v){
 
-    return safeString(v).replace(
-      /[&<>"']/g,
-      c => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
-      }[c])
-    );
+  return safeString(v).replace(
+    /[&<>"']/g,
+    c => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[c])
+  );
 
 }
 
+
 function getRawServiceName(source){
 
-    if(
-      !source ||
-      typeof source !== "object"
-    ){
-      return safeString(source);
-    }
+  if(
+    !source ||
+    typeof source !== "object"
+  ){
+    return safeString(source);
+  }
 
-    return safeString(
-      firstNonEmpty(
-        source.service,
-        source.provider,
-        source.source,
-        source.name,
-        source.title,
-        source.platform
-      )
-    );
+  return safeString(
+    firstNonEmpty(
+      source.service,
+      source.provider,
+      source.source,
+      source.name,
+      source.title,
+      source.platform
+    )
+  );
 
 }
 
 
 function findServiceConfig(name){
 
-    const n =
-     normalizeServiceName(name);
+  const n =
+    normalizeServiceName(name);
 
-    return SERVICE_CONFIG.find(
-      c =>
-       c.matches.some(
-         m =>
+  return SERVICE_CONFIG.find(
+    c =>
+      c.matches.some(
+        m =>
           n.includes(
             normalizeServiceName(m)
           )
-       )
-    );
+      )
+  );
 
 }
 
 
 function getCleanServiceName(name){
 
-    const raw =
+  const raw =
+    safeString(name);
 
-     safeString(name);
+  const c =
+    findServiceConfig(raw);
 
-    const c =
-     findServiceConfig(raw);
-
-    return (
-      c?.displayName ||
-      raw ||
-      "Unknown Service"
-    );
+  return (
+    c?.displayName ||
+    raw ||
+    "Unknown Service"
+  );
 
 }
 
 
 function getProviderParentName(name){
 
-    const n =
-     normalizeServiceName(name);
+  const n =
+    normalizeServiceName(name);
 
-    if(!n){
-      return "";
-    }
+  if(!n){
+    return "";
+  }
 
-    if(
-      n.includes("crunchyroll")
-    ){
-      return "Crunchyroll";
-    }
+  if(
+    n.includes("crunchyroll")
+  ){
+    return "Crunchyroll";
+  }
 
-    if(
-      n === "prime video" ||
-      n === "amazon prime video" ||
-      n.includes("amazon prime video")
-    ){
-      return "Amazon Prime Video";
-    }
+  if(
+    n === "prime video" ||
+    n === "amazon prime video" ||
+    n.includes("amazon prime video")
+  ){
+    return "Amazon Prime Video";
+  }
 
-    if(
-      n === "amazon" ||
-      n === "amazon com" ||
-      n === "amazon video" ||
-      n === "amazon instant video"
-    ){
-      return "Amazon";
+  if(
+    n === "amazon" ||
+    n === "amazon com" ||
+    n === "amazon video" ||
+    n === "amazon instant video"
+  ){
+    return "Amazon";
+  }
 
-    }
-
-    return (
-      findServiceConfig(name)?.displayName ||
-      safeString(name)
-    );
+  return (
+    findServiceConfig(name)?.displayName ||
+    safeString(name)
+  );
 
 }
 
 
 function getOfferTitle(source){
 
-    const raw =
-     getRawServiceName(source);
+  const raw =
+    getRawServiceName(source);
 
-    const n =
-     normalizeServiceName(raw);
+  const n =
+    normalizeServiceName(raw);
 
-    if(
-      n.includes("crunchyroll") &&
-      n !== "crunchyroll"
-    ){
-      return "Crunchyroll Premium";
-    }
+  if(
+    n.includes("crunchyroll") &&
+    n !== "crunchyroll"
+  ){
+    return "Crunchyroll Premium";
+  }
 
-    return getCleanServiceName(raw);
+  return getCleanServiceName(raw);
 
 }
 
 
 function getOfferSubline(source){
 
-    const n =
-     normalizeServiceName(
-       getRawServiceName(source)
-     );
+  const n =
+    normalizeServiceName(
+      getRawServiceName(source)
+    );
 
-    if(
-      n.includes("via prime") ||
-      n.includes("amazon channel")
-    ){
-      return "Via Amazon Prime";
-    }
+  if(
+    n.includes("via prime") ||
+    n.includes("amazon channel")
+  ){
+    return "Via Amazon Prime";
+  }
 
-    if(
-      n.includes("roku channel")
-    ){
-      return "Via Roku Channel";
-    }
+  if(
+    n.includes("roku channel")
+  ){
+    return "Via Roku Channel";
+  }
 
-    return "";
+  return "";
 
 }
 
 
 function getTypeText(source){
 
-    const raw =
-     safeString(
-       firstNonEmpty(
-         source?.type,
-         source?.offerType,
-         source?.accessType
-       )
-     ).toLowerCase();
-
-    if(
-      raw === "sub" ||
-      raw.includes("subscription") ||
-      raw === "subscribe"
-    ){
-      return "Subscription";
-    }
-
-    if(
-      raw.includes("free") ||
-      raw === "ads"
-    ){
-      return "Free";
-    }
-
-    if(
-      raw.includes("rent")
-    ){
-      return "Rent";
-    }
-
-    if(
-
-      raw.includes("buy") ||
-      raw.includes("purchase")
-    ){
-      return "Buy";
-    }
-
-    return safeString(
+  const raw =
+    safeString(
       firstNonEmpty(
         source?.type,
         source?.offerType,
-        "Watch"
+        source?.accessType
       )
-    );
+    ).toLowerCase();
+
+  if(
+    raw === "sub" ||
+    raw.includes("subscription") ||
+    raw === "subscribe"
+  ){
+    return "Subscription";
+  }
+
+  if(
+    raw.includes("free") ||
+    raw === "ads"
+  ){
+    return "Free";
+  }
+
+  if(
+    raw.includes("rent")
+  ){
+    return "Rent";
+  }
+
+  if(
+    raw.includes("buy") ||
+    raw.includes("purchase")
+  ){
+    return "Buy";
+  }
+
+  return safeString(
+    firstNonEmpty(
+      source?.type,
+      source?.offerType,
+      "Watch"
+    )
+  );
 
 }
 
 
 function formatPrice(value){
 
-    if(
-      value === null ||
-      value === undefined ||
-      String(value).trim() === ""
-    ){
-      return "";
+  if(
+    value === null ||
+    value === undefined ||
+    String(value).trim() === ""
+  ){
+    return "";
+  }
+
+  if(typeof value === "object"){
+
+    const amount =
+      firstNonEmpty(
+        value.amount,
+        value.value,
+        value.price
+      );
+
+    if(amount !== ""){
+      return formatPrice(amount);
     }
 
-    if(typeof value === "object"){
+    return "";
 
-        const amount =
-         firstNonEmpty(
-           value.amount,
-           value.value,
-           value.price
-         );
+  }
 
-        if(amount !== ""){
-          return formatPrice(amount);
-        }
+  const raw =
+    String(value).trim();
 
-        return "";
+  if(
+    raw.toLowerCase() === "free"
+  ){
+    return "Free";
+  }
 
-    }
-
-const raw =
- String(value).trim();
-
-if(
-  raw.toLowerCase() === "free"
-){
-  return "Free";
-}
-
-if(
-  raw.startsWith("$")
-){
+  if(
+    raw.startsWith("$")
+  ){
 
     const m =
-     raw.match(
-       /\$\s*(\d+(?:\.\d{1,2})?)/
-     );
+      raw.match(
+        /\$\s*(\d+(?:\.\d{1,2})?)/
+      );
 
     if(m){
 
-        const n =
-         Number(m[1]);
+      const n =
+        Number(m[1]);
 
-        return Number.isFinite(n)
-         ? `$${n.toFixed(2)}`
-         : raw;
+      return Number.isFinite(n)
+        ? `$${n.toFixed(2)}`
+        : raw;
 
     }
 
     return raw;
 
-}
+  }
 
-const m =
- raw.match(
-   /\$?\s*(\d+(?:\.\d{1,2})?)/
- );
+  const m =
+    raw.match(
+      /\$?\s*(\d+(?:\.\d{1,2})?)/
+    );
 
-if(!m){
-  return raw;
-}
+  if(!m){
+    return raw;
+  }
 
-const n =
- Number(m[1]);
+  const n =
+    Number(m[1]);
 
-    if(!Number.isFinite(n)){
-      return raw;
-    }
+  if(!Number.isFinite(n)){
+    return raw;
+  }
 
-    return `${
-     /^from\b/i.test(raw)
-       ? "From "
-       : ""
-    }$${n.toFixed(2)}`;
+  return `${
+    /^from\b/i.test(raw)
+      ? "From "
+      : ""
+  }$${n.toFixed(2)}`;
 
 }
 
 
 function getFormatText(source){
 
-    return safeString(
-      firstNonEmpty(
-        source?.format,
-        source?.quality,
-        source?.resolution
-      )
-    );
+  return safeString(
+    firstNonEmpty(
+      source?.format,
+      source?.quality,
+      source?.resolution
+    )
+  );
 
 }
 
 
 function getEpisodeText(source){
 
-    const v =
-     firstNonEmpty(
-       source?.episodes,
-       source?.episodeCount,
-       source?.numberOfEpisodes
-     );
+  const v =
+    firstNonEmpty(
+      source?.episodes,
+      source?.episodeCount,
+      source?.numberOfEpisodes
+    );
 
-    if(v === ""){
-      return "";
-    }
+  if(v === ""){
+    return "";
+  }
 
-    const s =
-     safeString(v);
+  const s =
+    safeString(v);
 
-    return /^\d+$/.test(s)
-
-     ? `${s} eps`
-     : s;
+  return /^\d+$/.test(s)
+    ? `${s} eps`
+    : s;
 
 }
 
 
 function getServiceNote(source){
 
-    return safeString(
-      firstNonEmpty(
-        source?.note,
-        source?.notes,
-        source?.channel
-      )
-    );
+  return safeString(
+    firstNonEmpty(
+      source?.note,
+      source?.notes,
+      source?.channel
+    )
+  );
 
 }
 
 
 function getSafeUrl(v){
 
-    if(
-      v === null ||
-      v === undefined
-    ){
+  if(
+    v === null ||
+    v === undefined
+  ){
+    return "";
+  }
+
+  if(
+    typeof v === "string"
+  ){
+
+    const s =
+      v.trim();
+
+    if(!s){
       return "";
     }
 
-    if(
-      typeof v === "string"
-    ){
+    try{
 
-     const s =
-      v.trim();
+      const u =
+        new URL(
+          s,
+          location.href
+        );
 
-     if(!s){
-       return "";
-     }
-
-     try{
-
-      const u =       new URL(
-        s,
-
-           location.href
-         );
-
-        if(
-          [
-            "http:",
-            "https:"
-          ].includes(
-            u.protocol
-          )
-        ){
-          return u.href;
-        }
+      if(
+        [
+          "http:",
+          "https:"
+        ].includes(
+          u.protocol
+        )
+      ){
+        return u.href;
+      }
 
     }catch{}
 
     return "";
 
-}
-
-if(
-  Array.isArray(v)
-){
-  return v
-    .map(
-      normalizeUrl
-    )
-    .filter(Boolean);
-}
-
-return [];
-
-}
-
-function firstNonEmptyArray(
- value
-){
-
-  if(
-    Array.isArray(value) &&
-    value.length
-  ){
-    return value;
   }
 
-  return [];
+  if(
+    Array.isArray(v)
+  ){
+
+    for(
+      const item
+      of v
+    ){
+
+      const found =
+        getSafeUrl(
+          item
+        );
+
+      if(found){
+        return found;
+      }
+
+    }
+
+    return "";
+
+  }
+
+  if(
+    typeof v === "object"
+  ){
+
+    const possibleUrls = [
+
+      v.url,
+      v.link,
+      v.watchUrl,
+      v.watchURL,
+      v.watch_url,
+      v.href,
+      v.uri,
+      v.webUrl,
+      v.web_url,
+      v.website,
+      v.deepLink,
+      v.deeplink,
+      v.targetUrl,
+      v.target_url,
+      v.destinationUrl,
+      v.destination_url,
+      v.externalUrl,
+      v.external_url,
+      v.streamingLink,
+      v.streaming_url,
+      v.playUrl,
+      v.play_url,
+      v.offerUrl,
+      v.offer_url,
+      v.sourceUrl,
+      v.source_url
+
+    ];
+
+    for(
+      const candidate
+      of possibleUrls
+    ){
+
+      const found =
+        getSafeUrl(
+          candidate
+        );
+
+      if(found){
+        return found;
+      }
+
+    }
+
+    const nested = [
+
+      v.offer,
+      v.offers,
+      v.availability,
+      v.source,
+      v.provider,
+      v.links,
+      v.actions,
+      v.watch,
+      v.streaming
+
+    ];
+
+    for(
+      const candidate
+      of nested
+    ){
+
+      const found =
+        getSafeUrl(
+          candidate
+        );
+
+      if(found){
+        return found;
+      }
+
+    }
+
+  }
+
+  return "";
 
 }
 
-function extractSources(
- data
-){
 
-  if(!data){
+function valueContainsUs(value){
+
+  if(Array.isArray(value)){
+
+    return value.some(
+      valueContainsUs
+    );
+
+  }
+
+  const n =
+    normalizeServiceName(value);
+
+  if(!n){
+    return false;
+  }
+
+  const t =
+    n.split(" ");
+
+  return (
+    t.includes("us") ||
+    t.includes("usa") ||
+    n.includes("united states") ||
+    n.includes(
+      "united states of america"
+    )
+  );
+
+}
+
+
+function isUsSource(source){
+
+  if(
+    source?.us === true ||
+    source?.isUS === true ||
+    source?.isUs === true ||
+    source?.isUSAvailable === true ||
+    source?.availableInUS === true
+  ){
+    return true;
+  }
+
+  const vals = [
+    source?.region,
+    source?.country,
+    source?.market,
+    source?.territory,
+    source?.regions,
+    source?.countries
+  ].filter(
+    v =>
+      v !== null &&
+      v !== undefined &&
+      safeString(v).trim() !== ""
+  );
+
+  if(!vals.length){
+    return true;
+  }
+
+  return vals.some(
+    valueContainsUs
+  );
+
+}
+
+
+function getSourceKey(source){
+
+  return [
+
+    normalizeServiceName(
+      getRawServiceName(source)
+    ),
+
+    normalizeServiceName(
+      getTypeText(source)
+    ),
+
+    normalizeServiceName(
+      formatPrice(
+        source?.price
+      )
+    ),
+
+    normalizeServiceName(
+      getFormatText(source)
+    ),
+
+    normalizeServiceName(
+      getEpisodeText(source)
+    ),
+
+    normalizeServiceName(
+      getServiceNote(source)
+    ),
+
+    getSafeUrl(
+      source
+    )
+
+  ].join("|");
+
+}
+
+
+function extractSources(data){
+
+  if(
+    !data ||
+    typeof data !== "object"
+  ){
     return [];
   }
 
-  const candidates = [
+  const arrays = [
     data.sources,
     data.offers,
     data.results,
     data.availability
   ];
 
-  for(
-    const candidate
-    of candidates
-  ){
-
-    const list =
-      firstNonEmptyArray(
-        candidate
-      );
-
-    if(list.length){
-      return list;
-    }
-
-  }
-
-  return [];
+  return (
+    arrays.find(
+      a =>
+        Array.isArray(a) &&
+        a.length > 0
+    ) ||
+    arrays.find(
+      Array.isArray
+    ) ||
+    []
+  );
 
 }
 
-function normalizeResponse(
- data
-){
 
-  const sources =
-    extractSources(
-      data
-    );
+function getServiceLogoCandidates(name){
 
-  let anime =
-    data?.anime ||
-    data?.result ||
-    data?.data ||
-    data;
+  const c =
+    findServiceConfig(name);
 
-  if(
-    Array.isArray(
-      anime
-    )
-  ){
-    anime =
-      anime[0] ||
-      {};
-  }
-
-  return {
-    anime:
-      anime &&
-      typeof anime === "object"
-        ? anime
-        : null,
-
-    sources:
-      sources
-        .map(
-          normalizeSource
-        )
-        .filter(Boolean)
-  };
+  return c
+    ? [
+        c.logo,
+        c.fallbackLogo
+      ].filter(Boolean)
+    : [];
 
 }
 
-function normalizeSource(
- source
-){
 
-  if(
-    !source ||
-    typeof source !== "object"
-  ){
-    return null;
-  }
+function getProviderInitials(name){
 
-  const rawName =
-    source.service ||
-    source.provider ||
-    source.name ||
-    source.platform ||
-    source.source ||
-    source.title ||
-    "";
-
-  const rawUrl =
-    source.url ||
-    source.link ||
-    source.href ||
-    source.webUrl ||
-    source.watchUrl ||
-    "";
-
-  const rawType =
-    source.type ||
-    source.offerType ||
-    source.monetization ||
-    source.access ||
-    "";
-
-  const rawPrice =
-    source.price ??
-    source.cost ??
-    source.amount ??
-    "";
-
-  const rawRegion =
-    source.region ||
-    source.country ||
-    source.locale ||
-    "";
-
-  const display =
-    getServiceDisplayName(
-      rawName
-    );
-
-  const url =
-    normalizeUrl(
-      rawUrl
-    );
-
-  const price =
-    normalizePrice(
-      rawPrice
-    );
-
-  const type =
-    normalizeOfferType(
-      rawType,
-      price
-    );
-
-  return {
-    ...source,
-
-    service:
-      display.name,
-
-    serviceKey:
-      display.key,
-
-    logo:
-      display.logo,
-
-    fallbackLogo:
-      display.fallbackLogo,
-
-    url,
-
-    type,
-
-    price,
-
-    region:
-      safeString(
-        rawRegion
-      ),
-
-    title:
-      safeString(
-        source.title ||
-        rawName
-      ),
-
-    name:
-      safeString(
-        rawName
+  const s =
+    getCleanServiceName(name)
+      .replace(
+        /[^A-Za-z0-9 ]/g,
+        " "
       )
-  };
-
-}
-
-function normalizePrice(
- value
-){
-
-  if(
-    value === null ||
-    value === undefined ||
-    value === ""
-  ){
-    return "";
-  }
-
-  if(
-    typeof value === "number"
-  ){
-    if(
-      Number.isFinite(value)
-    ){
-      return `$${value.toFixed(2)}`;
-    }
-
-    return "";
-  }
-
-  const text =
-    safeString(
-      value
-    ).trim();
-
-  if(!text){
-    return "";
-  }
-
-  if(
-    /^\$?\d+(\.\d{1,2})?$/.test(
-      text
-    )
-  ){
-
-    const number =
-      Number(
-        text.replace(
-          "$",
-          ""
-        )
-      );
-
-    if(
-      Number.isFinite(number)
-    ){
-      return `$${number.toFixed(2)}`;
-    }
-
-  }
-
-  return text;
-
-}
-
-function normalizeOfferType(
- value,
- price
-){
-
-  const text =
-    safeString(
-      value
-    )
-    .trim()
-    .toLowerCase();
-
-  if(
-    text.includes("subscription")
-  ){
-    return "Subscription";
-  }
-
-  if(
-    text.includes("free")
-  ){
-    return "Free";
-  }
-
-  if(
-    text.includes("rent")
-  ){
-    return "Rent";
-  }
-
-  if(
-    text.includes("buy") ||
-    text.includes("purchase")
-  ){
-    return "Buy";
-  }
-
-  if(
-    text.includes("ads")
-  ){
-    return "Free with Ads";
-  }
-
-  if(
-    price
-  ){
-    return price;
-  }
-
-  return "Open Offer";
-
-}
-
-function getServiceDisplayName(
- value
-){
-
-  const text =
-    safeString(
-      value
-    ).trim();
-
-  const lower =
-    text.toLowerCase();
-
-  /*
-    IMPORTANT:
-    Keep more specific services
-    ahead of generic parent names.
-  */
-
-  for(
-    const service
-    of SERVICE_CONFIG
-  ){
-
-    for(
-      const match
-      of service.matches
-    ){
-
-      if(
-        lower.includes(
-          match.toLowerCase()
-        )
-      ){
-
-        return {
-          key:
-            service.key,
-
-          name:
-            service.displayName,
-
-          logo:
-            service.logo,
-
-          fallbackLogo:
-            service.fallbackLogo
-        };
-
-      }
-
-    }
-
-  }
-
-  return {
-    key:
-      slugify(
-        text
-      ) || "other",
-
-    name:
-      text || "Unknown Service",
-
-    logo:
-      "",
-
-    fallbackLogo:
-      ""
-  };
-
-}
-
-function isUnitedStatesSource(
- source
-){
-
-  if(!source){
-    return false;
-  }
-
-  const region =
-    safeString(
-      source.region ||
-      source.country ||
-      source.locale ||
-      source.market
-    ).toLowerCase();
-
-  if(
-    !region
-  ){
-    /*
-      Conservative:
-      no region information does
-      not automatically mean U.S.
-    */
-
-    const url =
-      safeString(
-        source.url ||
-        source.link ||
-        source.href
-      ).toLowerCase();
-
-    if(
-      !url
-    ){
-      return false;
-    }
-
-    return (
-      url.includes(
-        ".com"
-      ) &&
-      !url.includes(
-        ".uk"
-      ) &&
-      !url.includes(
-        ".ca"
-      ) &&
-      !url.includes(
-        ".au"
-      ) &&
-      !url.includes(
-        ".nz"
-      )
-    );
-
-  }
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
 
   return (
-    region === "us" ||
-    region === "usa" ||
-    region === "u.s." ||
-    region === "u.s.a." ||
-    region.includes(
-      "united states"
-    ) ||
-    region.includes(
-      "america"
-    )
-  );
-
-}
-
-function cleanSources(
- list
-){
-
-  if(
-    !Array.isArray(
-      list
-    )
-  ){
-    return [];
-  }
-
-  const seen =
-    new Set();
-
-  const cleaned =
-    [];
-
-  for(
-    const source
-    of list
-  ){
-
-    if(!source){
-      continue;
-    }
-
-    /*
-      If a provider explicitly gives
-      a region, keep only U.S. entries.
-      Otherwise preserve the source so
-      provider APIs that omit region
-      metadata still work.
-    */
-
-    const hasRegion =
-      Boolean(
-        source.region ||
-        source.country ||
-        source.locale ||
-        source.market
-      );
-
-    if(
-      hasRegion &&
-      !isUnitedStatesSource(
-        source
-      )
-    ){
-      continue;
-    }
-
-    const serviceKey =
-      source.serviceKey ||
-      slugify(
-        source.service
-      );
-
-    const url =
-      normalizeUrl(
-        source.url
-      );
-
-    const identity =
-      [
-        serviceKey,
-        url,
-        source.type,
-        source.price
-      ]
-      .join(
-        "|"
-      )
-      .toLowerCase();
-
-    if(
-      seen.has(
-        identity
-      )
-    ){
-      continue;
-    }
-
-    seen.add(
-      identity
-    );
-
-    cleaned.push(
-      source
-    );
-
-  }
-
-  return cleaned;
-
-}
-
-function serviceMatchesSource(
- source,
- service
-){
-
-  if(
-    !source ||
-    !service
-  ){
-    return false;
-  }
-
-  const key =
-    safeString(
-      source.serviceKey
-    ).toLowerCase();
-
-  if(
-    key ===
-    safeString(
-      service.key
-    ).toLowerCase()
-  ){
-    return true;
-  }
-
-  const name =
-    safeString(
-      source.service
-    ).toLowerCase();
-
-  return service.matches.some(
-    match =>
-      name.includes(
-        safeString(
-          match
-        ).toLowerCase()
-      )
-  );
-
-}
-
-function getServiceList(){
-
-  const services =
-    [];
-
-  for(
-    const config
-    of SERVICE_CONFIG
-  ){
-
-    const count =
-      currentSources.filter(
-        source =>
-          serviceMatchesSource(
-            source,
-            config
+    s.length > 1
+      ? s
+          .slice(0,2)
+          .map(
+            x => x[0]
           )
-      ).length;
-
-    if(count){
-      services.push({
-        ...config,
-        count
-      });
-    }
-
-  }
-
-  return services;
+          .join("")
+      : s[0]?.slice(0,2) ||
+        "TV"
+  ).toUpperCase();
 
 }
 
-function renderResults(){
 
-  const results =
-    $("results");
+function buildLogoHtml(
+  serviceName,
+  small=false
+){
 
-  if(!results){
-    return;
-  }
+  const candidates =
+    getServiceLogoCandidates(
+      serviceName
+    );
 
-  results.innerHTML =
-    "";
+  const initials =
+    getProviderInitials(
+      serviceName
+    );
 
-  if(
-    !currentAnime &&
-    !currentSources.length
-  ){
+  const cls =
+    small
+      ? "service-card-logo"
+      : "logo";
 
-    results.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">⌕</div>
-        <h3>Search for an anime</h3>
-        <p>
-          Enter a title above to see where
-          it is available to watch in the U.S.
-        </p>
+  if(!candidates.length){
+
+    return `
+      <div
+        class="${cls}"
+        aria-label="${escapeHtml(
+          serviceName
+        )}"
+      >
+        <span class="logo-initials">
+          ${escapeHtml(initials)}
+        </span>
       </div>
     `;
 
-    return;
   }
 
-  const sources =
-    cleanSources(
-      currentSources
-    ).filter(
-      source =>
-        activeService === "All" ||
-        source.serviceKey ===
-          activeService
-    );
+  return `
+    <div
+      class="${cls}"
+      aria-label="${escapeHtml(
+        serviceName
+      )}"
+    >
 
-  if(
-    !sources.length
-  ){
+      <img
+        src="${escapeHtml(
+          candidates[0]
+        )}"
+        alt=""
+        data-fallback="${escapeHtml(
+          candidates[1] || ""
+        )}"
+      >
 
-    results.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">◌</div>
-        <h3>No matching services</h3>
-        <p>
-          No U.S. streaming options were found
-          for the selected service.
-        </p>
-      </div>
-    `;
+      <span
+        class="logo-initials"
+        hidden
+      >
+        ${escapeHtml(initials)}
+      </span>
 
-    return;
-  }
-
-  const animeTitle =
-    safeString(
-      currentAnime?.title ||
-      currentAnime?.name ||
-      $("searchInput")?.value ||
-      "Anime"
-    );
-
-  const titleEl =
-    document.createElement(
-      "div"
-    );
-
-  titleEl.className =
-    "result-heading";
-
-  titleEl.innerHTML = `
-    <div>
-      <div class="eyebrow">
-        WATCH OPTIONS
-      </div>
-      <h2>
-        ${escapeHtml(
-          animeTitle
-        )}
-      </h2>
     </div>
   `;
 
-  results.appendChild(
-    titleEl
-  );
-
-  const grid =
-    document.createElement(
-      "div"
-    );
-
-  grid.className =
-    "source-grid";
-
-  for(
-    const source
-    of sources
-  ){
-
-    const card =
-      document.createElement(
-        "article"
-      );
-
-    card.className =
-      "source-card";
-
-    const service =
-      SERVICE_CONFIG.find(
-        item =>
-          item.key ===
-          source.serviceKey
-      );
-
-    const logo =
-      source.logo ||
-      service?.logo ||
-      "";
-
-    const fallbackLogo =
-      source.fallbackLogo ||
-      service?.fallbackLogo ||
-      "";
-
-    const logoHtml =
-      logo
-        ? `
-          <img
-            class="service-logo"
-            src="${escapeAttribute(
-              logo
-            )}"
-            alt="${escapeAttribute(
-              source.service
-            )}"
-            ${
-              fallbackLogo
-                ? `data-fallback="${escapeAttribute(
-                    fallbackLogo
-                  )}"`
-                : ""
-            }
-          >
-        `
-        : `
-          <div class="service-logo-fallback">
-            ${escapeHtml(
-              source.service
-            )}
-          </div>
-        `;
-
-    const offerText =
-      source.price ||
-      source.type ||
-      "Open Offer";
-
-    const href =
-      normalizeUrl(
-        source.url
-      );
-
-    card.innerHTML = `
-      <div class="source-top">
-        <div class="service-logo-wrap">
-          ${logoHtml}
-        </div>
-
-        <div class="source-info">
-          <h3>
-            ${escapeHtml(
-              source.service
-            )}
-          </h3>
-
-          <div class="offer">
-            ${escapeHtml(
-              offerText
-            )}
-          </div>
-        </div>
-      </div>
-
-      ${
-        href
-          ? `
-            <a
-              class="watch-button"
-              href="${escapeAttribute(
-                href
-              )}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Watch
-            </a>
-          `
-          : `
-            <button
-              class="watch-button disabled"
-              type="button"
-              disabled
-            >
-              No Link
-            </button>
-          `
-      }
-    `;
-
-    grid.appendChild(
-      card
-    );
-
-  }
-
-  results.appendChild(
-    grid
-  );
-
-  attachLogoFallbacks();
-
 }
 
-function renderServices(){
 
-  const servicesEl =
-    $("serviceList");
+function attachLogoFallbacks(
+  root=document
+){
 
-  if(!servicesEl){
-    return;
-  }
-
-  servicesEl.innerHTML =
-    "";
-
-  const services =
-    getServiceList();
-
-  if(
-    !services.length
-  ){
-
-    servicesEl.innerHTML = `
-      <div class="empty-state compact">
-        <p>
-          Search for an anime to see
-          available services.
-        </p>
-      </div>
-    `;
-
-    return;
-  }
-
-  for(
-    const service
-    of services
-  ){
-
-    const button =
-      document.createElement(
-        "button"
-      );
-
-    button.type =
-      "button";
-
-    button.className =
-      "service-filter" +
-      (
-        activeService ===
-        service.key
-          ? " active"
-          : ""
-      );
-
-    button.dataset.service =
-      service.key;
-
-    const logo =
-      service.logo ||
-      "";
-
-    button.innerHTML = `
-      ${
-        logo
-          ? `
-            <img
-              class="service-filter-logo"
-              src="${escapeAttribute(
-                logo
-              )}"
-              alt=""
-              ${
-                service.fallbackLogo
-                  ? `data-fallback="${escapeAttribute(
-                      service.fallbackLogo
-                    )}"`
-                  : ""
-              }
-            >
-          `
-          : ""
-      }
-
-      <span>
-        ${escapeHtml(
-          service.displayName
-        )}
-      </span>
-
-      <b>
-        ${service.count}
-      </b>
-    `;
-
-    servicesEl.appendChild(
-      button
-    );
-
-  }
-
-  attachLogoFallbacks();
-
-}
-
-function renderRecent(){
-
-  const recentEl =
-    $("recentList");
-
-  if(!recentEl){
-    return;
-  }
-
-  recentEl.innerHTML =
-    "";
-
-  if(
-    !recentSearches.length
-  ){
-
-    recentEl.innerHTML = `
-      <div class="empty-state compact">
-        <p>
-          Your recent searches will appear here.
-        </p>
-      </div>
-    `;
-
-    return;
-  }
-
-  for(
-    const item
-    of recentSearches
-  ){
-
-    const button =
-      document.createElement(
-        "button"
-      );
-
-    button.type =
-      "button";
-
-    button.className =
-      "recent-item";
-
-    button.dataset.query =
-      item;
-
-    button.innerHTML = `
-      <span>
-        ${escapeHtml(
-          item
-        )}
-      </span>
-      <span class="recent-arrow">
-        →
-      </span>
-    `;
-
-    recentEl.appendChild(
-      button
-    );
-
-  }
-
-}
-
-function renderFavorites(){
-
-  const favoritesEl =
-    $("favoritesList");
-
-  if(!favoritesEl){
-    return;
-  }
-
-  favoritesEl.innerHTML =
-    "";
-
-  if(
-    !favorites.length
-  ){
-
-    favoritesEl.innerHTML = `
-      <div class="empty-state compact">
-        <p>
-          Save anime here to build
-          your personal watch list.
-        </p>
-      </div>
-    `;
-
-    return;
-  }
-
-  for(
-    const item
-    of favorites
-  ){
-
-    const row =
-      document.createElement(
-        "div"
-      );
-
-    row.className =
-      "favorite-item";
-
-    row.innerHTML = `
-      <button
-        class="favorite-open"
-        type="button"
-        data-query="${escapeAttribute(
-          item.title
-        )}"
-      >
-        <span>
-          ${escapeHtml(
-            item.title
-          )}
-        </span>
-
-        <span>
-          →
-        </span>
-      </button>
-
-      <button
-        class="favorite-remove"
-        type="button"
-        aria-label="Remove ${
-          escapeAttribute(
-            item.title
-          )
-        } from favorites"
-        data-remove-favorite="${escapeAttribute(
-          item.title
-        )}"
-      >
-        ×
-      </button>
-    `;
-
-    favoritesEl.appendChild(
-      row
-    );
-
-  }
-
-}
-
-function renderHelp(){
-
-  const helpList =
-    $("fundraiserList");
-
-  if(!helpList){
-    return;
-  }
-
-  helpList.innerHTML =
-    "";
-
-  const submissions =
-    getFundraiserSubmissions();
-
-  const approved =
-    submissions.filter(
-      item =>
-        item &&
-        (
-          item.status ===
-            "approved" ||
-          item.approved === true
-        )
-    );
-
-  if(
-    !approved.length
-  ){
-
-    helpList.innerHTML = `
-      <div class="empty-state compact">
-        <p>
-          Fundraisers approved for sharing
-          will appear here.
-        </p>
-      </div>
-    `;
-
-    return;
-  }
-
-  for(
-    const item
-    of approved
-  ){
-
-    const url =
-      getGoFundMeUrl(
-        item.url ||
-        item.link ||
-        item.goFundMe
-      );
-
-    if(!url){
-      continue;
-    }
-
-    const card =
-      document.createElement(
-        "article"
-      );
-
-    card.className =
-      "fundraiser-card";
-
-    card.innerHTML = `
-      <div class="fundraiser-copy">
-        <div class="eyebrow">
-          HELP SOMEONE
-        </div>
-
-        <h3>
-          ${escapeHtml(
-            item.title ||
-            item.name ||
-            "Fundraiser"
-          )}
-        </h3>
-
-        ${
-          item.description
-            ? `
-              <p>
-                ${escapeHtml(
-                  item.description
-                )}
-              </p>
-            `
-            : ""
-        }
-      </div>
-
-      <a
-        class="watch-button"
-        href="${escapeAttribute(
-          url
-        )}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View Fundraiser
-      </a>
-    `;
-
-    helpList.appendChild(
-      card
-    );
-
-  }
-
-}
-
-function attachLogoFallbacks(){
-
-  document
+  root
     .querySelectorAll(
       "img[data-fallback]"
     )
@@ -4014,52 +3113,47 @@ function attachLogoFallbacks(){
       img => {
 
         if(
-          img.dataset.fallbackBound ===
-          "1"
+          img.dataset.logoBound === "1"
         ){
           return;
         }
 
-        img.dataset.fallbackBound =
+        img.dataset.logoBound =
           "1";
 
         img.addEventListener(
           "error",
           () => {
 
-            const fallback =
+            const fb =
               img.dataset.fallback;
 
             if(
-              fallback &&
-              img.src !== fallback
+              fb &&
+              img.src !== fb
             ){
 
               img.src =
-                fallback;
+                fb;
 
               return;
+
             }
 
-            const replacement =
-              document.createElement(
-                "div"
-              );
+            img.hidden =
+              true;
 
-            replacement.className =
-              "service-logo-fallback";
+            const span =
+              img.parentElement
+                ?.querySelector(
+                  ".logo-initials"
+                );
 
-            replacement.textContent =
-              img.alt ||
-              "Service";
+            if(span){
+              span.hidden =
+                false;
+            }
 
-            img.replaceWith(
-              replacement
-            );
-
-          },
-          {
-            once:false
           }
         );
 
@@ -4068,27 +3162,65 @@ function attachLogoFallbacks(){
 
 }
 
-function saveFavorites(){
 
-  writeStorage(
-    FAVORITES_KEY,
-    favorites
-  );
-
-}
-
-function saveRecent(){
-
-  writeStorage(
-    RECENT_KEY,
-    recentSearches
-  );
-
-}
-
-function addRecent(
- query
+function readStorage(
+  key,
+  fallback
 ){
+
+  try{
+
+    const v =
+      JSON.parse(
+        localStorage.getItem(
+          key
+        ) || "null"
+      );
+
+    return v ?? fallback;
+
+  }catch{
+
+    return fallback;
+
+  }
+
+}
+
+
+function writeStorage(
+  key,
+  value
+){
+
+  try{
+
+    localStorage.setItem(
+      key,
+      JSON.stringify(value)
+    );
+
+  }catch{}
+
+}
+
+
+function getRecent(){
+
+  const v =
+    readStorage(
+      RECENT_KEY,
+      []
+    );
+
+  return Array.isArray(v)
+    ? v
+    : [];
+
+}
+
+
+function addRecent(query){
 
   const q =
     safeString(
@@ -4099,123 +3231,358 @@ function addRecent(
     return;
   }
 
-  recentSearches =
-    [
-      q,
-      ...recentSearches.filter(
-        item =>
-          item.toLowerCase() !==
-          q.toLowerCase()
-      )
-    ]
-    .slice(
-      0,
-      12
+  const list =
+    getRecent().filter(
+      x =>
+        safeString(x)
+          .toLowerCase() !==
+        q.toLowerCase()
     );
 
-  saveRecent();
+  list.unshift(q);
+
+  writeStorage(
+    RECENT_KEY,
+    list.slice(0,8)
+  );
+
   renderRecent();
 
 }
 
-function addFavorite(
- title
-){
 
-  const value =
-    safeString(
-      title
-    ).trim();
+function renderRecent(){
 
-  if(!value){
+  const list =
+    $("recentList");
+
+  if(!list){
     return;
   }
 
-  const exists =
-    favorites.some(
-      item =>
-        safeString(
-          item.title
-        ).toLowerCase() ===
-        value.toLowerCase()
+  const recent =
+    getRecent();
+
+  list.innerHTML =
+    recent.length
+
+      ? recent
+          .map(
+            q =>
+              `
+                <button
+                  class="recent-item"
+                  data-query="${escapeHtml(q)}"
+                  type="button"
+                >
+                  ${escapeHtml(q)}
+                </button>
+              `
+          )
+          .join("")
+
+      : `
+          <span class="meta">
+            No recent searches yet.
+          </span>
+        `;
+
+}
+
+
+function getFavorites(){
+
+  const v =
+    readStorage(
+      FAVORITES_KEY,
+      []
     );
+
+  return Array.isArray(v)
+    ? v
+    : [];
+
+}
+
+
+function getAnimeId(anime){
+
+  return safeString(
+    anime?.id ||
+    anime?.mal_id ||
+    anime?.title
+  );
+
+}
+
+
+function isFavorite(){
+
+  const id =
+    getAnimeId(
+      currentAnime
+    );
+
+  if(!id){
+    return false;
+  }
+
+  return getFavorites().some(
+    x =>
+      safeString(
+        x?.id ||
+        x?.title
+      ) === id
+  );
+
+}
+
+
+function toggleFavorite(){
+
+  if(!currentAnime){
+    return;
+  }
+
+  const id =
+    getAnimeId(
+      currentAnime
+    );
+
+  if(!id){
+    return;
+  }
+
+  let list =
+    getFavorites();
 
   if(
-    exists
+    list.some(
+      x =>
+        safeString(
+          x?.id ||
+          x?.title
+        ) === id
+    )
   ){
+
+    list =
+      list.filter(
+        x =>
+          safeString(
+            x?.id ||
+            x?.title
+          ) !== id
+      );
+
+  }else{
+
+    list.unshift({
+
+      id,
+
+      title:
+        safeString(
+          currentAnime.title
+        ),
+
+      poster:
+        safeString(
+          firstNonEmpty(
+            currentAnime.poster,
+            currentAnime.image,
+            currentAnime.posterUrl
+          )
+        )
+
+    });
+
+  }
+
+  writeStorage(
+    FAVORITES_KEY,
+    list
+  );
+
+  renderFavorites();
+  renderResults();
+
+}
+
+
+/* =========================
+   REMOVE FAVORITE
+========================= */
+
+function removeFavorite(id){
+
+  const targetId =
+    safeString(id);
+
+  if(!targetId){
     return;
   }
 
-  favorites.push({
-    title:
-      value
-  });
+  const list =
+    getFavorites();
 
-  saveFavorites();
-  renderFavorites();
-
-}
-
-function removeFavorite(
- title
-){
-
-  const value =
-    safeString(
-      title
-    ).trim()
-    .toLowerCase();
-
-  favorites =
-    favorites.filter(
-      item =>
+  const updated =
+    list.filter(
+      x =>
         safeString(
-          item.title
-        ).trim()
-        .toLowerCase() !==
-        value
+          x?.id ||
+          x?.title
+        ) !== targetId
     );
 
-  saveFavorites();
+  writeStorage(
+    FAVORITES_KEY,
+    updated
+  );
+
   renderFavorites();
 
-}
-
-function getGoFundMeUrl(
- value
-){
-
-  const url =
-    normalizeUrl(
-      value
-    );
-
-  if(!url){
-    return "";
+  if(currentAnime){
+    renderResults();
   }
 
-  try{
-
-    const parsed =
-      new URL(
-        url
-      );
-
-    if(
-      parsed.hostname
-        .toLowerCase()
-        .includes(
-          "gofundme.com"
-        )
-    ){
-      return parsed.href;
-    }
-
-  }catch{}
-
-  return "";
+  showStatus(
+    "Removed from My Anime.",
+    "success"
+  );
 
 }
+
+
+/* =========================
+   RENDER FAVORITES
+========================= */
+
+function renderFavorites(){
+
+  const box =
+    $("favoriteList");
+
+  if(!box){
+    return;
+  }
+
+  const list =
+    getFavorites();
+
+  box.innerHTML =
+    list.length
+
+      ? list
+          .map(
+            x => {
+
+              const id =
+                safeString(
+                  x.id ||
+                  x.title ||
+                  ""
+                );
+
+              const title =
+                safeString(
+                  x.title ||
+                  "Untitled"
+                );
+
+              const poster =
+                getSafeUrl(
+                  x.poster
+                );
+
+              return `
+
+                <article
+                  class="service-card glass favorite-item"
+                  data-favorite-id="${escapeHtml(id)}"
+                  tabindex="0"
+                  role="button"
+                  aria-label="Open ${escapeHtml(title)}"
+                >
+
+                  ${
+                    poster
+
+                      ? `
+                        <img
+                          class="favorite-poster"
+                          src="${escapeHtml(poster)}"
+                          alt=""
+                          onerror="
+                            this.style.display='none';
+                            this.nextElementSibling.hidden=false;
+                          "
+                        >
+
+                        <div
+                          class="favorite-poster-fallback"
+                          hidden
+                          aria-hidden="true"
+                        >
+                          TV
+                        </div>
+                      `
+
+                      : `
+                        <div
+                          class="favorite-poster-fallback"
+                          aria-hidden="true"
+                        >
+                          TV
+                        </div>
+                      `
+                  }
+
+                  <div class="favorite-info">
+
+                    <h3>
+                      ${escapeHtml(title)}
+                    </h3>
+
+                    <p>
+                      Saved anime
+                    </p>
+
+                  </div>
+
+                  <button
+                    class="favorite-remove"
+                    type="button"
+                    data-remove-favorite="${escapeHtml(id)}"
+                    aria-label="Remove ${escapeHtml(title)} from My Anime"
+                    title="Remove from My Anime"
+                  >
+                    ×
+                  </button>
+
+                </article>
+
+              `;
+
+            }
+          )
+          .join("")
+
+      : `
+          <div
+            class="empty"
+            style="grid-column:1/-1"
+          >
+            No favorites yet.
+          </div>
+        `;
+
+}
+
+
+/* =========================================================
+   HELP SOMEONE
+========================================================= */
 
 function getFundraiserSubmissions(){
 
@@ -4231,8 +3598,9 @@ function getFundraiserSubmissions(){
 
 }
 
+
 function writeFundraiserSubmissions(
- list
+  list
 ){
 
   writeStorage(
@@ -4242,92 +3610,1201 @@ function writeFundraiserSubmissions(
 
 }
 
-function loadFundraisers(){
+
+function getGoFundMeUrl(value){
+
+  const raw =
+    safeString(
+      value
+    ).trim();
+
+  if(!raw){
+    return "";
+  }
+
+  try{
+
+    const u =
+      new URL(
+        raw
+      );
+
+    const host =
+      u.hostname
+        .toLowerCase()
+        .replace(
+          /^www\./,
+          ""
+        );
+
+    if(
+      host === "gofundme.com" ||
+      host.endsWith(".gofundme.com") ||
+      host === "gofund.me"
+    ){
+
+      return u.href;
+
+    }
+
+  }catch{}
+
+  return "";
+
+}
+
+
+function renderHelpCategories(){
+
+  const box =
+    $("helpCategories");
+
+  if(!box){
+    return;
+  }
+
+  const submissions =
+    getFundraiserSubmissions();
+
+  const counts = {};
+
+  submissions.forEach(
+    item => {
+
+      const category =
+        safeString(
+          item.category
+        ) || "Other";
+
+      counts[category] =
+        (counts[category] || 0) + 1;
+
+    }
+  );
+
+  const allCount =
+    submissions.length;
+
+
+  box.innerHTML = `
+
+    <button
+      class="help-category ${
+        activeHelpCategory === "All"
+          ? "active"
+          : ""
+      }"
+      type="button"
+      data-help-category="All"
+    >
+      All (${allCount})
+    </button>
+
+    ${
+      HELP_CATEGORIES
+        .map(
+          category =>
+            `
+              <button
+                class="help-category ${
+                  activeHelpCategory === category
+                    ? "active"
+                    : ""
+                }"
+                type="button"
+                data-help-category="${escapeHtml(category)}"
+              >
+                ${escapeHtml(category)}
+                (${counts[category] || 0})
+              </button>
+            `
+        )
+        .join("")
+    }
+
+  `;
+
+}
+
+
+function renderFundraiserSubmissions(){
+
+  const box =
+    $("fundraiserList");
+
+  if(!box){
+    return;
+  }
+
+  const submissions =
+    getFundraiserSubmissions();
+
+  const filtered =
+    submissions.filter(
+      item =>
+        activeHelpCategory === "All" ||
+        safeString(
+          item.category
+        ) === activeHelpCategory
+    );
+
+
+  if(!filtered.length){
+
+    box.innerHTML = `
+
+      <div class="help-empty">
+
+        ${
+          submissions.length
+            ? "No submitted fundraisers match this cause."
+            : "No fundraisers have been submitted yet. You can be the first one."
+        }
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    filtered
+      .map(
+        item => {
+
+          const id =
+            safeString(
+              item.id
+            );
+
+          const title =
+            safeString(
+              item.title ||
+              "Untitled Fundraiser"
+            );
+
+          const category =
+            safeString(
+              item.category ||
+              "Other"
+            );
+
+          const description =
+            safeString(
+              item.description ||
+              "No description provided."
+            );
+
+          const url =
+            getGoFundMeUrl(
+              item.url
+            );
+
+
+          return `
+
+            <article
+              class="fundraiser-card"
+            >
+
+              <span class="fundraiser-category">
+                ${escapeHtml(category)}
+              </span>
+
+              <h4>
+                ${escapeHtml(title)}
+              </h4>
+
+              <p class="fundraiser-description">
+                ${escapeHtml(description)}
+              </p>
+
+              <span class="fundraiser-status">
+                Pending review
+              </span>
+
+              <div class="fundraiser-actions">
+
+                ${
+                  url
+
+                    ? `
+                      <a
+                        class="help-open"
+                        href="${escapeHtml(url)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Open GoFundMe
+                      </a>
+                    `
+
+                    : ""
+                }
+
+                <button
+                  class="help-remove"
+                  type="button"
+                  data-remove-fundraiser="${escapeHtml(id)}"
+                  aria-label="Remove ${escapeHtml(title)}"
+                  title="Remove submission"
+                >
+                  ×
+                </button>
+
+              </div>
+
+            </article>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+function renderHelp(){
+
+  renderHelpCategories();
+  renderFundraiserSubmissions();
+
+}
+
+
+function removeFundraiserSubmission(id){
+
+  const target =
+    safeString(id);
+
+  if(!target){
+    return;
+  }
+
+  const updated =
+    getFundraiserSubmissions()
+      .filter(
+        item =>
+          safeString(
+            item.id
+          ) !== target
+      );
+
+  writeFundraiserSubmissions(
+    updated
+  );
 
   renderHelp();
 
 }
 
-function openReportModal(){
 
-  const modal =
-    $("reportModal");
+function submitFundraiser(e){
 
-  if(!modal){
-    return;
-  }
+  e.preventDefault();
 
-  modal.classList.remove(
-    "hidden"
-  );
 
-  document.body.classList.add(
-    "modal-open"
-  );
-
-}
-
-function closeReportModal(){
-
-  const modal =
-    $("reportModal");
-
-  if(!modal){
-    return;
-  }
-
-  modal.classList.add(
-    "hidden"
-  );
-
-  document.body.classList.remove(
-    "modal-open"
-  );
-
-}
-
-function showTab(
- tabName
-){
-
-  const name =
+  const title =
     safeString(
-      tabName
+      $("fundraiserTitle")
+        ?.value
     ).trim();
 
+  const category =
+    safeString(
+      $("fundraiserCategory")
+        ?.value
+    ).trim();
+
+  const url =
+    getGoFundMeUrl(
+      $("fundraiserUrl")
+        ?.value
+    );
+
+  const description =
+    safeString(
+      $("fundraiserDescription")
+        ?.value
+    ).trim();
+
+  const permission =
+    $("fundraiserPermission")
+      ?.checked;
+
+
+  if(!title){
+
+    showHelpStatus(
+      "Please enter a fundraiser title.",
+      "error"
+    );
+
+    $("fundraiserTitle")
+      ?.focus();
+
+    return;
+
+  }
+
+
+  if(
+    !HELP_CATEGORIES.includes(
+      category
+    )
+  ){
+
+    showHelpStatus(
+      "Please choose a valid cause category.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!url){
+
+    showHelpStatus(
+      "Please enter a valid GoFundMe URL.",
+      "error"
+    );
+
+    $("fundraiserUrl")
+      ?.focus();
+
+    return;
+
+  }
+
+
+  if(!description){
+
+    showHelpStatus(
+      "Please add a short description.",
+      "error"
+    );
+
+    $("fundraiserDescription")
+      ?.focus();
+
+    return;
+
+  }
+
+
+  if(!permission){
+
+    showHelpStatus(
+      "Please confirm that you have permission to share this fundraiser.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const submission = {
+
+    id:
+      `${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2,8)}`,
+
+    createdAt:
+      new Date()
+        .toISOString(),
+
+    title,
+
+    category,
+
+    description,
+
+    url,
+
+    status:
+      "pending"
+
+  };
+
+
+  const submissions =
+    getFundraiserSubmissions();
+
+  submissions.unshift(
+    submission
+  );
+
+
+  writeFundraiserSubmissions(
+    submissions
+  );
+
+
+  $("fundraiserForm")
+    ?.reset();
+
+
+  renderHelp();
+
+
+  showHelpStatus(
+    "Fundraiser submitted locally and marked Pending review.",
+    "success"
+  );
+
+}
+
+
+function showHelpStatus(
+  message,
+  type=""
+){
+
+  const existing =
+    $("helpFormStatus");
+
+  if(existing){
+
+    existing.textContent =
+      message;
+
+    existing.className =
+      "status " +
+      (
+        type ||
+        ""
+      );
+
+    return;
+
+  }
+
+
+  const note =
+    document.createElement(
+      "p"
+    );
+
+  note.id =
+    "helpFormStatus";
+
+  note.className =
+    "status " +
+    (
+      type ||
+      ""
+    );
+
+  note.textContent =
+    message;
+
+  const form =
+    $("fundraiserForm");
+
+  if(form){
+
+    form.insertBefore(
+      note,
+      form.firstElementChild
+    );
+
+  }
+
+}
+
+
+/* =========================
+   ANIME
+========================= */
+
+function getAnimeTitle(data){
+
+  return safeString(
+    firstNonEmpty(
+      data?.title,
+      data?.name,
+      data?.anime?.title,
+      data?.anime?.name,
+      "Unknown Anime"
+    )
+  );
+
+}
+
+
+function getPoster(data){
+
+  return getSafeUrl(
+    firstNonEmpty(
+      data?.poster,
+      data?.image,
+      data?.posterUrl,
+      data?.cover,
+      data?.anime?.poster
+    )
+  );
+
+}
+
+
+function getAnimeObject(data){
+
+  return (
+    data?.anime &&
+    typeof data.anime === "object"
+  )
+    ? data.anime
+    : data;
+
+}
+
+
+function normalizeResponse(json){
+
+  const root =
+    json?.data &&
+    typeof json.data === "object"
+      ? json.data
+      : json;
+
+  const anime =
+    getAnimeObject(root) ||
+    {};
+
+  const sources =
+    extractSources(root)
+      .filter(
+        s =>
+          s &&
+          typeof s === "object" &&
+          !RETIRED_PROVIDERS.some(
+            r =>
+              normalizeServiceName(
+                getRawServiceName(s)
+              ).includes(
+                normalizeServiceName(r)
+              )
+          )
+      );
+
+  const unique = [];
+  const seen = new Set();
+
+  for(
+    const s of sources
+  ){
+
+    if(!isUsSource(s)){
+      continue;
+    }
+
+    const k =
+      getSourceKey(s);
+
+    if(seen.has(k)){
+      continue;
+    }
+
+    seen.add(k);
+    unique.push(s);
+
+  }
+
+  return {
+
+    anime:{
+      ...anime,
+      title:getAnimeTitle(root)
+    },
+
+    sources:unique
+
+  };
+
+}
+
+
+/* =========================================================
+   SERVICE COUNTS
+========================================================= */
+
+function getServiceCounts(){
+
+  const counts = {};
+
+  currentSources.forEach(
+    source => {
+
+      const service =
+        getProviderParentName(
+          getRawServiceName(source)
+        );
+
+      if(!service){
+        return;
+      }
+
+      counts[service] =
+        (counts[service] || 0) + 1;
+
+    }
+  );
+
+  return counts;
+
+}
+
+
+function renderResults(){
+
+  const box =
+    $("results");
+
+  if(!box){
+    return;
+  }
+
+  if(!currentAnime){
+
+    box.innerHTML =
+      "";
+
+    return;
+
+  }
+
+  const poster =
+    getPoster(
+      currentAnime
+    );
+
+  const counts =
+    getServiceCounts();
+
+  const filtered =
+    currentSources.filter(
+      s =>
+        activeService === "All" ||
+        getProviderParentName(
+          getRawServiceName(s)
+        ) === activeService
+    );
+
+  const services =
+    Object.keys(
+      counts
+    );
+
+
+  const filters = `
+
+    <div class="filters">
+
+      <button
+        class="filter ${
+          activeService === "All"
+            ? "active"
+            : ""
+        }"
+        data-service="All"
+        type="button"
+      >
+
+        <span>
+          All
+        </span>
+
+        <span class="filter-count">
+          ${currentSources.length}
+        </span>
+
+      </button>
+
+      ${
+        services
+          .map(
+            s =>
+              `
+                <button
+                  class="filter ${
+                    activeService === s
+                      ? "active"
+                      : ""
+                  }"
+                  data-service="${escapeHtml(
+                    s
+                  )}"
+                  type="button"
+                >
+
+                  <span>
+                    ${escapeHtml(s)}
+                  </span>
+
+                  <span class="filter-count">
+                    ${counts[s]}
+                  </span>
+
+                </button>
+              `
+          )
+          .join("")
+      }
+
+    </div>
+
+  `;
+
+
+  const offers =
+    filtered.length
+
+      ? filtered
+          .map(
+            s => {
+
+              const name =
+                getRawServiceName(s);
+
+              const title =
+                getOfferTitle(s);
+
+              const sub =
+                getOfferSubline(s);
+
+              const type =
+                getTypeText(s);
+
+              const price =
+                formatPrice(
+                  s.price
+                );
+
+              const fmt =
+                getFormatText(s);
+
+              const eps =
+                getEpisodeText(s);
+
+              const note =
+                getServiceNote(s);
+
+              const url =
+                getSafeUrl(s);
+
+
+              const badges = [
+                type,
+                price,
+                fmt,
+                eps,
+                note,
+                "🇺🇸 U.S."
+              ].filter(Boolean);
+
+
+              return `
+
+                <article class="offer">
+
+                  ${buildLogoHtml(name)}
+
+                  <div>
+
+                    <div class="offer-title">
+                      ${escapeHtml(title)}
+                    </div>
+
+                    ${
+                      sub
+
+                        ? `
+                          <div class="offer-sub">
+                            ${escapeHtml(sub)}
+                          </div>
+                        `
+
+                        : ""
+                    }
+
+                    <div class="offer-details">
+
+                      ${
+                        badges
+                          .map(
+                            (b,i) =>
+                              `
+                                <span
+                                  class="badge ${
+                                    i === badges.length - 1
+                                      ? "us"
+                                      : ""
+                                  }"
+                                >
+                                  ${escapeHtml(b)}
+                                </span>
+                              `
+                          )
+                          .join("")
+                      }
+
+                    </div>
+
+                  </div>
+
+                  ${
+                    url
+
+                      ? `
+                        <a
+                          class="open-offer"
+                          href="${escapeHtml(url)}"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Open Offer
+                        </a>
+                      `
+
+                      : `
+                        <span class="badge no-link">
+                          No link
+                        </span>
+                      `
+                  }
+
+                </article>
+
+              `;
+
+            }
+          )
+          .join("")
+
+      : `
+          <div class="empty">
+            No matching U.S. offers found for this filter.
+          </div>
+        `;
+
+
+  box.innerHTML = `
+
+    <div class="anime-head">
+
+      ${
+        poster
+
+          ? `
+            <img
+              class="poster"
+              src="${escapeHtml(poster)}"
+              alt=""
+              onerror="this.style.display='none'"
+            >
+          `
+
+          : ""
+      }
+
+      <div>
+
+        <h2>
+          ${escapeHtml(
+            getAnimeTitle(
+              currentAnime
+            )
+          )}
+        </h2>
+
+        <div class="meta">
+          🇺🇸 ${currentSources.length}
+          U.S. option${
+            currentSources.length === 1
+              ? ""
+              : "s"
+          }
+          found.
+        </div>
+
+      </div>
+
+      <button
+        class="fav"
+        id="favBtn"
+        title="Favorite"
+        type="button"
+        aria-label="${
+          isFavorite()
+            ? "Remove from favorites"
+            : "Add to favorites"
+        }"
+      >
+        ${
+          isFavorite()
+            ? "♥"
+            : "♡"
+        }
+      </button>
+
+    </div>
+
+    <div class="section-title">
+
+      <h2>
+        Where to Watch
+      </h2>
+
+      <span class="meta">
+        ${filtered.length}
+        result${
+          filtered.length === 1
+            ? ""
+            : "s"
+        }
+      </span>
+
+    </div>
+
+    ${filters}
+
+    <div class="offer-grid">
+      ${offers}
+    </div>
+
+    <button
+      class="report-btn"
+      id="reportBtn"
+      type="button"
+    >
+      Report incorrect information
+    </button>
+
+  `;
+
+
+  attachLogoFallbacks(
+    box
+  );
+
+}
+
+
+function showStatus(
+  msg,
+  type=""
+){
+
+  const el =
+    $("status");
+
+  if(!el){
+    return;
+  }
+
+  el.textContent =
+    msg;
+
+  el.className =
+    "status" +
+    (
+      type
+        ? " " + type
+        : ""
+    );
+
+}
+
+
+async function searchAnime(query){
+
+  const q =
+    safeString(
+      query
+    ).trim();
+
+  if(!q){
+
+    showStatus(
+      "Enter an anime title to search.",
+      "error"
+    );
+
+    $("searchInput")?.focus();
+
+    return;
+
+  }
+
+  $("searchInput").value =
+    q;
+
+  showStatus(
+    "Searching..."
+  );
+
+  const button =
+    $("searchButton");
+
+  if(button){
+    button.disabled =
+      true;
+  }
+
+
+  try{
+
+    const url =
+      new URL(
+        WORKER_URL
+      );
+
+    url.searchParams.set(
+      "q",
+      q
+    );
+
+
+    const res =
+      await fetch(
+        url.toString(),
+        {
+          headers:{
+            Accept:
+              "application/json"
+          }
+        }
+      );
+
+
+    if(!res.ok){
+
+      throw new Error(
+        `Worker returned ${res.status}`
+      );
+
+    }
+
+
+    const json =
+      await res.json();
+
+
+    const normalized =
+      normalizeResponse(
+        json
+      );
+
+
+    currentAnime =
+      normalized.anime;
+
+    currentSources =
+      normalized.sources;
+
+    activeService =
+      "All";
+
+
+    addRecent(q);
+
+    renderResults();
+
+    renderServices();
+
+
+    showStatus(
+      `Found ${currentSources.length} U.S. option${
+        currentSources.length === 1
+          ? ""
+          : "s"
+      }.`,
+      "success"
+    );
+
+
+  }catch(err){
+
+    currentAnime =
+      null;
+
+    currentSources =
+      [];
+
+    activeService =
+      "All";
+
+    renderResults();
+
+    renderServices();
+
+
+    showStatus(
+      `Search failed: ${
+        safeString(
+          err?.message ||
+          err
+        )
+      }`,
+      "error"
+    );
+
+  }finally{
+
+    if(button){
+      button.disabled =
+        false;
+    }
+
+  }
+
+}
+
+
+function showTab(tab){
+
   const sections = {
+
     search:
-      "searchSection",
+      $("searchSection"),
 
     services:
-      "servicesSection",
+      $("servicesSection"),
 
     favorites:
-      "favoritesSection",
+      $("favoritesSection"),
 
     help:
-      "helpSection"
+      $("helpSection")
+
   };
+
 
   Object.entries(
     sections
   ).forEach(
-    ([key,id]) => {
+    ([name,section]) => {
 
-      const section =
-        $(id);
+      if(section){
 
-      if(!section){
-        return;
+        section.classList.toggle(
+          "hidden",
+          name !== tab
+        );
+
       }
-
-      section.classList.toggle(
-        "hidden",
-        key !== name
-      );
 
     }
   );
+
 
   document
     .querySelectorAll(
@@ -4338,160 +4815,416 @@ function showTab(
 
         button.classList.toggle(
           "active",
-          button.dataset.tab ===
-            name
+          button.dataset.tab === tab
         );
 
       }
     );
 
-  closeTabMenu();
 
-  if(
-    name === "search"
-  ){
+  if(tab === "services"){
+    renderServices();
+  }
 
-    $("searchInput")?.focus();
+  if(tab === "favorites"){
+    renderFavorites();
+  }
 
+  if(tab === "help"){
+    renderHelp();
   }
 
 }
 
-const menuToggle =
-  $("menuToggle");
 
-const tabMenu =
-  $("tabMenu");
+function renderServices(){
 
-function closeTabMenu(){
+  const box =
+    $("serviceGrid");
 
-  if(!tabMenu){
+  const status =
+    $("serviceStatus");
+
+  if(!box){
     return;
   }
 
-  tabMenu.classList.add(
-    "hidden"
+  const configs =
+    SERVICE_CONFIG.filter(
+      c =>
+        c.displayName &&
+        !RETIRED_PROVIDERS.includes(
+          normalizeServiceName(
+            c.displayName
+          )
+        )
+    );
+
+  const counts =
+    getServiceCounts();
+
+  const hasAnime =
+    Boolean(
+      currentAnime
+    );
+
+  const totalServices =
+    Object.keys(
+      counts
+    ).length;
+
+
+  if(status){
+
+    status.textContent =
+      hasAnime
+
+        ? `Current search: ${
+            safeString(
+              getAnimeTitle(
+                currentAnime
+              )
+            )
+          } • ${
+            totalServices
+          } service${
+            totalServices === 1
+              ? ""
+              : "s"
+          } with U.S. offers.`
+
+        : "Search an anime to see which services currently have it.";
+
+  }
+
+
+  box.innerHTML =
+    configs
+      .map(
+        c => {
+
+          const service =
+            c.displayName;
+
+          const count =
+            counts[service] || 0;
+
+          const hasOffer =
+            count > 0;
+
+          const active =
+            activeService === service &&
+            hasAnime;
+
+
+          let description;
+
+          if(!hasAnime){
+
+            description =
+              "Search an anime to check availability.";
+
+          }else if(hasOffer){
+
+            description =
+              `${count} current U.S. offer${
+                count === 1
+                  ? ""
+                  : "s"
+              } • Tap to view`;
+
+          }else{
+
+            description =
+              "No current U.S. offer for this anime.";
+
+          }
+
+
+          return `
+
+            <button
+              class="
+                service-card
+                glass
+                service-browser-card
+                ${hasOffer ? "has-offer" : ""}
+                ${active ? "active" : ""}
+              "
+              type="button"
+              data-browser-service="${escapeHtml(service)}"
+              aria-label="${
+                hasOffer
+                  ? `View ${escapeHtml(service)} offers`
+                  : `Check ${escapeHtml(service)} availability`
+              }"
+            >
+
+              ${buildLogoHtml(
+                service,
+                true
+              )}
+
+              <div class="service-browser-info">
+
+                <h3>
+                  ${escapeHtml(service)}
+                </h3>
+
+                <p>
+                  ${escapeHtml(description)}
+                </p>
+
+              </div>
+
+              <span
+                class="service-browser-count"
+                aria-hidden="true"
+              >
+                ${
+                  hasAnime
+                    ? count
+                    : "—"
+                }
+              </span>
+
+              <span
+                class="service-browser-arrow"
+                aria-hidden="true"
+              >
+                ›
+              </span>
+
+            </button>
+
+          `;
+
+        }
+      )
+      .join("");
+
+
+  attachLogoFallbacks(
+    box
   );
 
-  if(menuToggle){
+}
 
-    menuToggle.setAttribute(
-      "aria-expanded",
-      "false"
+
+function getReports(){
+
+  const v =
+    readStorage(
+      REPORTS_KEY,
+      []
     );
 
-    menuToggle.setAttribute(
-      "aria-label",
-      "Open navigation menu"
-    );
-
-  }
+  return Array.isArray(v)
+    ? v
+    : [];
 
 }
 
-function toggleTabMenu(){
 
-  if(!tabMenu){
+function openReport(){
+
+  if(
+    !currentAnime ||
+    !currentSources.length
+  ){
+
+    showStatus(
+      "Search an anime before reporting offer information.",
+      "error"
+    );
+
     return;
+
   }
 
-  const opening =
-    tabMenu.classList.contains(
+  $("reportModal")
+    ?.classList
+    .remove(
       "hidden"
     );
 
-  tabMenu.classList.toggle(
-    "hidden",
-    !opening
-  );
-
-  if(menuToggle){
-
-    menuToggle.setAttribute(
-      "aria-expanded",
-      String(
-        opening
-      )
-    );
-
-    menuToggle.setAttribute(
-      "aria-label",
-      opening
-        ? "Close navigation menu"
-        : "Open navigation menu"
-    );
-
-  }
+  $("reportReason")
+    ?.focus();
 
 }
 
-if(
-  menuToggle &&
-  menuToggle.dataset.menuBound !==
-    "1"
-){
 
-  menuToggle.dataset.menuBound =
-    "1";
+function closeReport(){
 
-  menuToggle.addEventListener(
-    "click",
-    e => {
-
-      e.preventDefault();
-      e.stopPropagation();
-
-      toggleTabMenu();
-
-    }
-  );
+  $("reportModal")
+    ?.classList
+    .add(
+      "hidden"
+    );
 
 }
 
-const wiredSearchForm =
-  $("searchForm");
 
-if(
-  wiredSearchForm &&
-  wiredSearchForm.dataset.searchBound !==
-    "1"
-){
+/*
+  SEARCH
+*/
 
-  wiredSearchForm.dataset.searchBound =
-    "1";
-
-  wiredSearchForm.addEventListener(
+$("searchForm")
+  .addEventListener(
     "submit",
     e => {
 
       e.preventDefault();
-      e.stopPropagation();
 
-      void searchAnime(
-        $("searchInput")?.value ||
-        ""
+      searchAnime(
+        $("searchInput").value
       );
 
     }
   );
 
-}
 
-document.addEventListener(
- "click",
- e => {
+/*
+  STATIC BUTTONS
+*/
 
-    if(
-      menuToggle &&
-      tabMenu &&
-      !e.target.closest(
-        ".tabs"
-      )
-    ){
+$("clearRecent")
+  .addEventListener(
+    "click",
+    () => {
 
-      closeTabMenu();
+      writeStorage(
+        RECENT_KEY,
+        []
+      );
+
+      renderRecent();
 
     }
+  );
+
+
+$("closeReport")
+  .addEventListener(
+    "click",
+    closeReport
+  );
+
+
+$("reportModal")
+  .addEventListener(
+    "click",
+    e => {
+
+      if(
+        e.target.id ===
+        "reportModal"
+      ){
+
+        closeReport();
+
+      }
+
+    }
+  );
+
+
+$("reportForm")
+  .addEventListener(
+    "submit",
+    e => {
+
+      e.preventDefault();
+
+      if(!currentAnime){
+
+        closeReport();
+
+        return;
+
+      }
+
+      const report = {
+
+        id:
+          Date.now(),
+
+        createdAt:
+          new Date()
+            .toISOString(),
+
+        anime:
+          getAnimeTitle(
+            currentAnime
+          ),
+
+        service:
+          currentSources
+            .map(
+              getRawServiceName
+            )
+            .filter(Boolean),
+
+        reason:
+          $("reportReason")
+            .value,
+
+        details:
+          $("reportDetails")
+            .value
+            .trim()
+
+      };
+
+
+      const reports =
+        getReports();
+
+      reports.unshift(
+        report
+      );
+
+
+      writeStorage(
+        REPORTS_KEY,
+        reports
+      );
+
+
+      $("reportDetails")
+        .value =
+        "";
+
+      closeReport();
+
+
+      showStatus(
+        "Your report was saved locally. Thank you for helping improve Anime Finder.",
+        "success"
+      );
+
+    }
+  );
+
+
+/*
+  FUNDRAISER SUBMISSION
+*/
+
+$("fundraiserForm")
+  .addEventListener(
+    "submit",
+    submitFundraiser
+  );
+
+
+/*
+  EVENT DELEGATION
+*/
+
+document.addEventListener(
+  "click",
+  e => {
 
     const tab =
       e.target.closest(
@@ -4504,23 +5237,179 @@ document.addEventListener(
         tab.dataset.tab
       );
 
-      closeTabMenu();
+      return;
+
+    }
+
+
+    const recent =
+      e.target.closest(
+        ".recent-item"
+      );
+
+    if(recent){
+
+      searchAnime(
+        recent.dataset.query ||
+        ""
+      );
 
       return;
 
     }
 
-    const serviceButton =
+
+    /*
+      HELP CATEGORIES
+    */
+
+    const helpCategory =
       e.target.closest(
-        ".service-filter"
+        ".help-category"
       );
 
-    if(
-      serviceButton
-    ){
+    if(helpCategory){
+
+      activeHelpCategory =
+        safeString(
+          helpCategory.dataset
+            .helpCategory
+        ) || "All";
+
+      renderHelp();
+
+      return;
+
+    }
+
+
+    /*
+      REMOVE FUNDRAISER
+    */
+
+    const removeFundraiser =
+      e.target.closest(
+        ".help-remove"
+      );
+
+    if(removeFundraiser){
+
+      e.stopPropagation();
+
+      removeFundraiserSubmission(
+        removeFundraiser.dataset
+          .removeFundraiser
+      );
+
+      return;
+
+    }
+
+
+    /*
+      ALL SERVICES BROWSER
+    */
+
+    const browserService =
+      e.target.closest(
+        ".service-browser-card"
+      );
+
+    if(browserService){
+
+      const service =
+        safeString(
+          browserService.dataset
+            .browserService
+        );
+
+      if(!service){
+        return;
+      }
+
+
+      if(!currentAnime){
+
+        showTab(
+          "search"
+        );
+
+        showStatus(
+          `Search an anime first to check ${
+            service
+          } availability.`,
+          "error"
+        );
+
+        $("searchInput")
+          ?.focus();
+
+        return;
+
+      }
+
 
       activeService =
-        serviceButton.dataset.service ||
+        service;
+
+      showTab(
+        "search"
+      );
+
+      renderResults();
+
+
+      const count =
+        getServiceCounts()[service] ||
+        0;
+
+
+      if(count > 0){
+
+        showStatus(
+          `Showing ${count} U.S. offer${
+            count === 1
+              ? ""
+              : "s"
+          } for ${
+            getAnimeTitle(
+              currentAnime
+            )
+          } on ${
+            service
+          }.`,
+          "success"
+        );
+
+      }else{
+
+        showStatus(
+          `No current U.S. offer found for ${
+            getAnimeTitle(
+              currentAnime
+            )
+          } on ${
+            service
+          }.`,
+          "error"
+        );
+
+      }
+
+      return;
+
+    }
+
+
+    const filter =
+      e.target.closest(
+        ".filter"
+      );
+
+    if(filter){
+
+      activeService =
+        filter.dataset.service ||
         "All";
 
       renderResults();
@@ -4530,115 +5419,97 @@ document.addEventListener(
 
     }
 
-    const recentButton =
+
+    const fav =
       e.target.closest(
-        ".recent-item"
+        "#favBtn"
       );
 
-    if(
-      recentButton
-    ){
+    if(fav){
 
-      const query =
-        recentButton.dataset.query ||
-        "";
-
-      showTab(
-        "search"
-      );
-
-      const input =
-        $("searchInput");
-
-      if(input){
-        input.value =
-          query;
-      }
-
-      void searchAnime(
-        query
-      );
+      toggleFavorite();
 
       return;
 
     }
 
-    const favoriteOpen =
+
+    const report =
       e.target.closest(
-        ".favorite-open"
+        "#reportBtn"
       );
 
-    if(
-      favoriteOpen
-    ){
+    if(report){
 
-      const query =
-        favoriteOpen.dataset.query ||
-        "";
-
-      showTab(
-        "search"
-      );
-
-      const input =
-        $("searchInput");
-
-      if(input){
-        input.value =
-          query;
-      }
-
-      void searchAnime(
-        query
-      );
+      openReport();
 
       return;
 
     }
 
-    const favoriteRemove =
+
+    /*
+      REMOVE FAVORITE
+    */
+
+    const removeFavoriteButton =
       e.target.closest(
-        "[data-remove-favorite]"
+        ".favorite-remove"
       );
 
-    if(
-      favoriteRemove
-    ){
+    if(removeFavoriteButton){
+
+      e.stopPropagation();
 
       removeFavorite(
-        favoriteRemove.dataset.removeFavorite ||
-        ""
+        removeFavoriteButton.dataset
+          .removeFavorite
       );
 
       return;
 
     }
 
-    const reportButton =
+
+    /*
+      OPEN FAVORITE
+    */
+
+    const favoriteItem =
       e.target.closest(
-        "[data-report]"
+        ".favorite-item"
       );
 
-    if(
-      reportButton
-    ){
+    if(favoriteItem){
 
-      openReportModal();
+      const id =
+        safeString(
+          favoriteItem.dataset
+            .favoriteId
+        );
 
-      return;
+      const favorite =
+        getFavorites().find(
+          x =>
+            safeString(
+              x?.id ||
+              x?.title
+            ) === id
+        );
 
-    }
+      if(
+        favorite?.title
+      ){
 
-    const closeModalButton =
-      e.target.closest(
-        "[data-close-report]"
-      );
+        showTab(
+          "search"
+        );
 
-    if(
-      closeModalButton
-    ){
+        searchAnime(
+          favorite.title
+        );
 
-      closeReportModal();
+      }
 
       return;
 
@@ -4647,861 +5518,107 @@ document.addEventListener(
   }
 );
 
-const reportForm =
-  $("reportForm");
-
-if(
-  reportForm
-){
-
-  reportForm.addEventListener(
-    "submit",
-    e => {
-
-      e.preventDefault();
-
-      const message =
-        $("reportMessage")?.value.trim() ||
-        "";
-
-      if(
-        !message
-      ){
-        return;
-      }
-
-      const reports =
-        readStorage(
-          REPORTS_KEY,
-          []
-        );
-
-      reports.push({
-        message,
-        anime:
-          safeString(
-            currentAnime?.title ||
-            currentAnime?.name ||
-            $("searchInput")?.value ||
-            ""
-          ),
-        createdAt:
-          new Date().toISOString()
-      });
-
-      writeStorage(
-        REPORTS_KEY,
-        reports
-      );
-
-      if(
-        $("reportMessage")
-      ){
-        $("reportMessage").value =
-          "";
-      }
-
-      closeReportModal();
-
-      showStatus(
-        "Thanks. Your report was saved.",
-        "success"
-      );
-
-    }
-  );
-
-}
-
-const fundraiserForm =
-  $("fundraiserForm");
-
-if(
-  fundraiserForm
-){
-
-  fundraiserForm.addEventListener(
-    "submit",
-    e => {
-
-      e.preventDefault();
-
-      const title =
-        $("fundraiserTitle")?.value.trim() ||
-        "";
-
-      const url =
-        getGoFundMeUrl(
-          $("fundraiserUrl")?.value.trim() ||
-          ""
-        );
-
-      const description =
-        $("fundraiserDescription")?.value.trim() ||
-        "";
-
-      if(
-        !title ||
-        !url
-      ){
-
-        showStatus(
-          "Please enter a fundraiser title and a valid GoFundMe link.",
-          "error"
-        );
-
-        return;
-
-      }
-
-      const submissions =
-        getFundraiserSubmissions();
-
-      submissions.push({
-        id:
-          Date.now().toString(),
-
-        title,
-
-        url,
-
-        description,
-
-        status:
-          "pending",
-
-        approved:
-          false,
-
-        createdAt:
-          new Date().toISOString()
-      });
-
-      writeFundraiserSubmissions(
-        submissions
-      );
-
-      fundraiserForm.reset();
-
-      showStatus(
-        "Fundraiser submitted for review.",
-        "success"
-      );
-
-      renderHelp();
-
-    }
-  );
-
-}
-
-const favoriteButton =
-  $("favoriteButton");
-
-if(
-  favoriteButton
-){
-
-  favoriteButton.addEventListener(
-    "click",
-    () => {
-
-      const title =
-        safeString(
-          currentAnime?.title ||
-          currentAnime?.name ||
-          $("searchInput")?.value ||
-          ""
-        ).trim();
-
-      if(
-        title
-      ){
-
-        addFavorite(
-          title
-        );
-
-        showStatus(
-          "Saved to My Anime.",
-          "success"
-        );
-
-      }
-
-    }
-  );
-
-}
-
-const searchButton =
-  $("searchButton");
-
-if(
-  searchButton
-){
-
-  searchButton.addEventListener(
-    "click",
-    e => {
-
-      e.preventDefault();
-
-      void searchAnime(
-        $("searchInput")?.value ||
-        ""
-      );
-
-    }
-  );
-
-}
-
-document.addEventListener(
- "keydown",
- e => {
-
-   if(
-     e.key ===
-     "Escape"
-   ){
-
-     closeTabMenu();
-     closeReportModal();
-
-   }
-
- }
-);
 
 /*
-  EXPOSE CORE UI HANDLERS
+  KEYBOARD SUPPORT FOR FAVORITES
 */
-window.searchAnime =
-  searchAnime;
 
-window.showTab =
-  showTab;
+document.addEventListener(
+  "keydown",
+  e => {
 
-window.toggleTabMenu =
-  toggleTabMenu;
+    if(
+      e.key !== "Enter" &&
+      e.key !== " "
+    ){
+      return;
+    }
 
-window.closeTabMenu =
-  closeTabMenu;
+    const favoriteItem =
+      e.target.closest(
+        ".favorite-item"
+      );
+
+    if(!favoriteItem){
+      return;
+    }
+
+    if(
+      e.target.closest(
+        ".favorite-remove"
+      )
+    ){
+      return;
+    }
+
+    e.preventDefault();
+
+    const id =
+      safeString(
+        favoriteItem.dataset
+          .favoriteId
+    );
+
+    const favorite =
+      getFavorites().find(
+        x =>
+          safeString(
+            x?.id ||
+            x?.title
+          ) === id
+      );
+
+    if(
+      favorite?.title
+    ){
+
+      showTab(
+        "search"
+      );
+
+      searchAnime(
+        favorite.title
+      );
+
+    }
+
+  }
+);
+
+
+/*
+  ESCAPE CLOSES REPORT MODAL
+*/
+
+document.addEventListener(
+  "keydown",
+  e => {
+
+    if(
+      e.key === "Escape" &&
+      !$("reportModal")
+        .classList
+        .contains("hidden")
+    ){
+
+      closeReport();
+
+    }
+
+  }
+);
+
+
+/*
+  INITIAL LOAD
+*/
 
 renderRecent();
 renderServices();
 renderFavorites();
 renderHelp();
-loadFundraisers();
 attachLogoFallbacks();
 
-</script>
-
-<!-- Critical UI fallback bindings -->
-<script>
-(function(){
-
-  /*
-    HARD FALLBACK UI CONTROLLER
-
-    This intentionally does NOT depend on the
-    main Anime Finder initialization completing.
-  */
-
-  function get(id){
-    return document.getElementById(id);
-  }
-
-  function showFallbackStatus(
-    message,
-    type
-  ){
-
-    const status =
-      get("status");
-
-    if(!status){
-      return;
-    }
-
-    status.textContent =
-      message;
-
-    status.className =
-      "status" +
-      (
-        type
-          ? " " + type
-          : ""
-      );
-
-  }
-
-  function closeMenu(){
-
-    const menu =
-      get("tabMenu");
-
-    const toggle =
-      get("menuToggle");
-
-    if(menu){
-      menu.classList.add(
-        "hidden"
-      );
-    }
-
-    if(toggle){
-
-      toggle.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-
-      toggle.setAttribute(
-        "aria-label",
-        "Open navigation menu"
-      );
-
-    }
-
-  }
-
-  function toggleMenu(){
-
-    const menu =
-      get("tabMenu");
-
-    const toggle =
-      get("menuToggle");
-
-    if(!menu){
-      return;
-    }
-
-    const isClosed =
-      menu.classList.contains(
-        "hidden"
-      );
-
-    if(isClosed){
-
-      menu.classList.remove(
-        "hidden"
-      );
-
-    }else{
-
-      menu.classList.add(
-        "hidden"
-      );
-
-    }
-
-    if(toggle){
-
-      toggle.setAttribute(
-        "aria-expanded",
-        String(
-          isClosed
-        )
-      );
-
-      toggle.setAttribute(
-        "aria-label",
-        isClosed
-          ? "Close navigation menu"
-          : "Open navigation menu"
-      );
-
-    }
-
-  }
-
-  function clearOldResults(){
-
-    const results =
-      get("results");
-
-    if(results){
-
-      results.innerHTML =
-        "";
-
-    }
-
-    /*
-      Clear any old status/result
-      containers that may contain
-      the previous Solo Leveling data.
-    */
-
-    const resultArea =
-      document.querySelector(
-        ".results"
-      );
-
-    if(
-      resultArea &&
-      resultArea !== results
-    ){
-
-      resultArea.innerHTML =
-        "";
-
-    }
-
-  }
-
-  async function hardSearch(
-    rawQuery
-  ){
-
-    const input =
-      get("searchInput");
-
-    const query =
-      String(
-        rawQuery ??
-        input?.value ??
-        ""
-      ).trim();
-
-    if(!query){
-
-      if(input){
-        input.focus();
-      }
-
-      showFallbackStatus(
-        "Enter an anime title to search.",
-        "error"
-      );
-
-      return;
-
-    }
-
-    /*
-      Immediately remove the old result.
-      This is what prevents Solo Leveling
-      from remaining visible while the
-      new search is happening.
-    */
-
-    clearOldResults();
-
-    if(input){
-      input.value =
-        query;
-    }
-
-    showFallbackStatus(
-      "Searching..."
-    );
-
-    const button =
-      get("searchButton");
-
-    if(button){
-      button.disabled =
-        true;
-    }
-
-    try{
-
-      const workerUrl =
-        "https://holy-lake-cba9.daviswillis232.workers.dev/";
-
-      const url =
-        new URL(
-          workerUrl
-        );
-
-      url.searchParams.set(
-        "q",
-        query
-      );
-
-      const response =
-        await fetch(
-          url.toString(),
-          {
-            method:
-              "GET",
-
-            headers:{
-              "Accept":
-                "application/json"
-            }
-          }
-        );
-
-      if(
-        !response.ok
-      ){
-
-        throw new Error(
-          "Worker returned HTTP " +
-          response.status
-        );
-
-      }
-
-      const data =
-        await response.json();
-
-      /*
-        If the normal app search function
-        exists, hand the response back to
-        the normal renderer by updating
-        the existing state.
-
-        Otherwise show a basic fallback
-        result so the search can never
-        appear completely dead.
-      */
-
-      if(
-        typeof window.normalizeResponse ===
-        "function"
-      ){
-
-        const normalized =
-          window.normalizeResponse(
-            data
-          );
-
-        window.currentAnime =
-          normalized.anime;
-
-        window.currentSources =
-          normalized.sources;
-
-        if(
-          typeof window.renderResults ===
-          "function"
-        ){
-
-          window.renderResults();
-
-        }
-
-        if(
-          typeof window.renderServices ===
-          "function"
-        ){
-
-          window.renderServices();
-
-        }
-
-      }else if(
-        typeof window.searchAnime ===
-        "function"
-      ){
-
-        /*
-          The main function exists, so let
-          the normal app handle the search.
-        */
-
-        await window.searchAnime(
-          query
-        );
-
-      }else{
-
-        /*
-          Last-resort display.
-          This proves the Worker itself
-          responded instead of leaving the
-          old Solo Leveling result visible.
-        */
-
-        const results =
-          get("results");
-
-        if(results){
-
-          const pre =
-            document.createElement(
-              "pre"
-            );
-
-          pre.className =
-            "fallback-search-result";
-
-          pre.textContent =
-            JSON.stringify(
-              data,
-              null,
-              2
-            );
-
-          results.appendChild(
-            pre
-          );
-
-        }
-
-      }
-
-      showFallbackStatus(
-        "Search complete.",
-        "success"
-      );
-
-    }catch(error){
-
-      console.error(
-        "Anime Finder search error:",
-        error
-      );
-
-      clearOldResults();
-
-      showFallbackStatus(
-        "Search failed: " +
-        (
-          error?.message ||
-          "Unknown error"
-        ),
-        "error"
-      );
-
-    }finally{
-
-      if(button){
-        button.disabled =
-          false;
-      }
-
-    }
-
-  }
-
-  function bind(){
-
-    const form =
-      get("searchForm");
-
-    const input =
-      get("searchInput");
-
-    const button =
-      get("searchButton");
-
-    const menu =
-      get("menuToggle");
-
-    /*
-      SEARCH FORM
-    */
-
-    if(form){
-
-      form.onsubmit =
-        function(event){
-
-          event.preventDefault();
-          event.stopImmediatePropagation();
-
-          hardSearch(
-            input?.value ||
-            ""
-          );
-
-          return false;
-
-        };
-
-    }
-
-    /*
-      SEARCH BUTTON
-    */
-
-    if(button){
-
-      button.onclick =
-        function(event){
-
-          event.preventDefault();
-          event.stopImmediatePropagation();
-
-          hardSearch(
-            input?.value ||
-            ""
-          );
-
-          return false;
-
-        };
-
-    }
-
-    /*
-      ENTER KEY
-    */
-
-    if(input){
-
-      input.onkeydown =
-        function(event){
-
-          if(
-            event.key ===
-            "Enter"
-          ){
-
-            event.preventDefault();
-            event.stopImmediatePropagation();
-
-            hardSearch(
-              input.value
-            );
-
-            return false;
-
-          }
-
-        };
-
-    }
-
-    /*
-      HAMBURGER / DROPDOWN
-    */
-
-    if(menu){
-
-      menu.onclick =
-        function(event){
-
-          event.preventDefault();
-          event.stopImmediatePropagation();
-
-          toggleMenu();
-
-          return false;
-
-        };
-
-    }
-
-    /*
-      MENU ITEMS
-    */
-
-    document
-      .querySelectorAll(
-        "#tabMenu .tab"
-      )
-      .forEach(
-        tab => {
-
-          tab.onclick =
-            function(event){
-
-              event.preventDefault();
-              event.stopImmediatePropagation();
-
-              const name =
-                tab.dataset.tab;
-
-              /*
-                Use the main showTab function
-                if it exists.
-              */
-
-              if(
-                typeof window.showTab ===
-                "function"
-              ){
-
-                window.showTab(
-                  name
-                );
-
-              }else{
-
-                /*
-                  Direct fallback tab switching.
-                */
-
-                const sections = {
-                  search:
-                    "searchSection",
-
-                  services:
-                    "servicesSection",
-
-                  favorites:
-                    "favoritesSection",
-
-                  help:
-                    "helpSection"
-                };
-
-                Object.entries(
-                  sections
-                ).forEach(
-                  ([key,id]) => {
-
-                    const section =
-                      get(id);
-
-                    if(section){
-
-                      section.classList.toggle(
-                        "hidden",
-                        key !== name
-                      );
-
-                    }
-
-                  }
-                );
-
-              }
-
-              closeMenu();
-
-              return false;
-
-            };
-
-        }
-      );
-
-  }
-
-  /*
-    Wait until the DOM exists.
-  */
-
-  if(
-    document.readyState ===
-    "loading"
-  ){
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      bind,
-      {
-        once:true
-      }
-    );
-
-  }else{
-
-    bind();
-
-  }
-
-})();
 </script>
 
 </body>
