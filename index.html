@@ -246,15 +246,28 @@ input:focus{
   top:50px;
   right:0;
   z-index:1000;
+
   width:min(230px,calc(100vw - 32px));
 
-  max-height:calc(100vh - 90px);
+  max-height:190px;
   overflow-y:auto;
   overflow-x:hidden;
 
   -webkit-overflow-scrolling:touch;
   touch-action:pan-y;
 
+  padding:7px;
+
+  border:1px solid var(--line);
+  border-radius:14px;
+
+  background:rgba(8,8,10,.97);
+
+  box-shadow:0 18px 45px rgba(0,0,0,.65);
+
+  backdrop-filter:blur(13px);
+  -webkit-backdrop-filter:blur(13px);
+}
   padding:7px;
   border:1px solid var(--line);
   border-radius:14px;
