@@ -611,6 +611,21 @@ input:focus{
   margin-top:2px;
 }
 
+.offer-service-label{
+  margin-top:4px;
+  color:#bdbdbd;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.02em;
+}
+
+.offer-identity-label{
+  margin-top:3px;
+  color:#777;
+  font-size:11px;
+}
+
+
 .offer-details{
   display:flex;
   flex-wrap:wrap;
@@ -2703,21 +2718,60 @@ function getOfferTitle(source){
      getOfferSpecificValue(source);
 
     /*
-      If the API gives us a real plan/product/offer label, show it.
-      Otherwise fall back to the canonical provider name.
+      The card must reflect the actual returned service/offer label.
+      Do not turn every Crunchyroll source into the same generic
+      "Crunchyroll Premium" title because that makes distinct
+      returned offers look like one identical service.
     */
     if(specific){
       return specific;
     }
 
-    if(
-      normalizeServiceName(service) ===
-      "crunchyroll"
-    ){
-      return "Crunchyroll Premium";
+    const rawClean =
+      safeString(raw).trim();
+
+    if(rawClean &&
+       normalizeServiceName(rawClean) !== normalizeServiceName(service)){
+      return rawClean;
     }
 
     return getCleanServiceName(service || raw);
+
+}
+
+
+function getOfferServiceLabel(source){
+
+    const raw =
+      getRawServiceName(source);
+
+    return getProviderParentName(raw) ||
+           getCleanServiceName(raw) ||
+           "Unknown Service";
+
+}
+
+
+function getOfferIdentityLabel(source){
+
+    const title =
+      getOfferTitle(source);
+
+    const service =
+      getOfferServiceLabel(source);
+
+    if(!title){
+      return service;
+    }
+
+    if(
+      normalizeServiceName(title) ===
+      normalizeServiceName(service)
+    ){
+      return "Standard service offer";
+    }
+
+    return title;
 
 }
 
@@ -4802,6 +4856,12 @@ const offers =
             const title =
              getOfferTitle(s);
 
+            const serviceLabel =
+             getOfferServiceLabel(s);
+
+            const identityLabel =
+             getOfferIdentityLabel(s);
+
             const sub =
              getOfferSubline(s);
 
@@ -4851,6 +4911,14 @@ return `
 
     <div class="offer-title">
      ${escapeHtml(title)}
+    </div>
+
+    <div class="offer-service-label">
+     Service: ${escapeHtml(serviceLabel)}
+    </div>
+
+    <div class="offer-identity-label">
+     Offer: ${escapeHtml(identityLabel)}
     </div>
 
     ${
