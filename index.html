@@ -1049,8 +1049,9 @@ input:focus{
  border:1px solid #39393b;
  border-radius:9px;
  background:rgba(0,0,0,.45);
- color:#999;
- font-weight:900;
+
+    color:#999;
+    font-weight:900;
 }
 
 .help-remove:hover{
@@ -1093,6 +1094,7 @@ input:focus{
  display:flex;
  flex-direction:column;
  gap:7px;
+
 }
 
 .help-field.full{
@@ -1137,7 +1139,8 @@ input:focus{
  margin-top:15px;
  color:#999;
  font-size:12px;
- line-height:1.5;
+
+    line-height:1.5;
 }
 
 .help-checkbox input{
@@ -1181,8 +1184,9 @@ input:focus{
  text-align:center;
  color:#777;
  border:1px dashed #333;
- border-radius:15px;
- background:rgba(0,0,0,.15);
+
+    border-radius:15px;
+    background:rgba(0,0,0,.15);
 }
 
 /* =========================
@@ -1225,6 +1229,7 @@ input:focus{
   object-fit:cover;
   background:#111;
   border:1px solid #333;
+
 }
 
 .favorite-poster-fallback{
@@ -1269,26 +1274,27 @@ input:focus{
 
 .favorite-remove{
   position:absolute;
-  top:12px;
-  right:12px;
-  width:32px;
-  height:32px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid #3b3b3d;
-  border-radius:9px;
-  background:rgba(0,0,0,.45);
-  color:#999;
-  font-size:16px;
-  font-weight:800;
-  line-height:1;
-  cursor:pointer;
-  transition:
-    color .18s ease,
-    border-color .18s ease,
-    background .18s ease,
-    transform .18s ease;
+
+    top:12px;
+    right:12px;
+    width:32px;
+    height:32px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #3b3b3d;
+    border-radius:9px;
+    background:rgba(0,0,0,.45);
+    color:#999;
+    font-size:16px;
+    font-weight:800;
+    line-height:1;
+    cursor:pointer;
+    transition:
+      color .18s ease,
+      border-color .18s ease,
+      background .18s ease,
+      transform .18s ease;
 }
 
 .favorite-remove:hover{
@@ -1313,9 +1319,10 @@ input:focus{
  background:rgba(0,0,0,.78);
  display:flex;
  align-items:center;
- justify-content:center;
- padding:18px;
- z-index:20;
+
+    justify-content:center;
+    padding:18px;
+    z-index:20;
 }
 
 .modal{
@@ -1357,11 +1364,12 @@ textarea{
 
 .report-btn{
   margin-top:18px;
-  color:#999;
-  text-decoration:underline;
-  background:none;
-  border:0;
-  padding:0;
+
+    color:#999;
+    text-decoration:underline;
+    background:none;
+    border:0;
+    padding:0;
 }
 
 footer{
@@ -1501,26 +1509,18 @@ footer{
  }
 
  .offer-title{
-   font-size:14px;
- }
-  
- .anime-head h2{
-   font-size:19px;
+      font-size:14px;
  }
 
- .offer-title{
-   font-size:14px;
-    }
- 
  .offer-sub{
    font-size:11px;
  }
- 
+
  .badge{
    font-size:11px;
    padding:4px 7px;
  }
- 
+
 }
 </style>
 </head>
@@ -3020,8 +3020,10 @@ if(
 
             if(found){
               return found;
-    }
-         }
+                          }
+
+        }
+
         const nested = [
 
             v.offer,
@@ -4527,14 +4529,12 @@ function getServiceCounts(){
 
 
 function renderResults(){
-
+  
     const box =
-     $("results");
+           $("results");
 
     if(!box){
       return;
-       }
-        return;
     }
 
     if(!currentAnime){
@@ -4622,6 +4622,7 @@ const filters = `
          )
          .join("")
      }
+
  </div>
 
 `;
@@ -5564,18 +5565,6 @@ function toggleTabMenu(){
 
 }
 
-if(menuToggle && menuToggle.dataset.menuBound !== "1"){
-  menuToggle.dataset.menuBound = "1";
-  menuToggle.addEventListener(
-    "click",
-    e => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleTabMenu();
-    }
-  );
-}
-
 /*
   EVENT DELEGATION
 */
@@ -6006,6 +5995,14 @@ attachLogoFallbacks();
     const form = document.getElementById("searchForm");
     const input = document.getElementById("searchInput");
     const menu = document.getElementById("menuToggle");
+
+    if(typeof searchAnime === "function"){
+      window.searchAnime = searchAnime;
+    }
+
+    if(typeof toggleTabMenu === "function"){
+      window.toggleTabMenu = toggleTabMenu;
+    }
 
     if(form && input){
       form.onsubmit = function(event){
