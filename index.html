@@ -2611,17 +2611,24 @@ function getOfferTitle(source){
     const raw =
      getRawServiceName(source);
 
-    const n =
-     normalizeServiceName(raw);
+    /*
+      Always display the canonical parent service name on the
+      offer card instead of whatever compound/raw provider label
+      the data source returned. This keeps every card consistent
+      while preserving the intended Crunchyroll Premium label.
+    */
+
+    const service =
+     getProviderParentName(raw);
 
     if(
-      n.includes("crunchyroll") &&
-      n !== "crunchyroll"
+      normalizeServiceName(service) ===
+      "crunchyroll"
     ){
       return "Crunchyroll Premium";
     }
 
-    return getCleanServiceName(raw);
+    return getCleanServiceName(service || raw);
 
 }
 
@@ -6079,4 +6086,3 @@ attachLogoFallbacks();
 
 </body>
 </html>
-
