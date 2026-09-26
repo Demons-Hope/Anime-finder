@@ -2606,20 +2606,109 @@ function getProviderParentName(name){
 }
 
 
+function getOfferSpecificValue(source){
+
+    if(!source || typeof source !== "object"){
+      return "";
+    }
+
+    /*
+      Prefer an offer/plan/product label when the API provides one.
+      Do NOT blindly use source.title/name because those fields can
+      contain the anime title or the provider name rather than the
+      actual service offer.
+    */
+    const candidates = [
+      source.offerTitle,
+      source.offerName,
+      source.planName,
+      source.packageName,
+      source.productName,
+      source.product,
+      source.plan,
+      source.package,
+      source.label,
+      source.displayName,
+      source.title,
+      source.name
+    ];
+
+    const rawService =
+      getRawServiceName(source);
+
+    const service =
+      getProviderParentName(rawService);
+
+    const animeTitle =
+      getAnimeTitle(currentAnime);
+
+    for(const candidate of candidates){
+
+      const value =
+        safeString(candidate).trim();
+
+      if(!value || value === "[object Object]"){
+        continue;
+      }
+
+      const normalized =
+        normalizeServiceName(value);
+
+      if(!normalized){
+        continue;
+      }
+
+      if(
+        normalized === normalizeServiceName(rawService) ||
+        normalized === normalizeServiceName(service) ||
+        normalized === normalizeServiceName(animeTitle)
+      ){
+        continue;
+      }
+
+      /*
+        These are access labels, not useful offer identities.
+      */
+      if(
+        [
+          "subscription",
+          "subscribe",
+          "watch",
+          "stream",
+          "buy",
+          "purchase",
+          "rent",
+          "free"
+        ].includes(normalized)
+      ){
+        continue;
+      }
+
+      return value;
+    }
+
+    return "";
+}
+
+
 function getOfferTitle(source){
 
     const raw =
      getRawServiceName(source);
 
-    /*
-      Always display the canonical parent service name on the
-      offer card instead of whatever compound/raw provider label
-      the data source returned. This keeps every card consistent
-      while preserving the intended Crunchyroll Premium label.
-    */
-
     const service =
      getProviderParentName(raw);
+
+    const specific =
+     getOfferSpecificValue(source);
+
+    /*
+      If the API gives us a real plan/product/offer label, show it.
+      Otherwise fall back to the canonical provider name.
+    */
+    if(specific){
+      return specific;
+    }
 
     if(
       normalizeServiceName(service) ===
@@ -3168,14 +3257,37 @@ function isUsSource(source){
 function getSourceKey(source){
 
     /*
-      Deduplicate the same displayed offer even when the provider
-      returns multiple URLs for it. The URL is intentionally NOT
-      part of the identity because otherwise the same offer can
-      appear as duplicate cards simply because its links differ.
+      Treat an offer ID as the strongest identity when the API
+      supplies one. This keeps two genuinely different offers
+      separate even when they happen to share provider/type/price.
 
-      Keep the meaningful offer attributes so genuinely different
-      offers remain separate.
+      When there is no ID, include the real offer/plan label plus
+      the visible offer attributes. The URL is still excluded so
+      multiple links for the same offer do not create duplicate
+      cards.
     */
+
+    const explicitId =
+      firstNonEmpty(
+        source?.offerId,
+        source?.offer_id,
+        source?.sourceId,
+        source?.source_id,
+        source?.availabilityId,
+        source?.availability_id,
+        source?.id
+      );
+
+    if(explicitId){
+      return [
+        normalizeServiceName(
+          getProviderParentName(
+            getRawServiceName(source)
+          )
+        ),
+        normalizeServiceName(explicitId)
+      ].join("|");
+    }
 
     return [
 
@@ -3183,6 +3295,10 @@ function getSourceKey(source){
        getProviderParentName(
          getRawServiceName(source)
        )
+     ),
+
+     normalizeServiceName(
+       getOfferSpecificValue(source)
      ),
 
      normalizeServiceName(
